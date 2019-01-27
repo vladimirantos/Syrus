@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syrus.Test", "Syrus.Test\Sy
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{CDD23E2D-8382-450C-9933-DFD5F2EF435B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syrus.Plugins.TestPlugin", "Syrus.Plugins.TestPlugin\Syrus.Plugins.TestPlugin.csproj", "{55B1C782-348A-49E5-8F2F-CECF7E36A7D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,9 +31,16 @@ Global
 		{2A4C4C94-D31A-4775-AF52-88731E96BDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A4C4C94-D31A-4775-AF52-88731E96BDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A4C4C94-D31A-4775-AF52-88731E96BDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B1C782-348A-49E5-8F2F-CECF7E36A7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B1C782-348A-49E5-8F2F-CECF7E36A7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B1C782-348A-49E5-8F2F-CECF7E36A7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B1C782-348A-49E5-8F2F-CECF7E36A7D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55B1C782-348A-49E5-8F2F-CECF7E36A7D2} = {CDD23E2D-8382-450C-9933-DFD5F2EF435B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9BE9422-F363-4BB7-91FA-2C03EDF61658}
