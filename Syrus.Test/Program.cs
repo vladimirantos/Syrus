@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Syrus.Core;
+using System;
+using System.IO;
 
 namespace Syrus.Test
 {
@@ -6,7 +8,10 @@ namespace Syrus.Test
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string instalationFolder = Path.Combine(Environment.GetFolderPath(
+    Environment.SpecialFolder.ApplicationData), "Syrus");
+            SyrusFactory factory = new SyrusFactory(instalationFolder);
+            factory.Initialize();
         }
     }
 }

@@ -1,6 +1,11 @@
 ﻿namespace Syrus.Core
 {
-    public class SearchEngine
+    public interface ISearch
+    {
+
+    }
+
+    public class SearchEngine : ISearch
     {
     }
 }

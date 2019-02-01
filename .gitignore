@@ -7,3 +7,6 @@
 /Syrus.Plugin/obj
 /Syrus.Test/obj
 /Syrus.Plugins.TestPlugin/obj
+/Syrus.Core/bin/Debug/netcoreapp2.1
+/Syrus.Plugin/bin/Debug/netcoreapp2.1
+/Syrus.Test/bin/Debug/netcoreapp2.1
