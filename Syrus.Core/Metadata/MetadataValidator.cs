@@ -1,17 +1,17 @@
-﻿using Syrus.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Syrus.Plugin;
 
-namespace Syrus.Core
+namespace Syrus.Core.Metadata
 {
-    internal class MetadataValidator
+    internal class MetadataValidator : IValidator<PluginMetadata>
     {
-        private IEnumerable<Predicate<PluginMetadata>> _validationRules;
+        public IEnumerable<Predicate<PluginMetadata>> Rules { get; private set; }
 
         public MetadataValidator()
         {
-            _validationRules = new List<Predicate<PluginMetadata>>()
+            Rules = new List<Predicate<PluginMetadata>>()
              {
                  (PluginMetadata m) => m.Author != null,
                  (PluginMetadata m) => m.FullName != null,
@@ -20,6 +20,6 @@ namespace Syrus.Core
              };
         }
 
-        public bool IsValid(PluginMetadata metadata) => _validationRules.All(rule => rule(metadata));
+        public bool IsValid(PluginMetadata metadata) => Rules.All(rule => rule(metadata));
     }
 }

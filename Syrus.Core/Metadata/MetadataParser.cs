@@ -2,7 +2,7 @@
 using Syrus.Plugin;
 using System.IO;
 
-namespace Syrus.Core
+namespace Syrus.Core.Metadata
 {
     internal class MetadataParser
     {
@@ -14,18 +14,12 @@ namespace Syrus.Core
         {
             if (!File.Exists(filePath))
                 throw new FileNotFoundException($"File {filePath} not found.");
+
             PluginMetadata metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(filePath));
+
             if (!_metadataValidator.IsValid(metadata))
                 throw new MetadataParserException($"Metadata file {filePath} is not valid.");
             return metadata;
-        }
-    }
-
-    public class MetadataParserException : SyrusException
-    {
-        public MetadataParserException(string message) : base(message)
-        {
-
         }
     }
 }
