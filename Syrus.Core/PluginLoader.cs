@@ -22,6 +22,7 @@ namespace Syrus.Core
             {
                 string pluginPath = Path.Combine(pluginsLocation, directories[i]);
                 PluginMetadata metadata = LoadMetadata(pluginPath);
+                IPlugin plugin = LoadPlugin(Path.Combine(pluginPath, metadata.Name));
             }
 
             return new List<IPlugin>();
@@ -42,6 +43,11 @@ namespace Syrus.Core
             {
                 throw new SyrusException($"Failed to parse metadata file {pluginFullPath}", e);
             }
+        }
+
+        private IPlugin LoadPlugin(string libraryPath)
+        {
+            return null;
         }
     }
 }

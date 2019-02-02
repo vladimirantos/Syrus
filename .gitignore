@@ -10,3 +10,8 @@
 /Syrus.Core/bin/Debug/netcoreapp2.1
 /Syrus.Plugin/bin/Debug/netcoreapp2.1
 /Syrus.Test/bin/Debug/netcoreapp2.1
+/Syrus.Plugin/bin/Release/netcoreapp2.1
+/Syrus.Plugins.Wiki/Properties/PublishProfiles
+/Syrus.Plugins.Wiki/obj
+/Syrus.Plugins.Wiki/bin
+*.user
