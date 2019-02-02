@@ -5,6 +5,9 @@ using Syrus.Plugin;
 
 namespace Syrus.Core.Metadata
 {
+    /// <summary>
+    /// Kontroluje metadata jestli obsahují povinné hodnoty.
+    /// </summary>
     internal class MetadataValidator : IValidator<PluginMetadata>
     {
         public IEnumerable<Predicate<PluginMetadata>> Rules { get; private set; }
@@ -16,7 +19,6 @@ namespace Syrus.Core.Metadata
                  (PluginMetadata m) => m.Author != null,
                  (PluginMetadata m) => m.FullName != null,
                  (PluginMetadata m) => m.Name != null,
-                 (PluginMetadata m) => m.IconPath != null,
              };
         }
 

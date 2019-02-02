@@ -4,12 +4,21 @@ using System.IO;
 
 namespace Syrus.Core.Metadata
 {
+    /// <summary>
+    /// Převede konfigurační json soubor pluginu na objekt metadata a provádí validaci povinných hodnot.
+    /// </summary>
     internal class MetadataParser
     {
         private MetadataValidator _metadataValidator;
 
         public MetadataParser() => _metadataValidator = new MetadataValidator();
         
+        /// <summary>
+        /// Načte json soubor a převede ho na PluginMetadata
+        /// </summary>
+        /// <exception cref="FileNotFoundException">Pokud soubor neexistuje</exception>
+        /// <exception cref="MetadataParserException">Pokud soubor není validní (nejsou definovány poviné hodnoty)</exception>
+        /// <param name="filePath">Absolutní cesta k json souboru</param>
         public PluginMetadata ParseFromFile(string filePath)
         {
             if (!File.Exists(filePath))
