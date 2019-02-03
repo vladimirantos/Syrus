@@ -24,21 +24,21 @@ namespace Syrus.Core
         {
             List<PluginPair> plugins = new List<PluginPair>();
             string[] directories = Directory.GetDirectories(_pluginLocation);
-            for(int i = 0; i < directories.Length; i++)
+            for (int i = 0; i < directories.Length; i++)
             {
                 string pluginPath = Path.Combine(_pluginLocation, directories[i]);
                 PluginMetadata metadata = LoadMetadata(pluginPath);
+                IPlugin plugin;
                 try
                 {
-                    IPlugin plugin = CreatePluginInstance($"{Path.Combine(pluginPath, metadata.FullName)}.dll");
-                    plugins.Add(new PluginPair(plugin, metadata));
+                    plugin = CreatePluginInstance($"{Path.Combine(pluginPath, metadata.FullName)}.dll");
                 }
                 catch(IOException e)
                 {
                     throw new SyrusException($"Failed to load assembly {metadata.FullName} from {pluginPath}", e);
                 }
+                yield return new PluginPair(plugin, metadata);
             }
-            return plugins;
         }
 
         /// <summary>
