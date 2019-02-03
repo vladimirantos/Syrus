@@ -16,3 +16,7 @@
 /Syrus.Plugins.Wiki/bin
 *.user
 /Syrus.Plugins.Google/obj
+/packages/FluentWPF.0.6.1
+/Syrus/bin/Debug
+/Syrus/obj/Debug
+/Syrus/Properties
