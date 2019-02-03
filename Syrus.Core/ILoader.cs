@@ -5,6 +5,6 @@ namespace Syrus.Core
 {
     public interface ILoader
     {
-        IEnumerable<IPlugin> Load(string pluginsLocation);
+        IEnumerable<PluginPair> Load();
     }
 }

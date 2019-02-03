@@ -2,9 +2,8 @@
 {
     public interface IPlugin
     {
-        PluginMetadata Metadata { get; internal set; }
+        void OnInitialize(PluginContext context);
 
-        void OnInitialize();
         void Search(string searchTerm);
     }
 }

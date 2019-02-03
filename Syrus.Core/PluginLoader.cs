@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Syrus.Core
@@ -13,25 +12,26 @@ namespace Syrus.Core
     {
         public const string MetadataFileName = "plugin.json";
         private MetadataParser _metadataParser;
+        private string _pluginLocation;
 
-        public PluginLoader()
+        public PluginLoader(string pluginLocation)
         {
             _metadataParser = new MetadataParser();
+            _pluginLocation = pluginLocation;
         }
 
-        public IEnumerable<IPlugin> Load(string pluginsLocation)
+        public IEnumerable<PluginPair> Load()
         {
-            List<IPlugin> plugins = new List<IPlugin>();
-            string[] directories = Directory.GetDirectories(pluginsLocation);
+            List<PluginPair> plugins = new List<PluginPair>();
+            string[] directories = Directory.GetDirectories(_pluginLocation);
             for(int i = 0; i < directories.Length; i++)
             {
-                string pluginPath = Path.Combine(pluginsLocation, directories[i]);
+                string pluginPath = Path.Combine(_pluginLocation, directories[i]);
                 PluginMetadata metadata = LoadMetadata(pluginPath);
                 try
                 {
                     IPlugin plugin = CreatePluginInstance($"{Path.Combine(pluginPath, metadata.FullName)}.dll");
-                    plugin.Metadata = metadata;
-                    plugins.Add(plugin);
+                    plugins.Add(new PluginPair(plugin, metadata));
                 }
                 catch(IOException e)
                 {

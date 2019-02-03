@@ -4,9 +4,7 @@ namespace Syrus.Plugins.Wiki
 {
     public class Main : IPlugin
     {
-        public PluginMetadata Metadata => throw new System.NotImplementedException();
-
-        public void OnInitialize()
+        public void OnInitialize(PluginContext context)
         {
             throw new System.NotImplementedException();
         }
