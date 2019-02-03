@@ -15,3 +15,4 @@
 /Syrus.Plugins.Wiki/obj
 /Syrus.Plugins.Wiki/bin
 *.user
+/Syrus.Plugins.Google/obj

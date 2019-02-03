@@ -1,12 +1,12 @@
 ﻿using Syrus.Plugin;
 
-namespace Syrus.Plugins.Wiki
+namespace Syrus.Plugins.Google
 {
     public class Main : IPlugin
     {
         public void OnInitialize(PluginContext context)
         {
-            System.Console.WriteLine("WIKI");
+            System.Console.WriteLine("GOOGLE");
         }
 
         public void Search(string searchTerm)
