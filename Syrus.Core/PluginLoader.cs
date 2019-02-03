@@ -37,6 +37,7 @@ namespace Syrus.Core
                 {
                     throw new SyrusException($"Failed to load assembly {metadata.FullName} from {pluginPath}", e);
                 }
+            Console.WriteLine("AHOJ");
                 yield return new PluginPair(plugin, metadata);
             }
         }

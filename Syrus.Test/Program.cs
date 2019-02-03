@@ -8,10 +8,9 @@ namespace Syrus.Test
     {
         static void Main(string[] args)
         {
-            string instalationFolder = Path.Combine(Environment.GetFolderPath(
-    Environment.SpecialFolder.ApplicationData), "Syrus");
-            SyrusFactory factory = new SyrusFactory(instalationFolder);
-            factory.Initialize();
+            string instalationFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus");
+            Core.Syrus factory = new Core.Syrus(instalationFolder);
+            factory.LoadPlugins().Initialize();
         }
     }
 }
