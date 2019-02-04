@@ -42,5 +42,8 @@ namespace Syrus
             var left = (dip2.X - ActualWidth) / 2 + dip1.X;
             return left;
         }
+
+        private void AcrylicWindow_Deactivated(object sender, System.EventArgs e)
+            => WindowState = System.Windows.WindowState.Minimized;
     }
 }

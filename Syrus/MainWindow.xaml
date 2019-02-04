@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        ShowTitleBar="False" Width="800" Height="300" Topmost="True" 
+        ShowTitleBar="False" Width="800" Height="300" Topmost="True" SizeToContent="Height"
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" ShowInTaskbar="False"
-                  SizeToContent="Height">
+        Deactivated="AcrylicWindow_Deactivated">
     <!--SizeToContent-->
     <Window.Background>
         <SolidColorBrush Opacity="0.9" Color="#E7E6E6"/>
