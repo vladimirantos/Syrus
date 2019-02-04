@@ -1,15 +1,33 @@
 ﻿using Syrus.Helpers;
+using Syrus.Utils.Hotkeys;
+using System;
 using System.Windows.Forms;
 
 namespace Syrus
 {
     public partial class MainWindow
     {
+        private HotkeyRegistrator _hotkeyRegistrator;
+
         public MainWindow()
         {
             InitializeComponent();
 
             Loaded += (s, e) => InitializePosition();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            _hotkeyRegistrator = new HotkeyRegistrator(this);
+            _hotkeyRegistrator.Add(Modifiers.Ctrl, Keys.Space, OpenWindowAction);
+            _hotkeyRegistrator.Register();
+        }
+
+        private void OpenWindowAction()
+        {
+            WindowState = System.Windows.WindowState.Normal;
+            Show();
         }
 
         private void InitializePosition()
