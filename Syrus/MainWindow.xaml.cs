@@ -1,7 +1,6 @@
 ﻿using Syrus.Helpers;
-using System;
-using System.Windows;
 using System.Windows.Forms;
+
 namespace Syrus
 {
     public partial class MainWindow
@@ -19,6 +18,9 @@ namespace Syrus
             Left = WindowLeft();
         }
 
+        /// <summary>
+        /// Calculate center of screen from top
+        /// </summary>
         private double WindowTop()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -28,6 +30,10 @@ namespace Syrus
             return top;
         }
 
+        /// <summary>
+        /// Calculate center of screen from left
+        /// </summary>
+        /// <returns></returns>
         private double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);

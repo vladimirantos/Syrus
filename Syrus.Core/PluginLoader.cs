@@ -43,10 +43,10 @@ namespace Syrus.Core
         }
 
         /// <summary>
-        /// Vrací metadata z json souboru.
+        /// Get metadata from json file
         /// </summary>
-        /// <param name="pluginPath">Absolutní cesta k souboru s metadaty</param>
-        /// <exception cref="SyrusException">Pokud neexistuje soubor s metadaty nebo není validní</exception>
+        /// <param name="pluginPath">Absolute path to json file</param>
+        /// <exception cref="SyrusException">When file not exists or valid</exception>
         private PluginMetadata LoadMetadata(string pluginPath)
         {
             string pluginFullPath = Path.Combine(pluginPath, MetadataFileName);
@@ -65,11 +65,11 @@ namespace Syrus.Core
         }
 
         /// <summary>
-        /// Vytvoří instanci IPlugin ze zadaného assembly.
+        /// Create instance of IPlugin from assembly
         /// </summary>
-        /// <param name="assemblyPath">Absolutní cesta k assembly</param>
-        /// <exception cref="FileNotFoundException">Pokud cesta k assembly neexistuje</exception>
-        /// <exception cref="SyrusException">Pokud neexistuje třída implementující IPlugin rozhraní</exception>
+        /// <param name="assemblyPath">Absolute path to assembly</param>
+        /// <exception cref="FileNotFoundException">When file not exists</exception>
+        /// <exception cref="SyrusException">When don't exists class in assembly that doesn't implement IPlugin</exception>
         private IPlugin CreatePluginInstance(string assemblyPath)
         {
             if (!File.Exists(assemblyPath))
