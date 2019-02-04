@@ -9,10 +9,14 @@ namespace Syrus
     {
         private HotkeyRegistrator _hotkeyRegistrator;
 
+        /// <summary>
+        /// Get true when window is opened and activated.
+        /// </summary>
+        public bool IsOpened { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
-
             Loaded += (s, e) => InitializePosition();
         }
 
@@ -22,12 +26,22 @@ namespace Syrus
             _hotkeyRegistrator = new HotkeyRegistrator(this);
             _hotkeyRegistrator.Add(Modifiers.Ctrl, Keys.Space, OpenWindowAction);
             _hotkeyRegistrator.Register();
+            IsOpened = true;
         }
 
         private void OpenWindowAction()
         {
-            WindowState = System.Windows.WindowState.Normal;
-            Show();
+            if (!IsOpened)
+            {
+                WindowState = System.Windows.WindowState.Normal;
+                Show();
+                IsOpened = true;
+            }
+            else
+            {
+                Hide();
+                IsOpened = false;
+            }
         }
 
         private void InitializePosition()
@@ -62,6 +76,9 @@ namespace Syrus
         }
 
         private void AcrylicWindow_Deactivated(object sender, System.EventArgs e)
-            => WindowState = System.Windows.WindowState.Minimized;
+        {
+            WindowState = System.Windows.WindowState.Minimized;
+            IsOpened = false;
+        }
     }
 }
