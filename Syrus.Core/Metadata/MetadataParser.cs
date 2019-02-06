@@ -25,7 +25,6 @@ namespace Syrus.Core.Metadata
                 throw new FileNotFoundException($"File {filePath} not found.");
 
             PluginMetadata metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(filePath));
-
             if (!_metadataValidator.IsValid(metadata))
                 throw new MetadataParserException($"Metadata file {filePath} is not valid.");
             return metadata;
