@@ -8,7 +8,8 @@
     "y": "a",
     "z": {
       "a": "aa",
-      "b":  22
+      "b": 22
     }
-  }
+  },
+  "searchingPatterns": [ ]
 }

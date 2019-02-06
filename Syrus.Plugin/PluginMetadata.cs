@@ -31,6 +31,14 @@ namespace Syrus.Plugin
         /// </summary>
         public string Command { get; set; }
 
+        /// <summary>
+        /// Type of sentenses which can be used for serching.
+        /// </summary>
+        public IEnumerable<string> SearchingPatterns { get; set; }
+
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public Dictionary<string, object> Constants { get; set; }
     }
 }
