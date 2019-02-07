@@ -9,17 +9,27 @@ namespace Syrus.Core
     {
         IEnumerable<PluginPair> Plugins { get; set; }
         IEnumerable<Result> Search(string match);
+        void Indexing();
     }
 
     public class SearchEngine : ISearch
     {
         private List<ISearch> _searchEngines;
-
+        private Dictionary<string, IPlugin> _commandPlugins = new Dictionary<string, IPlugin>();
+        private Dictionary<string[], IEnumerable<IPlugin>> _termsPlugins = new Dictionary<string[], IEnumerable<IPlugin>>();
         public IEnumerable<PluginPair> Plugins { get; set; }
 
         public SearchEngine() => _searchEngines = new List<ISearch>();
 
         public void Add(ISearch searchEngine) => _searchEngines.Add(searchEngine);
+
+        public void Indexing()
+        {
+            foreach(PluginPair p in Plugins)
+            {
+                _commandPlugins.Add(p.Metadata.Command, p.Plugin);
+            }
+        }
 
         public async IEnumerable<Result> Search(string match)
         {
