@@ -13,8 +13,6 @@ namespace Syrus.Core
         
         public string PluginsLocation { get; private set; }
 
-        public IEnumerable<PluginPair> Plugins { get; private set; }
-
         public Syrus(string pluginsLocation)
             : this(new PluginLoader(pluginsLocation), new SearchEngine(), pluginsLocation) { }
            
@@ -24,7 +22,7 @@ namespace Syrus.Core
         public Syrus Initialize()
         {
             List<Action> actions = new List<Action>();
-            foreach(PluginPair p in Plugins)
+            foreach(PluginPair p in _search.Plugins)
             {
                 actions.Add(() => p.Plugin.OnInitialize(new PluginContext(p.Metadata)));
             }
@@ -34,7 +32,7 @@ namespace Syrus.Core
 
         public Syrus LoadPlugins()
         {
-            Plugins = _loader.Load().ToList();
+            _search.Plugins = _loader.Load().ToList();
             return this;
         }
 

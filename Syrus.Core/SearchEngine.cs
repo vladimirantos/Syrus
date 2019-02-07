@@ -7,14 +7,17 @@ namespace Syrus.Core
 {
     public interface ISearch
     {
+        IEnumerable<PluginPair> Plugins { get; set; }
         IEnumerable<Result> Search(string match);
     }
 
-    public class SearchingEngine : ISearch
+    public class SearchEngine : ISearch
     {
         private List<ISearch> _searchEngines;
 
-        public SearchingEngine() => _searchEngines = new List<ISearch>();
+        public IEnumerable<PluginPair> Plugins { get; set; }
+
+        public SearchEngine() => _searchEngines = new List<ISearch>();
 
         public void Add(ISearch searchEngine) => _searchEngines.Add(searchEngine);
 
