@@ -33,6 +33,7 @@ namespace Syrus.Core
         public Syrus LoadPlugins()
         {
             _search.Plugins = _loader.Load().ToList();
+            _search.Indexing();
             return this;
         }
 

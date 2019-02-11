@@ -33,7 +33,8 @@ namespace Syrus.Core
         {
             foreach(PluginPair p in Plugins)
             {
-                _commandPlugins.Add(p.Metadata.Command, p.Plugin);
+                if(p.Metadata.Command != null)
+                    _commandPlugins.Add(p.Metadata.Command, p.Plugin);
                 foreach (string term in p.Metadata.SearchingPatterns)
                     _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term, p.Plugin));
             }
