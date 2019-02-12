@@ -27,7 +27,7 @@ namespace Syrus.Core.Metadata
 
             PluginMetadata metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(filePath));
             if (metadata.SearchingPatterns == null)
-                metadata.SearchingPatterns = new List<string>();
+                metadata.SearchingPatterns = new List<SearchingPattern>();
             if (!_metadataValidator.IsValid(metadata))
                 throw new MetadataParserException($"Metadata file {filePath} is not valid.");
             return metadata;

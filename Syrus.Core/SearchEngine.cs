@@ -35,8 +35,8 @@ namespace Syrus.Core
             {
                 if(p.Metadata.Command != null)
                     _commandPlugins.Add(p.Metadata.Command.ToLower(), p.Plugin);
-                foreach (string term in p.Metadata.SearchingPatterns)
-                    _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term.ToLower(), p.Plugin));
+                foreach (SearchingPattern term in p.Metadata.TextPatterns)
+                    _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term.Text.ToLower(), p.Plugin));
             }
             _termsPlugins.Sort(new KeyValuePairComparer());
         }

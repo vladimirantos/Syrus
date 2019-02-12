@@ -5,6 +5,12 @@
   "version": "0.0.0.1",
   "command": "tr",
   "searchingPatterns": [
-    "translate x to y"
+    {
+      "text": "translate x to y"
+    },
+    {
+      "text": "translate ([A-Za-z\\s]+) to ([A-Za-z\\s]+) language",
+      "isRegex":  true
+    }
   ]
 }
