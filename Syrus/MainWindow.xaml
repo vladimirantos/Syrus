@@ -4,18 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        ShowTitleBar="False" Width="800" Height="300" Topmost="True" SizeToContent="Height"
+        ShowTitleBar="False" Width="800" Height="500" Topmost="True" SizeToContent="Height"
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" ShowInTaskbar="False"
-        Deactivated="AcrylicWindow_Deactivated">
+        Deactivated="AcrylicWindow_Deactivated" Background="{StaticResource SystemBaseLowColorBrush}">
     <!--SizeToContent-->
-    <Window.Background>
-        <SolidColorBrush Opacity="0.9" Color="#E7E6E6"/>
-    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Text="AHOJ"/>
+        <TextBox Grid.Row="0" Text="AHOJ" Style="{StaticResource SearchInput}"/>
     </Grid>
 </fw:AcrylicWindow>
