@@ -34,15 +34,16 @@ namespace Syrus.Core
             foreach(PluginPair p in Plugins)
             {
                 if(p.Metadata.Command != null)
-                    _commandPlugins.Add(p.Metadata.Command, p.Plugin);
+                    _commandPlugins.Add(p.Metadata.Command.ToLower(), p.Plugin);
                 foreach (string term in p.Metadata.SearchingPatterns)
-                    _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term, p.Plugin));
+                    _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term.ToLower(), p.Plugin));
             }
             _termsPlugins.Sort(new KeyValuePairComparer());
         }
 
         public IEnumerable<Result> Search(string match)
         {
+            match = match.ToLower();
             List<IPlugin> plugins = new List<IPlugin>();
             plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
 
