@@ -43,12 +43,19 @@ namespace Syrus.Core
 
         public IEnumerable<Result> Search(string match)
         {
-            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[_searchEngines.Count];
-            for(int i = 0; i < _searchEngines.Count; i++)
-            {
-                tasks[i] = Task.Factory.StartNew(() => _searchEngines[i].Search(match));
-            }
-            //return (await Task.WhenAll(tasks)).ToList();
+            List<IPlugin> plugins = new List<IPlugin>();
+            plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
+
+
+            foreach (var plugin in plugins)
+                plugin.Search(match);
+
+            //Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[_searchEngines.Count];
+            //for(int i = 0; i < _searchEngines.Count; i++)
+            //{
+            //    tasks[i] = Task.Factory.StartNew(() => _searchEngines[i].Search(match));
+            //}
+            ////return (await Task.WhenAll(tasks)).ToList();
             return new List<Result>();
         }
     }

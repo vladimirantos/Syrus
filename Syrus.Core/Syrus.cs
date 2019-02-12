@@ -37,6 +37,6 @@ namespace Syrus.Core
             return this;
         }
 
-        public IEnumerable<Result> Search(string term) => new List<Result>();
+        public IEnumerable<Result> Search(string term) => _search.Search(term);
     }
 }

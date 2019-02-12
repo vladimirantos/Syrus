@@ -1,19 +1,20 @@
 ﻿using Syrus.Plugin;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Syrus.Plugins.Google
+namespace Syrus.Plugins.Translate
 {
-    public class Main : IPlugin
+    class Main : IPlugin
     {
         public void OnInitialize(PluginContext context)
         {
-            System.Console.WriteLine("GOOGLE");
+            System.Console.WriteLine("TRANSLATE");
         }
 
         public void Search(string searchTerm)
         {
-            Console.WriteLine("Google > search " + searchTerm);
+            Console.WriteLine("Translate > search " + searchTerm);
         }
     }
 }

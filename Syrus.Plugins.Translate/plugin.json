@@ -1,0 +1,10 @@
+{
+  "name": "Translate",
+  "fullName": "Syrus.Plugins.Translate",
+  "author": "Vladimír Antoš",
+  "version": "0.0.0.1",
+  "command": "tr",
+  "searchingPatterns": [
+    "translate x to y"
+  ]
+}

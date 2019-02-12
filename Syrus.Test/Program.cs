@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Syrus.Test
 {
@@ -16,6 +18,15 @@ namespace Syrus.Test
             string instalationFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus");
             Core.Syrus factory = new Core.Syrus(instalationFolder);
             factory.LoadPlugins().Initialize();
+
+            string term = "Translate hello to czech";
+            string tmp = "";
+            for(int i = 0; i < term.Length; i++)
+            {
+                tmp += term[i];
+                factory.Search(tmp);
+                Thread.Sleep(1000);
+            }
 
             //_items.Add(new KeyValuePair<string[], IEnumerable<string>>(new[] { "K1", "K2", "K3" }, new List<string>() { "Plugin1" }));
             //_items.Add(new KeyValuePair<string[], IEnumerable<string>>(new[] { "K4", "K1", "K5" }, new List<string>() { "Plugin2" }));

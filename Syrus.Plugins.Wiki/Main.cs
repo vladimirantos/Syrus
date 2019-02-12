@@ -1,4 +1,5 @@
 ﻿using Syrus.Plugin;
+using System;
 
 namespace Syrus.Plugins.Wiki
 {
@@ -11,7 +12,7 @@ namespace Syrus.Plugins.Wiki
 
         public void Search(string searchTerm)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Wiki > search " + searchTerm);
         }
     }
 }

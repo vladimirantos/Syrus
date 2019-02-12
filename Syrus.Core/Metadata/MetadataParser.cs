@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Syrus.Plugin;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Syrus.Core.Metadata
@@ -25,6 +26,8 @@ namespace Syrus.Core.Metadata
                 throw new FileNotFoundException($"File {filePath} not found.");
 
             PluginMetadata metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(filePath));
+            if (metadata.SearchingPatterns == null)
+                metadata.SearchingPatterns = new List<string>();
             if (!_metadataValidator.IsValid(metadata))
                 throw new MetadataParserException($"Metadata file {filePath} is not valid.");
             return metadata;
