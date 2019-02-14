@@ -22,6 +22,7 @@ namespace Syrus.Core
         /// </summary>
         private Dictionary<string, IPlugin> _commandPlugins = new Dictionary<string, IPlugin>();
         private List<KeyValuePair<string, IPlugin>> _termsPlugins = new List<KeyValuePair<string, IPlugin>>();
+        private List<KeyValuePair<string, IPlugin>> _regexPlugins = new List<KeyValuePair<string, IPlugin>>();
 
         public IEnumerable<PluginPair> Plugins { get; set; }
 
@@ -35,10 +36,15 @@ namespace Syrus.Core
             {
                 if(p.Metadata.Command != null)
                     _commandPlugins.Add(p.Metadata.Command.ToLower(), p.Plugin);
-                foreach (SearchingPattern term in p.Metadata.TextPatterns)
-                    _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term.Text.ToLower(), p.Plugin));
+                foreach (SearchingPattern term in p.Metadata.SearchingPatterns)
+                {
+                    if (!term.IsRegex)
+                        _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term.Text.ToLower(), p.Plugin));
+                    else _regexPlugins.Add(new KeyValuePair<string, IPlugin>(term.Text.ToLower(), p.Plugin));
+                }
             }
             _termsPlugins.Sort(new KeyValuePairComparer());
+            _regexPlugins.Sort(new KeyValuePairComparer());
         }
 
         public IEnumerable<Result> Search(string match)
