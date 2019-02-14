@@ -1,5 +1,6 @@
 ﻿using Syrus.Helpers;
 using Syrus.Utils.Hotkeys;
+using Syrus.ViewModel;
 using System;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace Syrus
         {
             InitializeComponent();
             Loaded += (s, e) => InitializePosition();
+            DataContext = new SearchingViewModel();
         }
 
         protected override void OnSourceInitialized(EventArgs e)

@@ -13,6 +13,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Style="{StaticResource SearchInput}"/>
+        <TextBox Grid.Row="0" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchInput}"/>
     </Grid>
 </fw:AcrylicWindow>

@@ -62,6 +62,8 @@
     </ApplicationDefinition>
     <Compile Include="Utils\Hotkeys\Hotkey.cs" />
     <Compile Include="Utils\Hotkeys\HotkeyRegistrator.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\SearchingViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
