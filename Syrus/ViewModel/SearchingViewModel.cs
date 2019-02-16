@@ -1,16 +1,12 @@
 ﻿namespace Syrus.ViewModel
 {
-    class SearchingViewModel : BaseViewModel
+    class SearchingViewModel : NotifyPropertyChanges
     {
         private string _query;
         public string SearchingQuery 
         {
             get => _query;
-            set 
-            {
-                _query = value;
-                NotifyPropertyChanged();
-            }
+            set => SetProperty(ref _query, value);
         }
     }
 }
