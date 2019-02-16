@@ -21,3 +21,8 @@
 /Syrus/obj/Debug
 /Syrus/Properties
 /Syrus.Plugins.Translate/obj
+/Syrus/obj
+/Syrus.Core/bin/Debug/netcoreapp3.0
+/Syrus.Test/bin/Debug/netcoreapp3.0
+/Syrus_old/bin/Debug
+/Syrus_old

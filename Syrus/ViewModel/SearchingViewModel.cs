@@ -9,6 +9,11 @@
             set => SetProperty(ref _query, value, Search);
         }
 
+        public SearchingViewModel()
+        {
+
+        }
+
         public void Search(string newValue)
         {
 
