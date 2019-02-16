@@ -50,9 +50,7 @@ namespace Syrus.Core
         public IEnumerable<Result> Search(string match)
         {
             match = match.ToLower();
-            List<IPlugin> plugins = new List<IPlugin>();
-            plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
-
+            IEnumerable<IPlugin> plugins = SelectPlugins(match);
 
             foreach (var plugin in plugins)
                 plugin.Search(match);
@@ -64,6 +62,13 @@ namespace Syrus.Core
             //}
             ////return (await Task.WhenAll(tasks)).ToList();
             return new List<Result>();
+        }
+
+        private IEnumerable<IPlugin> SelectPlugins(string match)
+        {
+            List<IPlugin> plugins = new List<IPlugin>();
+            plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
+            return plugins;
         }
     }
 
