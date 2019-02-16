@@ -6,7 +6,12 @@
         public string SearchingQuery 
         {
             get => _query;
-            set => SetProperty(ref _query, value);
+            set => SetProperty(ref _query, value, Search);
+        }
+
+        public void Search(string newValue)
+        {
+
         }
     }
 }

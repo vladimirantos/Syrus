@@ -74,7 +74,7 @@ namespace Syrus.ViewModel
         /// <typeparam name="T">The type of the property</typeparam>
         /// <param name="currentValue">The current value of the property</param>
         /// <param name="newValue">The new value of the property</param>
-        /// <param name="onChange">Raise method with old and new value params</param>
+        /// <param name="onChange">Raise method with old and new value param</param>
         /// <param name="propertyNames">Name of the property</param>
         /// <returns><c>true</c> if the property was changed, otherwise <c>false</c></returns>
         protected bool SetProperty<T>(ref T currentValue, T newValue, Action<T, T> onChange, 
@@ -94,6 +94,26 @@ namespace Syrus.ViewModel
         /// <typeparam name="T">The type of the property</typeparam>
         /// <param name="currentValue">The current value of the property</param>
         /// <param name="newValue">The new value of the property</param>
+        /// <param name="onChange">Raise method with new value param</param>
+        /// <param name="propertyNames">Name of the property</param>
+        /// <returns><c>true</c> if the property was changed, otherwise <c>false</c></returns>
+        protected bool SetProperty<T>(ref T currentValue, T newValue, Action<T> onChange,
+            [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(currentValue, newValue))
+                return false;
+            currentValue = newValue;
+            OnPropertyChanged(propertyName);
+            onChange.Invoke(newValue);
+            return true;
+        }
+
+        /// <summary>
+        /// Sets the value of the property to the specified value if it has changed
+        /// </summary>
+        /// <typeparam name="T">The type of the property</typeparam>
+        /// <param name="currentValue">The current value of the property</param>
+        /// <param name="newValue">The new value of the property</param>
         /// <param name="onChange">Raise method with old and new value params</param>
         /// <param name="propertyNames">The names of all properties</param>
         /// <returns><c>true</c> if the property was changed, otherwise <c>false</c></returns>
@@ -104,6 +124,25 @@ namespace Syrus.ViewModel
             currentValue = newValue;
             OnPropertyChanged(propertyNames);
             onChange.Invoke(currentValue, newValue);
+            return true;
+        }
+
+        /// <summary>
+        /// Sets the value of the property to the specified value if it has changed
+        /// </summary>
+        /// <typeparam name="T">The type of the property</typeparam>
+        /// <param name="currentValue">The current value of the property</param>
+        /// <param name="newValue">The new value of the property</param>
+        /// <param name="onChange">Raise method with new value param</param>
+        /// <param name="propertyNames">The names of all properties</param>
+        /// <returns><c>true</c> if the property was changed, otherwise <c>false</c></returns>
+        protected bool SetProperty<T>(ref T currentValue, T newValue, Action<T> onChange, params string[] propertyNames)
+        {
+            if (Equals(currentValue, newValue))
+                return false;
+            currentValue = newValue;
+            OnPropertyChanged(propertyNames);
+            onChange.Invoke(newValue);
             return true;
         }
 
