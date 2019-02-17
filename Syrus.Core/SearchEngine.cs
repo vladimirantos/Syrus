@@ -23,6 +23,7 @@ namespace Syrus.Core
         private Dictionary<string, IPlugin> _commandPlugins = new Dictionary<string, IPlugin>();
         private List<KeyValuePair<string, IPlugin>> _termsPlugins = new List<KeyValuePair<string, IPlugin>>();
         private List<KeyValuePair<string, IPlugin>> _regexPlugins = new List<KeyValuePair<string, IPlugin>>();
+        private int _maxCommandLength = 0;
 
         public IEnumerable<PluginPair> Plugins { get; set; }
 
@@ -35,7 +36,11 @@ namespace Syrus.Core
             foreach(PluginPair p in Plugins)
             {
                 if(p.Metadata.Command != null)
+                {
+                    if (_maxCommandLength < p.Metadata.Command.Length)
+                        _maxCommandLength = p.Metadata.Command.Length;
                     _commandPlugins.Add(p.Metadata.Command.ToLower(), p.Plugin);
+                }
                 foreach (SearchingPattern term in p.Metadata.SearchingPatterns)
                 {
                     if (!term.IsRegex)
@@ -67,7 +72,8 @@ namespace Syrus.Core
         private IEnumerable<IPlugin> SelectPlugins(string match)
         {
             List<IPlugin> plugins = new List<IPlugin>();
-            plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
+            if(_maxCommandLength >= match.Length)
+                plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
             return plugins;
         }
     }

@@ -20,8 +20,11 @@ namespace Syrus.ViewModel
 
         public ObservableCollection<Result> Results { get; set; }
 
-        public SearchingViewModel() 
-            => _syrus = new Core.Syrus(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus"));
+        public SearchingViewModel()
+        {
+            _syrus = new Core.Syrus(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus"));
+            _syrus.LoadPlugins().Initialize();
+        }
 
         public void Search(string newValue)
         {
