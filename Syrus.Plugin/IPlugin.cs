@@ -1,9 +1,11 @@
-﻿namespace Syrus.Plugin
+﻿using System.Collections.Generic;
+
+namespace Syrus.Plugin
 {
     public interface IPlugin
     {
         void OnInitialize(PluginContext context);
 
-        void Search(string searchTerm);
+        IEnumerable<Result> Search(string searchTerm);
     }
 }

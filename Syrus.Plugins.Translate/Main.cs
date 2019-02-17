@@ -12,9 +12,9 @@ namespace Syrus.Plugins.Translate
             System.Console.WriteLine("TRANSLATE");
         }
 
-        public void Search(string searchTerm)
+        public IEnumerable<Result> Search(string searchTerm)
         {
-            Console.WriteLine("Translate > search " + searchTerm);
+            return new List<Result>();
         }
     }
 }

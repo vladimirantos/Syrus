@@ -11,9 +11,9 @@ namespace Syrus.Plugins.Google
             System.Console.WriteLine("GOOGLE");
         }
 
-        public void Search(string searchTerm)
+        public IEnumerable<Result> Search(string searchTerm)
         {
-            Console.WriteLine("Google > search " + searchTerm);
+            return new List<Result>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Syrus.Plugin;
 using System;
+using System.Collections.Generic;
 
 namespace Syrus.Plugins.Weather
 {
@@ -9,9 +10,9 @@ namespace Syrus.Plugins.Weather
         {
         }
 
-        public void Search(string searchTerm)
+        public IEnumerable<Result> Search(string searchTerm)
         {
-            throw new NotImplementedException();
+            return new List<Result>();
         }
     }
 }

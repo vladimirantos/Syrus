@@ -1,5 +1,6 @@
 ﻿using Syrus.Plugin;
 using System;
+using System.Collections.Generic;
 
 namespace Syrus.Plugins.Wiki
 {
@@ -10,9 +11,9 @@ namespace Syrus.Plugins.Wiki
             System.Console.WriteLine("WIKI");
         }
 
-        public void Search(string searchTerm)
+        public IEnumerable<Result> Search(string searchTerm)
         {
-            Console.WriteLine("Wiki > search " + searchTerm);
+            return new List<Result>();
         }
     }
 }
