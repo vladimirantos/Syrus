@@ -13,9 +13,9 @@
         <ItemsControl Grid.Column="0" ItemsSource="{Binding Results}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Title}"></TextBlock>
-                        <TextBlock Text="{Binding Text}" />
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource ResultItem}">
+                        <Image Source="{Binding Icon}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{Binding Text}" Style="{StaticResource ResultItemText}"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections;
+using System.IO;
 
 namespace Syrus.Core
 {
@@ -87,7 +88,8 @@ namespace Syrus.Core
             {
                 results.Add(new Result()
                 {
-                    Title = p.Metadata.Name
+                    Text = p.Metadata.Name,
+                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : ""
                 });
             }
             return results;

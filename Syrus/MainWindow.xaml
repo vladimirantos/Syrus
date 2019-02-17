@@ -14,7 +14,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <view:SearchPanel Grid.Row="0"/>
-        <view:ResultsList Grid.Row="1" Background="Red">
+        <view:ResultsList Grid.Row="1">
             <view:ResultsList.Resources>
                 <Style TargetType="view:ResultsList">
                     <Setter Property="Visibility" Value="Visible"/>

@@ -51,7 +51,9 @@ namespace Syrus.Core
             string pluginFullPath = Path.Combine(pluginPath, MetadataFileName);
             try
             {
-                return _metadataParser.ParseFromFile(pluginFullPath);
+                PluginMetadata metadata = _metadataParser.ParseFromFile(pluginFullPath);
+                metadata.PluginLocation = pluginPath;
+                return metadata;
             }
             catch (IOException e)
             {

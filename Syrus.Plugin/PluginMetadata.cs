@@ -23,9 +23,11 @@ namespace Syrus.Plugin
         public string Author { get; set; }
 
         /// <summary>
-        /// Absolute path to plugin icon
+        /// Name of icon
         /// </summary>
-        public string IconPath { get; set; }
+        public string Icon { get; set; }
+
+        public string PluginLocation { get; set; }
 
         /// <summary>
         /// Command which have to use for searching

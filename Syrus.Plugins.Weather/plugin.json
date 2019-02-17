@@ -4,6 +4,7 @@
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
   "command": "weather",
+  "icon": "icon.png",
   "searchingPatterns": [
     {
       "text": "Whats weather today"
