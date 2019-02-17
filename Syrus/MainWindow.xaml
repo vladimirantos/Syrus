@@ -31,13 +31,13 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Name="SearchLine">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="2.8*"/>
                 <ColumnDefinition Width="0.2*"/>
             </Grid.ColumnDefinitions>
             <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                <TextBox Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
+                <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  Style="{StaticResource SearchInput}"/>
                 <Label Content="– Počasí Praha - 27 °C, zataženo" Style="{StaticResource QuickResult}"/>
             </StackPanel>
