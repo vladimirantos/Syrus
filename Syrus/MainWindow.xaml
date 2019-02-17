@@ -43,5 +43,15 @@
             </StackPanel>
             <TextBlock Grid.Column="2" Text="ICON"/>
         </Grid>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Results}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Title}"></TextBlock>
+                        <TextBlock Text="{Binding Text}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </fw:AcrylicWindow>

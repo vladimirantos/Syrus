@@ -3,7 +3,7 @@
   "fullName": "Syrus.Plugins.Translate",
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
-  "command": "tr",
+  "command": "translate",
   "searchingPatterns": [
     {
       "text": "translate x to y"

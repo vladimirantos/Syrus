@@ -1,0 +1,29 @@
+{
+  "name": "Weather",
+  "fullName": "Syrus.Plugins.Weather",
+  "author": "Vladimír Antoš",
+  "version": "0.0.0.1",
+  "command": "weather",
+  "searchingPatterns": [
+    {
+      "text": "Whats weather today"
+    },
+    {
+      "text": "Whats weather yesterday"
+    },
+    {
+      "text": "It will be rain"
+    },
+    {
+      "text": "It will be sunny"
+    },
+    {
+      "text": "weather in ([A-Za-z\\s]+)",
+      "isRegex": true
+    },
+    {
+      "text": "what weaher in ([A-Za-z\\s]+)",
+      "isRegex": true
+    }
+  ]
+}

@@ -3,6 +3,7 @@
   "fullName": "Syrus.Plugins.Google",
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
+  "default":  true,
   "constants": {
     "x": 11,
     "y": "a",

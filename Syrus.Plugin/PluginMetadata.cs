@@ -33,6 +33,11 @@ namespace Syrus.Plugin
         public string Command { get; set; }
 
         /// <summary>
+        /// If is <c>true</c>, it will be use for searching allways.
+        /// </summary>
+        public bool Default { get; set; }
+
+        /// <summary>
         /// Type of sentenses which can be used for serching.
         /// </summary>
         public IEnumerable<SearchingPattern> SearchingPatterns { get; set; }
