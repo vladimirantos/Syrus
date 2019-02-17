@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View\ResultsList.xaml" />
+    <None Remove="View\SearchPanel.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.6.1" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.0.1" />
@@ -17,7 +22,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\ResultsList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\SearchPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\ResultsList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\SearchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

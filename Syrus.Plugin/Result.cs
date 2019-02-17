@@ -6,5 +6,6 @@
         public string Text { get; set; }
         public string IconPath { get; set; }
         public string Content { get; set; }
+        public string Group { get; set; }
     }
 }

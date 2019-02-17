@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-        ShowTitleBar="False" Width="860" Height="500" Topmost="True" SizeToContent="Height"
+                  xmlns:view="clr-namespace:Syrus.View"
+                  ShowTitleBar="False" Width="860" Height="500" Topmost="True" SizeToContent="Height"
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" ShowInTaskbar="False"
         Deactivated="AcrylicWindow_Deactivated" Background="{StaticResource SystemBaseLowColorBrush}" BorderThickness="0">
     <!--SizeToContent-->
@@ -29,29 +29,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Name="SearchLine">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="2.8*"/>
-                <ColumnDefinition Width="0.2*"/>
-            </Grid.ColumnDefinitions>
-            <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
-                <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 Style="{StaticResource SearchInput}"/>
-                <Label Content="– Počasí Praha - 27 °C, zataženo" Style="{StaticResource QuickResult}"/>
-            </StackPanel>
-            <TextBlock Grid.Column="2" Text="ICON"/>
-        </Grid>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding Results}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Title}"></TextBlock>
-                        <TextBlock Text="{Binding Text}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <view:SearchPanel Grid.Row="0"/>
+        <view:ResultsList Grid.Row="1"/>
     </Grid>
 </fw:AcrylicWindow>
