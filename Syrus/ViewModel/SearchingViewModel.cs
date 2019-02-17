@@ -18,7 +18,12 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _query, value, Search);
         }
 
-        public ObservableCollection<Result> Results { get; set; }
+        private IEnumerable<Result> _results;
+        public IEnumerable<Result> Results 
+        {
+            get => _results;
+            set => SetProperty(ref _results, value);
+        }
 
         public SearchingViewModel()
         {
@@ -28,9 +33,12 @@ namespace Syrus.ViewModel
 
         public void Search(string newValue)
         {
-            List<Result> results = _syrus.Search(newValue).ToList();
-            if(results.Count > 0)
-                results.ForEach(Results.Add);
+            if (string.IsNullOrEmpty(newValue))
+            {
+                Results = new List<Result>();
+                return;
+            }
+            Results = _syrus.Search(newValue);
         }
     }
 }

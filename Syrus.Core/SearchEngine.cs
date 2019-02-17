@@ -66,9 +66,9 @@ namespace Syrus.Core
             //    tasks[i] = Task.Factory.StartNew(() => _searchEngines[i].Search(match));
             //}
             ////return (await Task.WhenAll(tasks)).ToList();
-            
-            //if(results.Count == 0)
 
+            if (results.Count == 0)
+                results.AddRange(ResultsFromPlugins(plugins));
             return results;
         }
 
@@ -80,9 +80,17 @@ namespace Syrus.Core
             return plugins;
         }
 
-        private IEnumerable<Result> ResultsFromPlugins(IEnumerable<IPlugin> plugins)
+        private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins)
         {
-            return new List<Result>();
+            List<Result> results = new List<Result>();
+            foreach(PluginPair p in plugins)
+            {
+                results.Add(new Result()
+                {
+                    Title = p.Metadata.Name
+                });
+            }
+            return results;
         }
     }
 
