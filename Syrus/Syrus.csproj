@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Syrus.Core\Syrus.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
