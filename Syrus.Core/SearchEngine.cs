@@ -20,9 +20,9 @@ namespace Syrus.Core
         /// <summary>
         /// Key is command and value is IPlugin
         /// </summary>
-        private Dictionary<string, IPlugin> _commandPlugins = new Dictionary<string, IPlugin>();
-        private List<KeyValuePair<string, IPlugin>> _termsPlugins = new List<KeyValuePair<string, IPlugin>>();
-        private List<KeyValuePair<string, IPlugin>> _regexPlugins = new List<KeyValuePair<string, IPlugin>>();
+        private Dictionary<string, PluginPair> _commandPlugins = new Dictionary<string, PluginPair>();
+        private List<KeyValuePair<string, PluginPair>> _termsPlugins = new List<KeyValuePair<string, PluginPair>>();
+        private List<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
         private int _maxCommandLength = 0;
 
         public IEnumerable<PluginPair> Plugins { get; set; }
@@ -39,13 +39,13 @@ namespace Syrus.Core
                 {
                     if (_maxCommandLength < p.Metadata.Command.Length)
                         _maxCommandLength = p.Metadata.Command.Length;
-                    _commandPlugins.Add(p.Metadata.Command.ToLower(), p.Plugin);
+                    _commandPlugins.Add(p.Metadata.Command.ToLower(), p);
                 }
                 foreach (SearchingPattern term in p.Metadata.SearchingPatterns)
                 {
                     if (!term.IsRegex)
-                        _termsPlugins.Add(new KeyValuePair<string, IPlugin>(term.Text.ToLower(), p.Plugin));
-                    else _regexPlugins.Add(new KeyValuePair<string, IPlugin>(term.Text.ToLower(), p.Plugin));
+                        _termsPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text.ToLower(), p));
+                    else _regexPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text.ToLower(), p));
                 }
             }
             _termsPlugins.Sort(new KeyValuePairComparer());
@@ -55,10 +55,10 @@ namespace Syrus.Core
         public IEnumerable<Result> Search(string match)
         {
             match = match.ToLower();
-            IEnumerable<IPlugin> plugins = SelectPlugins(match);
-
+            IEnumerable<PluginPair> plugins = SelectPlugins(match);
+            List<Result> results = new List<Result>();
             foreach (var plugin in plugins)
-                plugin.Search(match);
+                results.AddRange(plugin.Plugin.Search(match));
 
             //Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[_searchEngines.Count];
             //for(int i = 0; i < _searchEngines.Count; i++)
@@ -66,20 +66,28 @@ namespace Syrus.Core
             //    tasks[i] = Task.Factory.StartNew(() => _searchEngines[i].Search(match));
             //}
             ////return (await Task.WhenAll(tasks)).ToList();
-            return new List<Result>();
+            
+            //if(results.Count == 0)
+
+            return results;
         }
 
-        private IEnumerable<IPlugin> SelectPlugins(string match)
+        private IEnumerable<PluginPair> SelectPlugins(string match)
         {
-            List<IPlugin> plugins = new List<IPlugin>();
+            List<PluginPair> plugins = new List<PluginPair>();
             if(_maxCommandLength >= match.Length)
                 plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
             return plugins;
         }
+
+        private IEnumerable<Result> ResultsFromPlugins(IEnumerable<IPlugin> plugins)
+        {
+            return new List<Result>();
+        }
     }
 
-    class KeyValuePairComparer : IComparer<KeyValuePair<string, IPlugin>>
+    class KeyValuePairComparer : IComparer<KeyValuePair<string, PluginPair>>
     {
-        public int Compare(KeyValuePair<string, IPlugin> x, KeyValuePair<string, IPlugin> y) => string.Compare(x.Key, y.Key);
+        public int Compare(KeyValuePair<string, PluginPair> x, KeyValuePair<string, PluginPair> y) => string.Compare(x.Key, y.Key);
     }
 }
