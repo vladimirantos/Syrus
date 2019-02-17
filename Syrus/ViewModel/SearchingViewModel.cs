@@ -29,6 +29,7 @@ namespace Syrus.ViewModel
         {
             _syrus = new Core.Syrus(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus"));
             _syrus.LoadPlugins().Initialize();
+            Results = new List<Result>();
         }
 
         public void Search(string newValue)
