@@ -7,7 +7,7 @@
                   xmlns:view="clr-namespace:Syrus.View"
                   ShowTitleBar="False" Width="860" Height="500" Topmost="True" SizeToContent="Height"
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" ShowInTaskbar="False"
-        Deactivated="AcrylicWindow_Deactivated" Background="{StaticResource SystemBaseLowColorBrush}" BorderThickness="0">
+        Deactivated="AcrylicWindow_Deactivated" BorderThickness="0">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

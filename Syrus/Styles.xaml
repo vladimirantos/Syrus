@@ -1,6 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:fa="http://schemas.fontawesome.io/icons/">
+                    xmlns:fa="http://schemas.fontawesome.io/icons/"
+                    xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF">
+    <Style TargetType="fw:AcrylicWindow">
+        <Setter Property="Background" Value="{StaticResource SystemBaseLowColorBrush}"/>
+    </Style>
+    
     <Style x:Key="SearchInput" TargetType="TextBox">
         <Setter Property="Height" Value="70"/>
         <Setter Property="FontSize" Value="30"/>
@@ -9,7 +14,7 @@
         <Setter Property="MinWidth" Value="250"/>
         <Setter Property="MaxWidth" Value="440"/>
         <Setter Property="Background" Value="Transparent"/>
-        <!--<Setter Property="Foreground" Value="#000"/>-->
+        <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumHighColorBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
@@ -17,18 +22,19 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="QuickResult" TargetType="Label">
         <Setter Property="Height" Value="70"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumLowColorBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="5 5 0 0"/>
     </Style>
 
     <Style x:Key="SearchIcon" TargetType="fa:ImageAwesome">
-        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Foreground" Value="{StaticResource SystemBaseLowColorBrush}"/>
         <Setter Property="Margin" Value="10 10 10 10"/>
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
