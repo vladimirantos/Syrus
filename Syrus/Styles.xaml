@@ -43,24 +43,26 @@
     </Style>
 
     <Style x:Key="ResultItem" TargetType="StackPanel">
-        <Setter Property="Background" Value="Red"/>
-        <Setter Property="Margin" Value="15 0 0 0"/>
         <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Style.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Margin" Value="15 0 15 0"/>
+                <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumHighColorBrush}"/>
             </Style>
             <Style TargetType="Image">
+                <Setter Property="Margin" Value="10 0 0 0"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
         </Style.Resources>
     </Style>
 
     <Style x:Key="ResultItemHeader" TargetType="TextBlock">
-        <Setter Property="Margin" Value="20 0 0 0"/>
+        <Setter Property="Padding" Value="20 5 20 5"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Foreground" Value="{StaticResource SystemBaseHighColorBrush}"/>
+        <Setter Property="Background" Value="{StaticResource SystemBaseLowColorBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumColorBrush}"/>
     </Style>
 </ResourceDictionary>
