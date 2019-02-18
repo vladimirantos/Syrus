@@ -37,11 +37,24 @@
     </Style>
 
     <Style x:Key="ResultItem" TargetType="StackPanel">
-        <Setter Property="Margin" Value="20 0 20 10"/>
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="Margin" Value="15 0 0 0"/>
+        <Setter Property="Height" Value="40"/>
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Margin" Value="15 0 15 0"/>
+            </Style>
+            <Style TargetType="Image">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Style.Resources>
     </Style>
 
-    <Style x:Key="ResultItemText" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Margin" Value="10 0 0 0"/>
+    <Style x:Key="ResultItemHeader" TargetType="TextBlock">
+        <Setter Property="Margin" Value="20 0 0 0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource SystemBaseHighColorBrush}"/>
     </Style>
 </ResourceDictionary>

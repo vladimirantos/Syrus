@@ -89,9 +89,16 @@ namespace Syrus.Core
                 results.Add(new Result()
                 {
                     Text = p.Metadata.Name,
+                    Group = p.Metadata.FullName,
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : ""
                 });
             }
+            results.Add(new Result()
+            {
+                Text = "Nápady na přestavbu kuchyně",
+                Group = results[0].Group,
+                Icon = results[0].Icon
+            });
             return results;
         }
     }

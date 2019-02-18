@@ -6,21 +6,38 @@
              xmlns:local="clr-namespace:Syrus.View">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2.3*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        
+        <Grid.Resources>
+            <CollectionViewSource x:Key="GroupedItems" Source="{Binding Results}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Group" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>
 
-        <ItemsControl Grid.Column="0" ItemsSource="{Binding Results}">
+        <ItemsControl Grid.Column="0" ItemsSource="{Binding Source={StaticResource GroupedItems}}">
+            <ItemsControl.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}" Style="{StaticResource ResultItemHeader}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ItemsControl.GroupStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Style="{StaticResource ResultItem}">
                         <Image Source="{Binding Icon}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{Binding Text}" Style="{StaticResource ResultItemText}"/>
+                        <TextBlock Text="{Binding Text}"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
+        
         <TextBlock Grid.Column="1" VerticalAlignment="Stretch" Background="#fff"/>
     </Grid>
 </UserControl>

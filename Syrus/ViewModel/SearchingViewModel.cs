@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Syrus.ViewModel
 {
@@ -18,8 +20,8 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _query, value, Search);
         }
 
-        private IEnumerable<Result> _results;
-        public IEnumerable<Result> Results 
+        private ObservableCollection<Result> _results;
+        public ObservableCollection<Result> Results 
         {
             get => _results;
             set => SetProperty(ref _results, value);
@@ -29,17 +31,23 @@ namespace Syrus.ViewModel
         {
             _syrus = new Core.Syrus(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus"));
             _syrus.LoadPlugins().Initialize();
-            Results = new List<Result>();
+            Results = new ObservableCollection<Result>();
         }
 
         public void Search(string newValue)
         {
             if (string.IsNullOrEmpty(newValue))
             {
-                Results = new List<Result>();
+                Results = new ObservableCollection<Result>();
                 return;
             }
-            Results = _syrus.Search(newValue);
+            IEnumerable<Result> results = _syrus.Search(newValue);
+            Results = new ObservableCollection<Result>(results);
+            //Results = new CollectionViewSource()
+            //{
+            //    Source = new ObservableCollection<Result>(results),
+            //    GroupDescriptions = { new PropertyGroupDescription(nameof(Result.Group)) }
+            //};
         }
     }
 }
