@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Syrus.Core
 {
@@ -68,7 +69,7 @@ namespace Syrus.Core
             //}
             ////return (await Task.WhenAll(tasks)).ToList();
 
-            if (results.Count == 0)
+           if (results.Count == 0)
                 results.AddRange(ResultsFromPlugins(plugins));
             return results;
         }
@@ -78,6 +79,10 @@ namespace Syrus.Core
             List<PluginPair> plugins = new List<PluginPair>();
             if(_maxCommandLength >= match.Length)
                 plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
+
+            plugins.AddRange(_regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).Select(kv => kv.Value));
+
+            //plugins.AddRange(_termsPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
             return plugins;
         }
 
@@ -93,12 +98,6 @@ namespace Syrus.Core
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : ""
                 });
             }
-            results.Add(new Result()
-            {
-                Text = "Nápady na přestavbu kuchyně",
-                Group = results[0].Group,
-                Icon = results[0].Icon
-            });
             return results;
         }
     }

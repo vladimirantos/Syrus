@@ -19,11 +19,11 @@
       "text": "It will be sunny"
     },
     {
-      "text": "weather in ([A-Za-z\\s]+)",
+      "text": "^weather in ([A-Za-z\\s]+)$",
       "isRegex": true
     },
     {
-      "text": "what weaher in ([A-Za-z\\s]+)",
+      "text": "[whats weather in ]([A-Za-z\\s]*)",
       "isRegex": true
     }
   ]
