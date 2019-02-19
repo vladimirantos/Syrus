@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\vladi\AppData\Roaming\Syrus\Syrus.Plugins.Google</OutputPath>
+    <OutputPath>C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Google\</OutputPath>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(ProjectDir)plugin.json C:\Users\vladi\AppData\Roaming\Syrus\Syrus.Plugins.Google" />
+    <Exec Command="copy $(ProjectDir)plugin.json C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Google" />
   </Target>
 
 </Project>
