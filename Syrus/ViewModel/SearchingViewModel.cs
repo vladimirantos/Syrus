@@ -29,7 +29,9 @@ namespace Syrus.ViewModel
 
         public SearchingViewModel()
         {
-            _syrus = new Core.Syrus(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus"));
+            string pluginsLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "plugins");
+            string cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "cache");
+            _syrus = new Core.Syrus(pluginsLocation, cacheLocation);
             _syrus.LoadPlugins().Initialize();
             Results = new ObservableCollection<Result>();
         }

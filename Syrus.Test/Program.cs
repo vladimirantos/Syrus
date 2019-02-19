@@ -16,8 +16,9 @@ namespace Syrus.Test
         static Random random = new Random();
         static void Main(string[] args)
         {
-            string instalationFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus");
-            Core.Syrus factory = new Core.Syrus(instalationFolder);
+            string instalationFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "plugins");
+            string cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "cache");
+            Core.Syrus factory = new Core.Syrus(instalationFolder, cacheLocation);
             factory.LoadPlugins().Initialize();
 
 

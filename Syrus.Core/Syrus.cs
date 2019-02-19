@@ -12,19 +12,24 @@ namespace Syrus.Core
         private ISearch _search;
         
         public string PluginsLocation { get; private set; }
+        public string CacheLocation { get; private set; }
 
-        public Syrus(string pluginsLocation)
-            : this(new PluginLoader(pluginsLocation), new SearchEngine(), pluginsLocation) { }
+        public Syrus(string pluginsLocation, string cacheLocation)
+            : this(new PluginLoader(pluginsLocation), new SearchEngine(), pluginsLocation, cacheLocation) { }
            
-        public Syrus(ILoader loader, ISearch search, string pluginsLocation) 
-            => (_loader, _search, PluginsLocation) = (loader, search, pluginsLocation);
+        public Syrus(ILoader loader, ISearch search, string pluginsLocation, string cacheLocation) 
+            => (_loader, _search, PluginsLocation, CacheLocation) = (loader, search, pluginsLocation, cacheLocation);
         
         public Syrus Initialize()
         {
             List<Action> actions = new List<Action>();
             foreach(PluginPair p in _search.Plugins)
             {
-                actions.Add(() => p.Plugin.OnInitialize(new PluginContext(p.Metadata)));
+                actions.Add(() => p.Plugin.OnInitialize(new PluginContext(p.Metadata)
+                {
+                    CacheLocation = CacheLocation,
+                    PluginsLocation = PluginsLocation
+                }));
             }
             Parallel.Invoke(actions.ToArray());
             return this;
