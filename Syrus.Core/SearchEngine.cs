@@ -5,6 +5,8 @@ using System.Linq;
 using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
+using System;
+using System.Diagnostics;
 
 namespace Syrus.Core
 {
@@ -77,10 +79,17 @@ namespace Syrus.Core
         private IEnumerable<PluginPair> SelectPlugins(string match)
         {
             List<PluginPair> plugins = new List<PluginPair>();
-            if(_maxCommandLength >= match.Length)
+            if (_maxCommandLength >= match.Length)
                 plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
 
             plugins.AddRange(_regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).Select(kv => kv.Value));
+
+            //foreach(var x in _termsPlugins)
+            //{
+            //    Trace.WriteLine($"{match} x {x.Key} = {DamerauLevenshteinDistance(match, x.Key, match.Length + x.Key.Length)} {x.Value.Metadata.Name}");
+            //}
+
+            //plugins.AddRange(_termsPlugins.Where(kv => DamerauLevenshteinDistance(match, kv.Key, match.Length + kv.Key.Length) != int.MaxValue).Select(kv => kv.Value));
 
             //plugins.AddRange(_termsPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
             return plugins;
@@ -99,6 +108,87 @@ namespace Syrus.Core
                 });
             }
             return results;
+        }
+
+        public static int DamerauLevenshteinDistance(string source, string target, int threshold)
+        {
+            void Swap<T>(ref T arg1, ref T arg2)
+            {
+                T temp = arg1;
+                arg1 = arg2;
+                arg2 = temp;
+            }
+
+
+            int length1 = source.Length;
+            int length2 = target.Length;
+
+            // Return trivial case - difference in string lengths exceeds threshhold
+            if (Math.Abs(length1 - length2) > threshold) { return int.MaxValue; }
+
+            // Ensure arrays [i] / length1 use shorter length 
+            if (length1 > length2)
+            {
+                Swap(ref target, ref source);
+                Swap(ref length1, ref length2);
+            }
+
+            int maxi = length1;
+            int maxj = length2;
+
+            int[] dCurrent = new int[maxi + 1];
+            int[] dMinus1 = new int[maxi + 1];
+            int[] dMinus2 = new int[maxi + 1];
+            int[] dSwap;
+
+            for (int i = 0; i <= maxi; i++) { dCurrent[i] = i; }
+
+            int jm1 = 0, im1 = 0, im2 = -1;
+
+            for (int j = 1; j <= maxj; j++)
+            {
+
+                // Rotate
+                dSwap = dMinus2;
+                dMinus2 = dMinus1;
+                dMinus1 = dCurrent;
+                dCurrent = dSwap;
+
+                // Initialize
+                int minDistance = int.MaxValue;
+                dCurrent[0] = j;
+                im1 = 0;
+                im2 = -1;
+
+                for (int i = 1; i <= maxi; i++)
+                {
+
+                    int cost = source[im1] == target[jm1] ? 0 : 1;
+
+                    int del = dCurrent[im1] + 1;
+                    int ins = dMinus1[i] + 1;
+                    int sub = dMinus1[im1] + cost;
+
+                    //Fastest execution for min value of 3 integers
+                    int min = (del > ins) ? (ins > sub ? sub : ins) : (del > sub ? sub : del);
+
+                    if (i > 1 && j > 1 && source[im2] == target[jm1] && source[im1] == target[j - 2])
+                        min = Math.Min(min, dMinus2[im2] + cost);
+
+                    dCurrent[i] = min;
+                    if (min < minDistance) { minDistance = min; }
+                    im1++;
+                    im2++;
+                }
+                jm1++;
+                if (minDistance > threshold)
+                {
+                    return int.MaxValue;
+                }
+            }
+
+            int result = dCurrent[maxi];
+            return (result > threshold) ? int.MaxValue : result;
         }
     }
 

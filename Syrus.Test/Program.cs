@@ -22,90 +22,96 @@ namespace Syrus.Test
             factory.LoadPlugins().Initialize();
 
 
-            string term = "Translate hello to czech";
-            string tmp = "";
-            for(int i = 0; i < term.Length; i++)
-            {
-                tmp += term[i];
-                factory.Search(tmp);
-                Console.WriteLine(tmp + "> " + Compute(tmp, "translate x to y"));
-                //Thread.Sleep(1000);
-            }
+            string x1 = "Whats weather today in Prague?";
+            string x2 = "Whats weather in Moscow?";
+            //string x2 = "What is weather yesterday in Washington";
+            var x1n = x1.Select(x => (int)x).ToArray();
+            var x2n = x2.Select(x => (int)x).ToArray();
+            var treshold = x1.Length / 3;
+            Console.WriteLine(DamerauLevenshteinDistance(x1n, x2n, treshold).ToString());
 
-            //_items.Add(new KeyValuePair<string[], IEnumerable<string>>(new[] { "K1", "K2", "K3" }, new List<string>() { "Plugin1" }));
-            //_items.Add(new KeyValuePair<string[], IEnumerable<string>>(new[] { "K4", "K1", "K5" }, new List<string>() { "Plugin2" }));
-            //_items.Add(new KeyValuePair<string[], IEnumerable<string>>(new[] { "K6", "K7", "K4" }, new List<string>() { "Plugin3" }));
-
-            /**
-             * Výsledek
-             * K2, K3 -> Plugin1
-             * K1 -> Plugin1, Plugin2
-             * K5 -> Plugin2
-             * K4 -> Plugin2, Plugin3
-             * K6, K7 -> Plugin 3
-             */
-
-
-            string input = "translate banik pico to english";
-
-            // B
-            // The regular expression we use to match
-            Regex r1 = new Regex(@"translate ([A-Za-z\s]+) to ([A-Za-z\s]+)");
-
-            // C
-            // Match the input and write results
-            Match match = r1.Match(input);
-            if (match.Success)
-            {
-                string v = match.Groups[1].Value;
-                Console.WriteLine("Between One and Three: {0}", v);
-            }
+            Console.ReadKey();
         }
-
-
-        public static int Compute(string s, string t)
+        public static int DamerauLevenshteinDistance(int[] source, int[] target, int threshold)
         {
-            int n = s.Length;
-            int m = t.Length;
-            int[,] d = new int[n + 1, m + 1];
-
-            // Step 1
-            if (n == 0)
+            void Swap<T>(ref T arg1, ref T arg2)
             {
-                return m;
+                T temp = arg1;
+                arg1 = arg2;
+                arg2 = temp;
             }
 
-            if (m == 0)
+
+            int length1 = source.Length;
+            int length2 = target.Length;
+
+            // Return trivial case - difference in string lengths exceeds threshhold
+            if (Math.Abs(length1 - length2) > threshold) { return int.MaxValue; }
+
+            // Ensure arrays [i] / length1 use shorter length 
+            if (length1 > length2)
             {
-                return n;
+                Swap(ref target, ref source);
+                Swap(ref length1, ref length2);
             }
 
-            // Step 2
-            for (int i = 0; i <= n; d[i, 0] = i++)
-            {
-            }
+            int maxi = length1;
+            int maxj = length2;
 
-            for (int j = 0; j <= m; d[0, j] = j++)
-            {
-            }
+            int[] dCurrent = new int[maxi + 1];
+            int[] dMinus1 = new int[maxi + 1];
+            int[] dMinus2 = new int[maxi + 1];
+            int[] dSwap;
 
-            // Step 3
-            for (int i = 1; i <= n; i++)
+            for (int i = 0; i <= maxi; i++) { dCurrent[i] = i; }
+
+            int jm1 = 0, im1 = 0, im2 = -1;
+
+            for (int j = 1; j <= maxj; j++)
             {
-                //Step 4
-                for (int j = 1; j <= m; j++)
+
+                // Rotate
+                dSwap = dMinus2;
+                dMinus2 = dMinus1;
+                dMinus1 = dCurrent;
+                dCurrent = dSwap;
+
+                // Initialize
+                int minDistance = int.MaxValue;
+                dCurrent[0] = j;
+                im1 = 0;
+                im2 = -1;
+
+                for (int i = 1; i <= maxi; i++)
                 {
-                    // Step 5
-                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
 
-                    // Step 6
-                    d[i, j] = Math.Min(
-                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                        d[i - 1, j - 1] + cost);
+                    int cost = source[im1] == target[jm1] ? 0 : 1;
+
+                    int del = dCurrent[im1] + 1;
+                    int ins = dMinus1[i] + 1;
+                    int sub = dMinus1[im1] + cost;
+
+                    //Fastest execution for min value of 3 integers
+                    int min = (del > ins) ? (ins > sub ? sub : ins) : (del > sub ? sub : del);
+
+                    if (i > 1 && j > 1 && source[im2] == target[jm1] && source[im1] == target[j - 2])
+                        min = Math.Min(min, dMinus2[im2] + cost);
+
+                    dCurrent[i] = min;
+                    if (min < minDistance) { minDistance = min; }
+                    im1++;
+                    im2++;
+                }
+                jm1++;
+                if (minDistance > threshold)
+                {
+                    return int.MaxValue;
                 }
             }
-            // Step 7
-            return d[n, m];
+
+            int result = dCurrent[maxi];
+            return (result > threshold) ? int.MaxValue : result;
         }
+
     }
 }
