@@ -25,7 +25,7 @@ namespace Syrus.Core
         /// Key is command and value is IPlugin
         /// </summary>
         private Dictionary<string, PluginPair> _commandPlugins = new Dictionary<string, PluginPair>();
-        private List<KeyValuePair<string, PluginPair>> _termsPlugins = new List<KeyValuePair<string, PluginPair>>();
+        private List<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
         private List<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
         private int _maxCommandLength = 0;
 
@@ -47,12 +47,13 @@ namespace Syrus.Core
                 }
                 foreach (SearchingPattern term in p.Metadata.SearchingPatterns)
                 {
-                    if (!term.IsRegex)
-                        _termsPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text.ToLower(), p));
-                    else _regexPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text.ToLower(), p));
+                    if(term.KeywordPattern)
+                        _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text.ToLower(), p));
+                    else if (term.IsRegex)
+                        _regexPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text, p));
                 }
             }
-            _termsPlugins.Sort(new KeyValuePairComparer());
+            _keywordPlugins.Sort(new KeyValuePairComparer());
             _regexPlugins.Sort(new KeyValuePairComparer());
         }
 
@@ -81,8 +82,8 @@ namespace Syrus.Core
             List<PluginPair> plugins = new List<PluginPair>();
             if (_maxCommandLength >= match.Length)
                 plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
-
-            plugins.AddRange(_regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).Select(kv => kv.Value));
+            var a = _regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).ToList(); 
+            //plugins.AddRange(a).Select(kv => kv.Value);
 
             //foreach(var x in _termsPlugins)
             //{

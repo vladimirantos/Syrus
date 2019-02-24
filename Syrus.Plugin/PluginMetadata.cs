@@ -39,6 +39,8 @@ namespace Syrus.Plugin
         /// </summary>
         public bool Default { get; set; }
 
+        public int Priority { get; set; }
+
         /// <summary>
         /// Type of sentenses which can be used for serching.
         /// </summary>
@@ -52,7 +54,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Get only text patterns
         /// </summary>
-        public IEnumerable<SearchingPattern> TextPatterns => SearchingPatterns.Where(p => !p.IsRegex);
+        public IEnumerable<SearchingPattern> KeywordPattern => SearchingPatterns.Where(p => p.KeywordPattern);
 
         /// <summary>
         /// Configuration
@@ -62,8 +64,9 @@ namespace Syrus.Plugin
 
     public class SearchingPattern
     {
+        public string Name { get; set; }
         public string Text { get; set; }
         public bool IsRegex { get; set; }
-        public int SimilarityPercentage { get; set; }
+        public bool KeywordPattern { get; set; }
     }
 }

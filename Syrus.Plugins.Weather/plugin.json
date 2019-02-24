@@ -7,24 +7,29 @@
   "icon": "icon.png",
   "searchingPatterns": [
     {
-      "text": "Whats weather today"
+      "name": 1,
+      "text": "Whats weather {day}",
+      "keywordPattern": true
     },
     {
-      "text": "Whats weather yesterday"
+      "name": 2,
+      "text": "weather {day}",
+      "keywordPattern": true
     },
     {
-      "text": "It will be rain"
+      "name": 3,
+      "text": "It will be {type}", //sunny
+      "keywordPattern": true
     },
     {
-      "text": "It will be sunny"
+      "name": 4,
+      "text": "weather in {city}",
+      "keywordPattern": true
     },
     {
-      "text": "^weather in ([A-Za-z\\s]+)$",
-      "isRegex": true
-    },
-    {
-      "text": "[whats weather in ]([A-Za-z\\s]*)",
-      "isRegex": true
+      "name": 5,
+      "text": "whats weather in {city}",
+      "keywordPattern": true
     }
   ]
 }
