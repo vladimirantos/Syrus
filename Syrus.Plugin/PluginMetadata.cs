@@ -70,7 +70,7 @@ namespace Syrus.Plugin
         public bool KeywordPattern { get; set; }
     }
 
-    public class ParsedSearchingPattern : SearchingPattern
+    public class SearchingQuery : SearchingPattern
     {
 
     }
