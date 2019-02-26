@@ -6,12 +6,16 @@ namespace Syrus.Core.PluginFinding
 {
     internal class ByRegexFinder : IPluginFinder
     {
-        public IEnumerable<PluginPair> Find(string match, out SearchingQuery query)
-        {
-            throw new NotImplementedException();
-        }
+        private List<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
 
         public void Initialize(ICollection<PluginPair> pluginPairs)
+        {
+            foreach (PluginPair p in pluginPairs)
+                foreach (SearchingPattern searchingPattern in p.Metadata.RegexPatterns)
+                    _regexPlugins.Add(new KeyValuePair<string, PluginPair>(searchingPattern.Text, p));
+        }
+
+        public IEnumerable<PluginPair> Find(string match, out SearchingQuery query)
         {
             throw new NotImplementedException();
         }

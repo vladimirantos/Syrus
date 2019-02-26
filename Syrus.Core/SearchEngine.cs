@@ -19,13 +19,7 @@ namespace Syrus.Core
 
     public class SearchEngine : ISearch
     {
-        /// <summary>
-        /// Key is command and value is IPlugin
-        /// </summary>
-        private Dictionary<string, PluginPair> _commandPlugins = new Dictionary<string, PluginPair>();
-        private List<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
-        private List<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
-        private int _maxCommandLength = 0;
+        
 
         public IEnumerable<PluginPair> Plugins { get; set; }
 
@@ -33,12 +27,6 @@ namespace Syrus.Core
         {
             foreach(PluginPair p in Plugins)
             {
-                if(p.Metadata.Command != null)
-                {
-                    if (_maxCommandLength < p.Metadata.Command.Length)
-                        _maxCommandLength = p.Metadata.Command.Length;
-                    _commandPlugins.Add(p.Metadata.Command.ToLower(), p);
-                }
                 foreach (SearchingPattern term in p.Metadata.SearchingPatterns)
                 {
                     if(term.KeywordPattern)
