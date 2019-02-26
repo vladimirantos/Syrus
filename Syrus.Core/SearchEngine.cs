@@ -19,8 +19,6 @@ namespace Syrus.Core
 
     public class SearchEngine : ISearch
     {
-        private List<ISearch> _searchEngines;
-
         /// <summary>
         /// Key is command and value is IPlugin
         /// </summary>
@@ -30,10 +28,6 @@ namespace Syrus.Core
         private int _maxCommandLength = 0;
 
         public IEnumerable<PluginPair> Plugins { get; set; }
-
-        public SearchEngine() => _searchEngines = new List<ISearch>();
-
-        public void Add(ISearch searchEngine) => _searchEngines.Add(searchEngine);
 
         public void Indexing()
         {

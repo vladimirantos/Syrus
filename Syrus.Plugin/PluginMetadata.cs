@@ -69,4 +69,9 @@ namespace Syrus.Plugin
         public bool IsRegex { get; set; }
         public bool KeywordPattern { get; set; }
     }
+
+    public class ParsedSearchingPattern : SearchingPattern
+    {
+
+    }
 }
