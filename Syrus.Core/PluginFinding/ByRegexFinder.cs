@@ -13,6 +13,7 @@ namespace Syrus.Core.PluginFinding
             foreach (PluginPair p in pluginPairs)
                 foreach (SearchingPattern searchingPattern in p.Metadata.RegexPatterns)
                     _regexPlugins.Add(new KeyValuePair<string, PluginPair>(searchingPattern.Text, p));
+            _regexPlugins.Sort(new KeyValuePairComparer());
         }
 
         public IEnumerable<PluginPair> Find(string match, out SearchingQuery query)

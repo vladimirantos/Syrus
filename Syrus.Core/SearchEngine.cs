@@ -19,24 +19,12 @@ namespace Syrus.Core
 
     public class SearchEngine : ISearch
     {
-        
-
         public IEnumerable<PluginPair> Plugins { get; set; }
 
         public void Indexing()
         {
-            foreach(PluginPair p in Plugins)
-            {
-                foreach (SearchingPattern term in p.Metadata.SearchingPatterns)
-                {
-                    if(term.KeywordPattern)
-                        _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text.ToLower(), p));
-                    else if (term.IsRegex)
-                        _regexPlugins.Add(new KeyValuePair<string, PluginPair>(term.Text, p));
-                }
-            }
-            _keywordPlugins.Sort(new KeyValuePairComparer());
-            _regexPlugins.Sort(new KeyValuePairComparer());
+                    
+            
         }
 
         public IEnumerable<Result> Search(string match)
@@ -173,10 +161,5 @@ namespace Syrus.Core
             int result = dCurrent[maxi];
             return (result > threshold) ? int.MaxValue : result;
         }
-    }
-
-    class KeyValuePairComparer : IComparer<KeyValuePair<string, PluginPair>>
-    {
-        public int Compare(KeyValuePair<string, PluginPair> x, KeyValuePair<string, PluginPair> y) => string.Compare(x.Key, y.Key);
     }
 }

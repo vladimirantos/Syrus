@@ -14,6 +14,7 @@ namespace Syrus.Core.PluginFinding
             foreach (PluginPair p in pluginPairs)
                 foreach (SearchingPattern searchingPattern in p.Metadata.KeywordPattern)
                     _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(searchingPattern.Text.ToLower(), p));
+            _keywordPlugins.Sort(new KeyValuePairComparer());
         }
 
         public IEnumerable<PluginPair> Find(string match, out SearchingQuery query)
