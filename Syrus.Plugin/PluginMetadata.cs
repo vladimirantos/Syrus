@@ -34,6 +34,8 @@ namespace Syrus.Plugin
         /// </summary>
         public string Command { get; set; }
 
+        public IEnumerable<string> Keywords { get; set; }
+
         /// <summary>
         /// If is <c>true</c>, it will be use for searching allways.
         /// </summary>
