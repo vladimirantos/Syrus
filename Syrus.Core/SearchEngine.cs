@@ -50,9 +50,9 @@ namespace Syrus.Core
         private IEnumerable<PluginPair> SelectPlugins(string match)
         {
             List<PluginPair> plugins = new List<PluginPair>();
-            if (_maxCommandLength >= match.Length)
-                plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
-            var a = _regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).ToList(); 
+            //if (_maxCommandLength >= match.Length)
+            //    plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
+            //var a = _regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).ToList(); 
             //plugins.AddRange(a).Select(kv => kv.Value);
 
             //foreach(var x in _termsPlugins)

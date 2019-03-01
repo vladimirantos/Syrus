@@ -1,35 +1,69 @@
-{
+﻿{
   "name": "Weather",
   "fullName": "Syrus.Plugins.Weather",
-  "author": "Vladim�r Anto�",
+  "author": "Vladimír Antoš",
   "version": "0.0.0.1",
-  "command": "weather",
-  "icon": "icon.png",
-  "searchingPatterns": [
+  "searchConfigurations": [
     {
-      "name": 1,
-      "text": "Whats weather {day}",
-      "keywordPattern": true
+      "language": "en",
+      "command": "weather",
+      "keyword": [ "weather", "forecast" ],
+      "searchingPatterns": [
+        {
+          "name": "1",
+          "pattern": "whats weather on {day}" //weather on {day}
+        },
+        {
+          "name": 2,
+          "pattern": "whats weather in {city}" //weather in {city}
+        }
+      ]
     },
+
     {
-      "name": 2,
-      "text": "weather {day}",
-      "keywordPattern": true
-    },
-    {
-      "name": 3,
-      "text": "It will be {type}", //sunny
-      "keywordPattern": true
-    },
-    {
-      "name": 4,
-      "text": "weather in {city}",
-      "keywordPattern": true
-    },
-    {
-      "name": 5,
-      "text": "whats weather in {city}",
-      "keywordPattern": true
+      "language": "cs",
+      "command": "počasí",
+      "keyword": [ "počasí", "předpověď" ],
+      "searchingPatterns": [
+        {
+          "name": 1,
+          "pattern": "jak bude v {day}"
+        },
+        {
+          "name": 2,
+          "pattern": "jak bude v {city}"
+        }
+      ]
     }
   ]
+  //"command": "weather",
+  //"keywords": ["weather", "sunny", "cloudy", "rain", "snow"],
+  //"icon": "icon.png",
+  //"searchingPatterns": [
+  //  {
+  //    "name": 1,
+  //    "text": "Whats weather {day}",
+  //    "keywordPattern": true
+  //  },
+  //  {
+  //    "name": 2,
+  //    "text": "weather {day}",
+  //    "keywordPattern": true
+  //  },
+  //  {
+  //    "name": 3,
+  //    "text": "It will be {type}", //sunny
+  //    "keywordPattern": true
+  //  },
+  //  {
+  //    "name": 4,
+  //    "text": "weather in {city}",
+  //    "keywordPattern": true
+  //  },
+  //  {
+  //    "name": 5,
+  //    "text": "whats weather in {city}",
+  //    "keywordPattern": true
+  //  }
+  //]
 }
