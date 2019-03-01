@@ -13,13 +13,22 @@ namespace Syrus.Core
         
         public string PluginsLocation { get; private set; }
         public string CacheLocation { get; private set; }
+        public Configuration Configuration { get; private set; }
 
-        public Syrus(string pluginsLocation, string cacheLocation)
-            : this(new PluginLoader(pluginsLocation), new SearchEngine(), pluginsLocation, cacheLocation) { }
+        public Syrus(string pluginsLocation, string cacheLocation, Configuration configuration)
+            : this(new PluginLoader(pluginsLocation), new SearchEngine(), pluginsLocation, cacheLocation, configuration) { }
            
-        public Syrus(ILoader loader, ISearch search, string pluginsLocation, string cacheLocation) 
-            => (_loader, _search, PluginsLocation, CacheLocation) = (loader, search, pluginsLocation, cacheLocation);
-        
+        public Syrus(ILoader loader, ISearch search, string pluginsLocation, string cacheLocation, Configuration configuration) 
+            => (_loader, _search, PluginsLocation, CacheLocation, Configuration) = (loader, search, pluginsLocation, cacheLocation, configuration);
+
+        public Syrus LoadPlugins()
+        {
+            _search.Plugins = _loader.Load().ToList();
+            SetPatternByLanguage(Configuration.Language);
+            _search.Indexing();
+            return this;
+        }
+
         public Syrus Initialize()
         {
             List<Action> actions = new List<Action>();
@@ -35,13 +44,20 @@ namespace Syrus.Core
             return this;
         }
 
-        public Syrus LoadPlugins()
-        {
-            _search.Plugins = _loader.Load().ToList();
-            _search.Indexing();
-            return this;
-        }
-
         public IEnumerable<Result> Search(string term) => _search.Search(term);
+
+        /// <summary>
+        /// Set pattern (to Metadata.CurrentSearchingConfiguration) by language for all plugins. 
+        /// Set null if the configuration for language is missing.
+        /// </summary>
+        /// <param name="language"></param>
+        private void SetPatternByLanguage(string language)
+        {
+            foreach(PluginPair pluginPair in _search.Plugins)
+            {
+                pluginPair.Metadata.CurrentSearchingConfiguration =
+                    pluginPair.Metadata.SearchingConfigurations.FirstOrDefault(sc => sc.Language == language);
+            }
+        }
     }
 }
