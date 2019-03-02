@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Syrus.Core
 {
@@ -42,11 +43,13 @@ namespace Syrus.Core
             List<PluginPair> plugins = SelectPlugins(match).ToList();
             plugins.AddRange(_defaultPlugins);
 
-            int pluginsCount = plugins.Count;
-            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[pluginsCount];
-            for (int i = 0; i < pluginsCount; i++)
+            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[plugins.Count];
+            int i = 0;
+            foreach(PluginPair pluginPair in plugins)
             {
-                tasks[i] = Task.Factory.StartNew(() => plugins[i].Plugin.Search(match));
+                Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
+                tasks[i] = Task.Factory.StartNew(() => pluginPair.Plugin.Search(match));
+                i++;
             }
             results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
             if (results.Count == 0)
@@ -65,7 +68,7 @@ namespace Syrus.Core
                 results.Add(new Result()
                 {
                     Text = p.Metadata.Name,
-                    Group = p.Metadata.FullName,
+                    Group = "Možnosti vyhledávání",
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : ""
                 });
             }
