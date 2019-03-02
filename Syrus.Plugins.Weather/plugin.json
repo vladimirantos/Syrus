@@ -6,34 +6,12 @@
   "searchConfigurations": [
     {
       "language": "en",
-      "command": "weather",
-      "keyword": [ "weather", "forecast" ],
-      "searchingPatterns": [
-        {
-          "name": "1",
-          "pattern": "whats weather on {day}" //weather on {day}
-        },
-        {
-          "name": 2,
-          "pattern": "whats weather in {city}" //weather in {city}
-        }
-      ]
+      "keywords": [ "weather", "forecast" ]
     },
 
     {
       "language": "cs",
-      "command": "počasí",
-      "keyword": [ "počasí", "předpověď" ],
-      "searchingPatterns": [
-        {
-          "name": 1,
-          "pattern": "jak bude v {day}"
-        },
-        {
-          "name": 2,
-          "pattern": "jak bude v {city}"
-        }
-      ]
+      "keywords": [ "počasí", "předpověď" ]
     }
   ]
   //"command": "weather",

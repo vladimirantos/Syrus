@@ -26,8 +26,12 @@ namespace Syrus.Core.Metadata
                 throw new FileNotFoundException($"File {filePath} not found.");
 
             PluginMetadata metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(filePath));
-            if (metadata.SearchingPatterns == null)
-                metadata.SearchingPatterns = new List<SearchingPattern>();
+            if (metadata.Constants == null)
+                metadata.Constants = new Dictionary<string, object>();
+            if(metadata.ReadonlyConstants == null)
+                metadata.ReadonlyConstants = new Dictionary<string, object>();
+            if (metadata.SearchingConfigurations == null)
+                metadata.SearchingConfigurations = new List<SearchingConfiguration>();
             if (!_metadataValidator.IsValid(metadata))
                 throw new MetadataParserException($"Metadata file {filePath} is not valid.");
             return metadata;

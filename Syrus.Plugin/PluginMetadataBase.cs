@@ -40,25 +40,19 @@ namespace Syrus.Plugin
         public IEnumerable<SearchingConfiguration> SearchingConfigurations { get; set; }
 
         /// <summary>
-        /// Configuration
+        /// Constants, which are configurable
         /// </summary>
         public Dictionary<string, object> Constants { get; set; }
+
+        /// <summary>
+        /// Readonly constants, It's not configurable.
+        /// </summary>
+        public Dictionary<string, object> ReadonlyConstants { get; set; }
     }
 
     public class SearchingConfiguration
     {
         public string Language { get; set; }
-        public string Command { get; set; }
         public IEnumerable<string> Keywords { get; set; }
-        public IEnumerable<SearchingPattern> SearchingPatterns { get; set; }
-        public IEnumerable<SearchingPattern> RegexPatterns => SearchingPatterns.Where(sp => sp.IsRegex);
-        public IEnumerable<SearchingPattern> TextPatterns => SearchingPatterns.Where(sp => !sp.IsRegex);
-    }
-
-    public class SearchingPattern
-    {
-        public string Name { get; set; }
-        public string Pattern { get; set; }
-        public bool IsRegex { get; set; }
     }
 }

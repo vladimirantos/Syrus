@@ -24,7 +24,6 @@ namespace Syrus.Core
         public Syrus LoadPlugins()
         {
             _search.Plugins = _loader.Load().ToList();
-            SetPatternByLanguage(Configuration.Language);
             _search.Indexing();
             return this;
         }
@@ -45,19 +44,5 @@ namespace Syrus.Core
         }
 
         public IEnumerable<Result> Search(string term) => _search.Search(term);
-
-        /// <summary>
-        /// Set pattern (to Metadata.CurrentSearchingConfiguration) by language for all plugins. 
-        /// Set null if the configuration for language is missing.
-        /// </summary>
-        /// <param name="language"></param>
-        private void SetPatternByLanguage(string language)
-        {
-            foreach(PluginPair pluginPair in _search.Plugins)
-            {
-                pluginPair.Metadata.CurrentSearchingConfiguration =
-                    pluginPair.Metadata.SearchingConfigurations.FirstOrDefault(sc => sc.Language == language);
-            }
-        }
     }
 }
