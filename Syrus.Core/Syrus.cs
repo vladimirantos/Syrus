@@ -16,7 +16,7 @@ namespace Syrus.Core
         public Configuration Configuration { get; private set; }
 
         public Syrus(string pluginsLocation, string cacheLocation, Configuration configuration)
-            : this(new PluginLoader(pluginsLocation), new SearchEngine(), pluginsLocation, cacheLocation, configuration) { }
+            : this(new PluginLoader(pluginsLocation), new SearchEngine(configuration), pluginsLocation, cacheLocation, configuration) { }
            
         public Syrus(ILoader loader, ISearch search, string pluginsLocation, string cacheLocation, Configuration configuration) 
             => (_loader, _search, PluginsLocation, CacheLocation, Configuration) = (loader, search, pluginsLocation, cacheLocation, configuration);
@@ -24,8 +24,7 @@ namespace Syrus.Core
         public Syrus LoadPlugins()
         {
             _search.Plugins = _loader.Load().ToList();
-            SelectSearchingConfigurationByLang(Configuration.Language);
-            _search.Indexing();
+            _search.Initialize();
             return this;
         }
 
@@ -45,14 +44,5 @@ namespace Syrus.Core
         }
 
         public IEnumerable<Result> Search(string term) => _search.Search(term);
-
-        private void SelectSearchingConfigurationByLang(string language)
-        {
-            foreach(PluginPair pluginPair in _search.Plugins)
-            {
-                pluginPair.Metadata.CurrentSearchingConfiguration 
-                    = pluginPair.Metadata.SearchingConfigurations.FirstOrDefault(s => s.Language == language);
-            }
-        }
     }
 }

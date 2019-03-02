@@ -1,29 +1,32 @@
 ﻿using Syrus.Plugin;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Collections;
 using System.IO;
-using System.Text.RegularExpressions;
 using System;
-using System.Diagnostics;
 
 namespace Syrus.Core
 {
     public interface ISearch
     {
         IEnumerable<PluginPair> Plugins { get; set; }
+        void Initialize();
         IEnumerable<Result> Search(string match);
-        void Indexing();
     }
 
     public class SearchEngine : ISearch
     {
+        private Configuration _configuration;
         private ICollection<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
         public IEnumerable<PluginPair> Plugins { get; set; }
 
-        public void Indexing()
+        public SearchEngine(Configuration configuration) => _configuration = configuration;
+
+        /// <summary>
+        /// Select searching configuration by language and prepare keywords.
+        /// </summary>
+        public void Initialize()
         {
+            SelectSearchingConfigurationByLang(_configuration.Language);
             foreach (PluginPair pp in Plugins)
                 foreach (string keyword in pp.Metadata.CurrentSearchingConfiguration.Keywords)
                     _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(keyword, pp));
@@ -81,6 +84,15 @@ namespace Syrus.Core
                 });
             }
             return results;
+        }
+
+        private void SelectSearchingConfigurationByLang(string language)
+        {
+            foreach (PluginPair pluginPair in Plugins)
+            {
+                pluginPair.Metadata.CurrentSearchingConfiguration
+                    = pluginPair.Metadata.SearchingConfigurations.FirstOrDefault(s => s.Language == language);
+            }
         }
 
         public static int DamerauLevenshteinDistance(string source, string target, int threshold)
