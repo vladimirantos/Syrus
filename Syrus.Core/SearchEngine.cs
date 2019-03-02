@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System;
+using System.Threading.Tasks;
 
 namespace Syrus.Core
 {
@@ -10,13 +11,14 @@ namespace Syrus.Core
     {
         IEnumerable<PluginPair> Plugins { get; set; }
         void Initialize();
-        IEnumerable<Result> Search(string match);
+        Task<IEnumerable<Result>> Search(string match);
     }
 
     public class SearchEngine : ISearch
     {
         private Configuration _configuration;
         private ICollection<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
+        private IEnumerable<PluginPair> _defaultPlugins;
         public IEnumerable<PluginPair> Plugins { get; set; }
 
         public SearchEngine(Configuration configuration) => _configuration = configuration;
@@ -27,49 +29,33 @@ namespace Syrus.Core
         public void Initialize()
         {
             SelectSearchingConfigurationByLang(_configuration.Language);
-            foreach (PluginPair pp in Plugins)
+            foreach (PluginPair pp in Plugins.Where(p => !p.Metadata.Default))
                 foreach (string keyword in pp.Metadata.CurrentSearchingConfiguration.Keywords)
                     _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(keyword, pp));
+            _defaultPlugins = Plugins.Where(p => p.Metadata.Default);
         }
 
-        public IEnumerable<Result> Search(string match)
+        public async Task<IEnumerable<Result>> Search(string match)
         {
+            List<Result> results;
             match = match.ToLower();
-            IEnumerable<PluginPair> plugins = SelectPlugins(match);
-            List<Result> results = new List<Result>();
-            foreach (var plugin in plugins)
-                results.AddRange(plugin.Plugin.Search(match));
+            List<PluginPair> plugins = SelectPlugins(match).ToList();
+            plugins.AddRange(_defaultPlugins);
 
-            //Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[_searchEngines.Count];
-            //for(int i = 0; i < _searchEngines.Count; i++)
-            //{
-            //    tasks[i] = Task.Factory.StartNew(() => _searchEngines[i].Search(match));
-            //}
-            ////return (await Task.WhenAll(tasks)).ToList();
-
-           if (results.Count == 0)
+            int pluginsCount = plugins.Count;
+            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[pluginsCount];
+            for (int i = 0; i < pluginsCount; i++)
+            {
+                tasks[i] = Task.Factory.StartNew(() => plugins[i].Plugin.Search(match));
+            }
+            results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
+            if (results.Count == 0)
                 results.AddRange(ResultsFromPlugins(plugins));
             return results;
         }
 
         private IEnumerable<PluginPair> SelectPlugins(string match)
-        {
-            List<PluginPair> plugins = new List<PluginPair>();
-            //if (_maxCommandLength >= match.Length)
-            //    plugins.AddRange(_commandPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
-            //var a = _regexPlugins.Where(kv => Regex.IsMatch(match, kv.Key)).ToList(); 
-            //plugins.AddRange(a).Select(kv => kv.Value);
-
-            //foreach(var x in _termsPlugins)
-            //{
-            //    Trace.WriteLine($"{match} x {x.Key} = {DamerauLevenshteinDistance(match, x.Key, match.Length + x.Key.Length)} {x.Value.Metadata.Name}");
-            //}
-
-            //plugins.AddRange(_termsPlugins.Where(kv => DamerauLevenshteinDistance(match, kv.Key, match.Length + kv.Key.Length) != int.MaxValue).Select(kv => kv.Value));
-
-            //plugins.AddRange(_termsPlugins.Where(kv => kv.Key.StartsWith(match)).Select(kv => kv.Value));
-            return plugins;
-        }
+            => _keywordPlugins.Where(kv => kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase)).Select(kv => kv.Value);
 
         private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins)
         {

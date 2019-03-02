@@ -3,5 +3,15 @@
   "fullName": "Syrus.Plugins.Wiki",
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
-  "command": "wiki"
+  "searchingConfigurations": [
+    {
+      "language": "en",
+      "keywords": [ "wiki" ]
+    },
+
+    {
+      "language": "cs",
+      "keywords": [ "wiki" ]
+    }
+  ]
 }

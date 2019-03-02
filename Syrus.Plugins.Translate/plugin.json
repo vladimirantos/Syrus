@@ -1,16 +1,17 @@
-{
+﻿{
   "name": "Translate",
   "fullName": "Syrus.Plugins.Translate",
-  "author": "Vladim�r Anto�",
+  "author": "Vladimír Antoš",
   "version": "0.0.0.1",
-  "command": "translate",
-  "searchingPatterns": [
+  "searchingConfigurations": [
     {
-      "text": "translate x to y"
+      "language": "en",
+      "keywords": [ "translate", "tr" ]
     },
+
     {
-      "text": "translate ([A-Za-z\\s]+) to ([A-Za-z\\s]+) language",
-      "isRegex":  true
+      "language": "cs",
+      "keywords": [ "přelož" ]
     }
   ]
 }

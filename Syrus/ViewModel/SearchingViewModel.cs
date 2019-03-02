@@ -38,14 +38,14 @@ namespace Syrus.ViewModel
             Results = new ObservableCollection<Result>();
         }
 
-        public void Search(string newValue)
+        public async void Search(string newValue)
         {
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
                 return;
             }
-            IEnumerable<Result> results = _syrus.Search(newValue);
+            IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             //Results = new CollectionViewSource()
             //{
