@@ -24,6 +24,7 @@ namespace Syrus.Core
         public Syrus LoadPlugins()
         {
             _search.Plugins = _loader.Load().ToList();
+            SelectSearchingConfigurationByLang(Configuration.Language);
             _search.Indexing();
             return this;
         }
@@ -44,5 +45,14 @@ namespace Syrus.Core
         }
 
         public IEnumerable<Result> Search(string term) => _search.Search(term);
+
+        private void SelectSearchingConfigurationByLang(string language)
+        {
+            foreach(PluginPair pluginPair in _search.Plugins)
+            {
+                pluginPair.Metadata.CurrentSearchingConfiguration 
+                    = pluginPair.Metadata.SearchingConfigurations.FirstOrDefault(s => s.Language == language);
+            }
+        }
     }
 }

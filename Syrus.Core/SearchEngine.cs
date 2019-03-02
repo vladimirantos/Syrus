@@ -19,12 +19,14 @@ namespace Syrus.Core
 
     public class SearchEngine : ISearch
     {
+        private ICollection<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
         public IEnumerable<PluginPair> Plugins { get; set; }
 
         public void Indexing()
         {
-                    
-            
+            foreach (PluginPair pp in Plugins)
+                foreach (string keyword in pp.Metadata.CurrentSearchingConfiguration.Keywords)
+                    _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(keyword, pp));
         }
 
         public IEnumerable<Result> Search(string match)
