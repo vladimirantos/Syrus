@@ -45,7 +45,7 @@ namespace Syrus.Core
 
             Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[plugins.Count];
             int i = 0;
-            foreach(PluginPair pluginPair in plugins)
+            foreach (PluginPair pluginPair in plugins)
             {
                 Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
                 tasks[i] = Task.Factory.StartNew(() => pluginPair.Plugin.Search(match));
@@ -58,12 +58,16 @@ namespace Syrus.Core
         }
 
         private IEnumerable<PluginPair> SelectPlugins(string match)
-            => _keywordPlugins.Where(kv => kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase)).Select(kv => kv.Value);
+            => _keywordPlugins.Where(kv => kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase))
+                .GroupBy(kv => kv.Value.Metadata.Name)
+                .Select(kv => kv.First().Value);
+
+
 
         private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins)
         {
             List<Result> results = new List<Result>();
-            foreach(PluginPair p in plugins)
+            foreach (PluginPair p in plugins)
             {
                 results.Add(new Result()
                 {

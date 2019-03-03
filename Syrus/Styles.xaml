@@ -5,15 +5,16 @@
     <Style TargetType="fw:AcrylicWindow">
         <Setter Property="Background" Value="{StaticResource SystemBaseLowColorBrush}"/>
     </Style>
-    
+
     <Style x:Key="SearchInput" TargetType="TextBox">
         <Setter Property="Height" Value="70"/>
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="MinWidth" Value="250"/>
+        <Setter Property="MinWidth" Value="2"/>
         <Setter Property="MaxWidth" Value="440"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumHighColorBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Style.Triggers>
@@ -21,6 +22,13 @@
                 <Setter Property="BorderBrush" Value="Transparent"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="Placeholder" TargetType="TextBox" BasedOn="{StaticResource SearchInput}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="-5 0 0 0"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Foreground" Value="{StaticResource SystemBaseLowColorBrush}"/>
     </Style>
     
     <Style x:Key="QuickResult" TargetType="Label">

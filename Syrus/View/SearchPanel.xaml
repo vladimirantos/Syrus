@@ -13,7 +13,9 @@
         <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
             <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     Tag="Search anything"
                  Style="{StaticResource SearchInput}"/>
+            <TextBox Text="{Binding Placeholder}" Style="{StaticResource Placeholder}"/>
             <Label Content="– Počasí Praha - 27 °C, zataženo" Style="{StaticResource QuickResult}"/>
         </StackPanel>
         <TextBlock Grid.Column="2" Text="ICON"/>

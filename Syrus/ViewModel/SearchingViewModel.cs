@@ -12,12 +12,19 @@ namespace Syrus.ViewModel
     class SearchingViewModel : NotifyPropertyChanges
     {
         private string _query;
+        private string _placeholder;
         private Core.Syrus _syrus;
 
         public string SearchingQuery 
         {
             get => _query;
             set => SetProperty(ref _query, value, Search);
+        }
+
+        public string Placeholder 
+        {
+            get => _placeholder;
+            set => SetProperty(ref _placeholder, value);
         }
 
         private ObservableCollection<Result> _results;
@@ -40,6 +47,8 @@ namespace Syrus.ViewModel
 
         public async void Search(string newValue)
         {
+            if (newValue.Length == 3)
+                Placeholder = "ther";
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
