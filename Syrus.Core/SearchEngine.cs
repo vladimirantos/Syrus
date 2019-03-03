@@ -39,8 +39,8 @@ namespace Syrus.Core
         public async Task<IEnumerable<Result>> Search(string match)
         {
             List<Result> results;
-            match = match.ToLower();
-            List<PluginPair> plugins = SelectPlugins(match).ToList();
+            string[] parts = match.ToLower().Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            List<PluginPair> plugins = SelectPlugins(parts.First()).ToList();
             plugins.AddRange(_defaultPlugins);
 
             Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[plugins.Count];

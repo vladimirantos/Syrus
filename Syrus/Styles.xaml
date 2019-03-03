@@ -28,6 +28,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Padding" Value="-5 0 0 0"/>
         <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="Foreground" Value="{StaticResource SystemBaseLowColorBrush}"/>
     </Style>
     
