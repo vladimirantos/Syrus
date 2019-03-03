@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Text.RegularExpressions;
 
 namespace Syrus.ViewModel
 {
@@ -47,8 +48,6 @@ namespace Syrus.ViewModel
 
         public async void Search(string newValue)
         {
-            if (newValue.Length == 3)
-                Placeholder = "ther";
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
@@ -56,11 +55,16 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
+            if (Results.Count == 1)
+                CreateHelp(newValue, Results[0]);
             //Results = new CollectionViewSource()
             //{
             //    Source = new ObservableCollection<Result>(results),
             //    GroupDescriptions = { new PropertyGroupDescription(nameof(Result.Group)) }
             //};
         }
+
+        private void CreateHelp(string text, Result result)
+            => Placeholder = Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase);
     }
 }
