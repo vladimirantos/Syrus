@@ -4,6 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:fa="http://schemas.fontawesome.io/icons/">
+    <UserControl.InputBindings>
+        <KeyBinding
+                Key="Tab" 
+                Command="{Binding CompleteTextByTabCommand}"/>
+    </UserControl.InputBindings>
     <Grid Name="SearchLine">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*"/>

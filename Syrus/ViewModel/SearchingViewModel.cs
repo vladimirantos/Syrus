@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows.Data;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace Syrus.ViewModel
 {
@@ -34,6 +32,8 @@ namespace Syrus.ViewModel
             get => _results;
             set => SetProperty(ref _results, value);
         }
+
+        public ICommand CompleteTextByTabCommand => new Command(CompleteText, _ => !string.IsNullOrEmpty(SearchingQuery));
 
         public SearchingViewModel()
         {
@@ -63,6 +63,12 @@ namespace Syrus.ViewModel
             //    GroupDescriptions = { new PropertyGroupDescription(nameof(Result.Group)) }
             //};
         }
+
+        private void CompleteText(object obj)
+        {
+            
+        }
+
 
         private void CreateHelp(string text, Result result)
             => Placeholder = Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase);
