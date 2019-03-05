@@ -34,7 +34,7 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _results, value);
         }
 
-        public ICommand CompleteTextByTabCommand => new Command(CompleteText, _ => !string.IsNullOrEmpty(SearchingQuery) && Results.Count == 1);
+        public ICommand CompleteTextByTabCommand => new Command(CompleteText, _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
 
         public SearchingViewModel()
         {
@@ -49,12 +49,6 @@ namespace Syrus.ViewModel
 
         public async void Search(string newValue)
         {
-            string[] str = new string[4] { "weather", "weather prague", "weather prague hovno", "weather " };
-            for(int i = 0; i < str.Length; i++)
-            {
-                var x = str[i].ToLower().Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-            }
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
@@ -62,8 +56,9 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            if (CanDisplayHelp())
+            if (CanDisplayHelp(Results[0]))
                 CreateHelp(newValue, Results[0]);
+            else Placeholder = string.Empty;
             //Results = new CollectionViewSource()
             //{
             //    Source = new ObservableCollection<Result>(results),
@@ -77,9 +72,20 @@ namespace Syrus.ViewModel
             Placeholder = null;
         }
 
-        private bool CanDisplayHelp() => Results.Count == 1 && true;
+        /// <summary>
+        /// Kontroluje, jestli je možné zobrazit nápovědu (placeholder) a zároveň doplnit command pomocí TAB.
+        /// Řeší případy command, command_, command_argument
+        /// </summary>
+        private bool CanDisplayHelp(Result result) => result.FromQuery.HasCommand 
+            && !result.FromQuery.HasArguments 
+            && !result.FromQuery.Original.EndsWith(' ');
 
+        /// <summary>
+        /// Ze zadaného výsledku hledání vybere zbývající část textu a zobrazí ji v Placeholderu.
+        /// </summary>
+        /// <param name="text">Text napsaný do vyhledávacího pole</param>
+        /// <param name="result">Aktuálně nalezený výsledek hledání</param>
         private void CreateHelp(string text, Result result)
-            => Placeholder = Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase);
+            => Placeholder = Regex.Replace(result.Text.ToLower(), text, string.Empty, RegexOptions.IgnoreCase);
     }
 }

@@ -54,6 +54,8 @@ namespace Syrus.Core
             results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
             if (results.Count == 0)
                 results.AddRange(ResultsFromPlugins(plugins));
+
+            results.ForEach(x => x.FromQuery = query);
             return results;
         }
 

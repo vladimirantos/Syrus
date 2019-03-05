@@ -9,6 +9,7 @@ namespace Syrus.Plugin
         public string Icon { get; set; }
         public string Content { get; set; }
         public string Group { get; set; }
+        public Query FromQuery { get; set; }
         public Action<IAppApi> OnClick { get; set; }
     }
 }
