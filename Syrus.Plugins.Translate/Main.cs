@@ -12,7 +12,7 @@ namespace Syrus.Plugins.Translate
             System.Console.WriteLine("TRANSLATE");
         }
 
-        public IEnumerable<Result> Search(string searchTerm)
+        public IEnumerable<Result> Search(Query query)
         {
             return new List<Result>();
         }

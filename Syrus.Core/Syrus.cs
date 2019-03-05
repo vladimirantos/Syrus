@@ -43,6 +43,6 @@ namespace Syrus.Core
             return this;
         }
 
-        public async Task<IEnumerable<Result>> SearchAsync(string term) => await _search.Search(term);
+        public async Task<IEnumerable<Result>> SearchAsync(string term) => await _search.Search(Query.FromString(term));
     }
 }

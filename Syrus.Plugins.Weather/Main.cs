@@ -10,7 +10,7 @@ namespace Syrus.Plugins.Weather
         {
         }
 
-        public IEnumerable<Result> Search(string searchTerm)
+        public IEnumerable<Result> Search(Query query)
         {
             return new List<Result>();
         }

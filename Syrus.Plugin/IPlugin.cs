@@ -6,6 +6,6 @@ namespace Syrus.Plugin
     {
         void OnInitialize(PluginContext context);
 
-        IEnumerable<Result> Search(string searchTerm);
+        IEnumerable<Result> Search(Query query);
     }
 }

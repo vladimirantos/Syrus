@@ -12,7 +12,7 @@ namespace Syrus.Core
     {
         IEnumerable<PluginPair> Plugins { get; set; }
         void Initialize();
-        Task<IEnumerable<Result>> Search(string match);
+        Task<IEnumerable<Result>> Search(Query query);
     }
 
     public class SearchEngine : ISearch
@@ -36,11 +36,11 @@ namespace Syrus.Core
             _defaultPlugins = Plugins.Where(p => p.Metadata.Default);
         }
 
-        public async Task<IEnumerable<Result>> Search(string match)
+        public async Task<IEnumerable<Result>> Search(Query query)
         {
             List<Result> results;
-            string[] parts = match.ToLower().Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            List<PluginPair> plugins = SelectPlugins(parts.First()).ToList();
+            
+            List<PluginPair> plugins = SelectPlugins(query.Command).ToList();
             //plugins.AddRange(_defaultPlugins);
 
             Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[plugins.Count];
@@ -48,7 +48,7 @@ namespace Syrus.Core
             foreach (PluginPair pluginPair in plugins)
             {
                 Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
-                tasks[i] = Task.Factory.StartNew(() => pluginPair.Plugin.Search(match));
+                tasks[i] = Task.Factory.StartNew(() => pluginPair.Plugin.Search(query));
                 i++;
             }
             results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -33,7 +34,7 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _results, value);
         }
 
-        public ICommand CompleteTextByTabCommand => new Command(CompleteText, _ => !string.IsNullOrEmpty(SearchingQuery));
+        public ICommand CompleteTextByTabCommand => new Command(CompleteText, _ => !string.IsNullOrEmpty(SearchingQuery) && Results.Count == 1);
 
         public SearchingViewModel()
         {
@@ -48,6 +49,12 @@ namespace Syrus.ViewModel
 
         public async void Search(string newValue)
         {
+            string[] str = new string[4] { "weather", "weather prague", "weather prague hovno", "weather " };
+            for(int i = 0; i < str.Length; i++)
+            {
+                var x = str[i].ToLower().Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+            }
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
@@ -55,7 +62,7 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            if (Results.Count == 1)
+            if (CanDisplayHelp())
                 CreateHelp(newValue, Results[0]);
             //Results = new CollectionViewSource()
             //{
@@ -66,9 +73,11 @@ namespace Syrus.ViewModel
 
         private void CompleteText(object obj)
         {
-            
+            SearchingQuery = Results.First().Text + " ";
+            Placeholder = null;
         }
 
+        private bool CanDisplayHelp() => Results.Count == 1 && true;
 
         private void CreateHelp(string text, Result result)
             => Placeholder = Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase);
