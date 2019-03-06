@@ -16,6 +16,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumHighColorBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource SystemBaseMediumHighColorBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
