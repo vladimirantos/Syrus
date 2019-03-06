@@ -54,11 +54,12 @@ namespace Syrus.ViewModel
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
+                Placeholder = string.Empty;
                 return;
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            if (CanDisplayHelp(Results[0]))
+            if (Results.Count > 0 && CanDisplayHelp(Results[0]))
                 CreateHelp(newValue, Results[0]);
             else Placeholder = string.Empty;
             //Results = new CollectionViewSource()
