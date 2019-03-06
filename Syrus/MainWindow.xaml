@@ -13,7 +13,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <view:SearchPanel Grid.Row="0"/>
+        <view:SearchPanel Grid.Row="0" x:Name="SearchPanel"/>
         <view:ResultsList Grid.Row="1">
             <view:ResultsList.Resources>
                 <Style TargetType="view:ResultsList">

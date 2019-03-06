@@ -20,6 +20,8 @@ namespace Syrus
             InitializeComponent();
             Loaded += (s, e) => InitializePosition();
             DataContext = new SearchingViewModel();
+            (DataContext as SearchingViewModel).OnSelectPlugin += 
+                () => SearchPanel.SearchingInput.CaretIndex = SearchPanel.SearchingInput.Text.Length;
         }
 
         protected override void OnSourceInitialized(EventArgs e)

@@ -1,8 +1,6 @@
 ﻿<UserControl x:Class="Syrus.View.SearchPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:fa="http://schemas.fontawesome.io/icons/">
     <UserControl.InputBindings>
         <KeyBinding
@@ -18,8 +16,7 @@
         <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
             <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Tag="Search anything"
-                 Style="{StaticResource SearchInput}"/>
+                     Style="{StaticResource SearchInput}"/>
             <TextBox Text="{Binding Placeholder}" Style="{StaticResource Placeholder}"/>
             <Label Content="– Počasí Praha - 27 °C, zataženo" Style="{StaticResource QuickResult}"/>
         </StackPanel>

@@ -1,7 +1,12 @@
-﻿namespace Syrus.View
+﻿using Syrus.ViewModel;
+
+namespace Syrus.View
 {
     public partial class SearchPanel
     {
-        public SearchPanel() => InitializeComponent();
+        public SearchPanel()
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -9,11 +9,13 @@ using System.Windows.Input;
 
 namespace Syrus.ViewModel
 {
+    public delegate void PluginSelected();
     class SearchingViewModel : NotifyPropertyChanges
     {
         private string _query;
         private string _placeholder;
         private Core.Syrus _syrus;
+        public event PluginSelected OnSelectPlugin;
 
         public string SearchingQuery 
         {
@@ -68,8 +70,9 @@ namespace Syrus.ViewModel
 
         private void CompleteText(object obj)
         {
-            SearchingQuery = Results.First().Text + " ";
+            SearchingQuery = Results.First().Text.ToLower() + " ";
             Placeholder = null;
+            OnSelectPlugin.Invoke();
         }
 
         /// <summary>
@@ -86,6 +89,7 @@ namespace Syrus.ViewModel
         /// <param name="text">Text napsaný do vyhledávacího pole</param>
         /// <param name="result">Aktuálně nalezený výsledek hledání</param>
         private void CreateHelp(string text, Result result)
-            => Placeholder = Regex.Replace(result.Text.ToLower(), text, string.Empty, RegexOptions.IgnoreCase);
+            => Placeholder = Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
     }
+
 }
