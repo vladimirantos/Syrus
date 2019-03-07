@@ -10,6 +10,7 @@ namespace Syrus.Plugin
         public string Content { get; set; }
         public string Group { get; set; }
         public Query FromQuery { get; set; }
+        public PluginMetadata FromPlugin { get; set; }
         public Action<IAppApi> OnClick { get; set; }
     }
 }

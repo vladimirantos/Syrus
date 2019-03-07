@@ -60,12 +60,6 @@ namespace Syrus.ViewModel
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
-
-            //Results = new CollectionViewSource()
-            //{
-            //    Source = new ObservableCollection<Result>(results),
-            //    GroupDescriptions = { new PropertyGroupDescription(nameof(Result.Group)) }
-            //};
         }
 
         private void CompleteText(object obj)
@@ -89,7 +83,7 @@ namespace Syrus.ViewModel
         /// <param name="text">Text napsaný do vyhledávacího pole</param>
         /// <param name="result">Aktuálně nalezený výsledek hledání</param>
         private string CreateHelp(string text, Result result)
-            => Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
+            => Regex.Replace(result.FromPlugin.FromKeyword, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
     }
 
 }

@@ -9,6 +9,11 @@ namespace Syrus.Plugin
         /// </summary>
         public string PluginLocation { get; set; }
 
+        /// <summary>
+        /// Klíčové slovo podle kterého byl plugin identifikován.
+        /// </summary>
+        public string FromKeyword { get; set; }
+
         public SearchingConfiguration? CurrentSearchingConfiguration { get; set; }
     }
 }

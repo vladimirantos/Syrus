@@ -48,19 +48,32 @@ namespace Syrus.Core
             foreach (PluginPair pluginPair in plugins)
             {
                 Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
-                tasks[i] = Task.Factory.StartNew(() => pluginPair.Plugin.Search(query));
+                tasks[i] = Task.Factory.StartNew(() => {
+                    List<Result> results = pluginPair.Plugin.Search(query).ToList();
+                    foreach (Result result in results) //todo: je nutné?
+                        result.FromPlugin = pluginPair.Metadata;
+                    return (IEnumerable<Result>)results;
+                });
                 i++;
             }
             results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
             if (results.Count == 0)
                 results.AddRange(ResultsFromPlugins(plugins));
 
-            results.ForEach(x => x.FromQuery = query);
+            foreach(var result in results)
+            {
+                result.FromQuery = query;
+            }
             return results;
         }
 
         private IEnumerable<PluginPair> SelectPlugins(string match)
-            => _keywordPlugins.Where(kv => kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase))
+            => _keywordPlugins.Where(kv => {
+                    bool isKeyword = kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase);
+                    if(isKeyword)
+                        kv.Value.Metadata.FromKeyword = kv.Key;
+                    return isKeyword;
+                })
                 .GroupBy(kv => kv.Value.Metadata.Name)
                 .Select(kv => kv.First().Value);
 
@@ -75,7 +88,8 @@ namespace Syrus.Core
                 {
                     Text = p.Metadata.Name,
                     Group = "Možnosti vyhledávání",
-                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : ""
+                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
+                    FromPlugin = p.Metadata
                 });
             }
             return results;
