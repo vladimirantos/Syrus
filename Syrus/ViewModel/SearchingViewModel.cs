@@ -43,7 +43,7 @@ namespace Syrus.ViewModel
             string pluginsLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "plugins");
             string cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "cache");
             _syrus = new Core.Syrus(pluginsLocation, cacheLocation, new Core.Configuration() {
-                Language = "en"
+                Language = "cs"
             });
             _syrus.LoadPlugins().Initialize();
             Results = new ObservableCollection<Result>();
@@ -59,9 +59,8 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            if (Results.Count > 0 && CanDisplayHelp(Results[0]))
-                CreateHelp(newValue, Results[0]);
-            else Placeholder = string.Empty;
+            Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
+
             //Results = new CollectionViewSource()
             //{
             //    Source = new ObservableCollection<Result>(results),
@@ -89,8 +88,8 @@ namespace Syrus.ViewModel
         /// </summary>
         /// <param name="text">Text napsaný do vyhledávacího pole</param>
         /// <param name="result">Aktuálně nalezený výsledek hledání</param>
-        private void CreateHelp(string text, Result result)
-            => Placeholder = Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
+        private string CreateHelp(string text, Result result)
+            => Regex.Replace(result.Text, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
     }
 
 }
