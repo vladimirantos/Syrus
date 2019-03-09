@@ -50,8 +50,8 @@ namespace Syrus.Core
                 Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
                 tasks[i] = Task.Factory.StartNew(() => {
                     List<Result> results = pluginPair.Plugin.Search(query).ToList();
-                    foreach (Result result in results) //todo: je nutné?
-                        result.FromPlugin = pluginPair.Metadata;
+                    //foreach (Result result in results) //todo: je nutné? možná se nevyužije
+                    //    result.FromPlugin = pluginPair.Metadata;
                     return (IEnumerable<Result>)results;
                 });
                 i++;
@@ -89,7 +89,8 @@ namespace Syrus.Core
                     Text = p.Metadata.Name,
                     Group = "Možnosti vyhledávání",
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
-                    FromPlugin = p.Metadata
+                    FromPlugin = p.Metadata,
+                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeyword)
                 });
             }
             return results;

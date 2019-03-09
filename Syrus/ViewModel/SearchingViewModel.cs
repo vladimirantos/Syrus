@@ -36,7 +36,9 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _results, value);
         }
 
-        public ICommand CompleteTextByTabCommand => new Command(CompleteText, _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
+        public ICommand CompleteTextByTabCommand => new Command((object obj) => CompleteText(Results.First()), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
+
+        public ICommand SelectResultCommand => new Command((object obj) => CompleteText((Result)obj));
 
         public SearchingViewModel()
         {
@@ -62,9 +64,9 @@ namespace Syrus.ViewModel
             Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
         }
 
-        private void CompleteText(object obj)
+        private void CompleteText(Result result)
         {
-            SearchingQuery = Results.First().Text.ToLower() + " ";
+            SearchingQuery = result.Text.ToLower() + " ";
             Placeholder = null;
             OnSelectPlugin.Invoke();
         }

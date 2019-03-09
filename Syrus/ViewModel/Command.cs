@@ -13,7 +13,9 @@ namespace Syrus.ViewModel
         public Command(Action<object> execute, Predicate<object> canExecute)
             => (_execute, _canExecute) = (execute, canExecute);
 
-        public bool CanExecute(object parameter) => _canExecute != null && _canExecute.Invoke(parameter);
+        public Command(Action<object> execute) : this(execute, null) { }
+
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
 
         public void Execute(object parameter) => _execute.Invoke(parameter);
     }
