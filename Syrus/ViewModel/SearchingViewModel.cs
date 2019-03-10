@@ -14,6 +14,7 @@ namespace Syrus.ViewModel
     {
         private string _query;
         private string _placeholder;
+        private string _quickResult;
         private Core.Syrus _syrus;
         public event PluginSelected OnSelectPlugin;
 
@@ -27,6 +28,12 @@ namespace Syrus.ViewModel
         {
             get => _placeholder;
             set => SetProperty(ref _placeholder, value);
+        }
+
+        public string QuickResult 
+        {
+            get => _quickResult;
+            set => SetProperty(ref _quickResult, value);
         }
 
         private ObservableCollection<Result> _results;
@@ -58,11 +65,13 @@ namespace Syrus.ViewModel
             {
                 Results = new ObservableCollection<Result>();
                 Placeholder = string.Empty;
+                QuickResult = string.Empty;
                 return;
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
+            QuickResult = results.First().QuickResult;
         }
 
         /// <summary>

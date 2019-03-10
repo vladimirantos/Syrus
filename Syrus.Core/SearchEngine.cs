@@ -50,8 +50,8 @@ namespace Syrus.Core
                 Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
                 tasks[i] = Task.Factory.StartNew(() => {
                     List<Result> results = pluginPair.Plugin.Search(query).ToList();
-                    //foreach (Result result in results) //todo: je nutné? možná se nevyužije
-                    //    result.FromPlugin = pluginPair.Metadata;
+                    foreach (Result result in results) 
+                        result.FromPlugin = pluginPair.Metadata;
                     return (IEnumerable<Result>)results;
                 });
                 i++;

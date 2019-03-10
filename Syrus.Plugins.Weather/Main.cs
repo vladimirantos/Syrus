@@ -12,7 +12,16 @@ namespace Syrus.Plugins.Weather
 
         public IEnumerable<Result> Search(Query query)
         {
-            return new List<Result>();
+            if (!query.HasArguments)
+                return new List<Result>();
+            return new List<Result>()
+            {
+                new Result()
+                {
+                    Text = $"Počasí v {query.Arguments}",
+                    QuickResult = $"- {query.Arguments} 19 °C, zataženo"
+                }
+            };
         }
     }
 }

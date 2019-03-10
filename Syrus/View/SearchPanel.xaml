@@ -18,7 +18,7 @@
             <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource SearchInput}"/>
             <TextBox Text="{Binding Placeholder}" Style="{StaticResource Placeholder}"/>
-            <Label Content="– Počasí Praha - 27 °C, zataženo" Style="{StaticResource QuickResult}"/>
+            <Label Content="{Binding QuickResult}" Style="{StaticResource QuickResult}"/>
         </StackPanel>
         <TextBlock Grid.Column="2" Text="ICON"/>
     </Grid>
