@@ -7,12 +7,12 @@
   "searchingConfigurations": [
     {
       "language": "en",
-      "regularExpressions":  ["^\\d$"]
+      "regularExpressions": [ "^\\s*([-+]?)(\\d+)(?:\\s*([-+*\\/])?\\s*((?:\\s[-+])?\\d+)?\\s*)+$" ]
     },
 
     {
       "language": "cs",
-      "regularExpressions": [ "^\\d$" ]
+      "regularExpressions": [ "^\\s*([-+]?)(\\d+)(?:\\s*([-+*\\/])?\\s*((?:\\s[-+])?\\d+)?\\s*)+$" ]
     }
   ]
 }
