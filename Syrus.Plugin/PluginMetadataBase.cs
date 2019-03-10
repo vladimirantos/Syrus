@@ -54,5 +54,6 @@ namespace Syrus.Plugin
     {
         public string Language { get; set; }
         public IEnumerable<string> Keywords { get; set; }
+        public IEnumerable<string> RegularExpressions { get; set; }
     }
 }

@@ -1,0 +1,17 @@
+﻿{
+  "name": "Calculator",
+  "fullName": "Syrus.Plugins.Calculator",
+  "author": "Vladimír Antoš",
+  "version": "0.0.0.1",
+  "searchingConfigurations": [
+    {
+      "language": "en",
+      "regularExpressions":  ["^\d$"]
+    },
+
+    {
+      "language": "cs",
+      "regularExpressions": [ "^\\d$" ]
+    }
+  ]
+}
