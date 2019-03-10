@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Syrus.Core
 {
@@ -17,6 +18,7 @@ namespace Syrus.Core
 
     public class SearchEngine : ISearch
     {
+        private Regex _regex;
         private Configuration _configuration;
         private ICollection<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
         private ICollection<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
@@ -55,7 +57,8 @@ namespace Syrus.Core
         {
             List<Result> results;
             
-            List<PluginPair> plugins = SelectPlugins(query.Command).ToList();
+            List<PluginPair> plugins = SelectPluginsByKeyword(query.Command).ToList();
+            plugins.AddRange(SelectPluginsByRegex(query.Command));
             //plugins.AddRange(_defaultPlugins);
 
             Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[plugins.Count];
@@ -82,7 +85,7 @@ namespace Syrus.Core
             return results;
         }
 
-        private IEnumerable<PluginPair> SelectPlugins(string match)
+        private IEnumerable<PluginPair> SelectPluginsByKeyword(string match)
             => _keywordPlugins.Where(kv => {
                     bool isKeyword = kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase);
                     if(isKeyword)
@@ -92,7 +95,18 @@ namespace Syrus.Core
                 .GroupBy(kv => kv.Value.Metadata.Name)
                 .Select(kv => kv.First().Value);
 
-
+        private IEnumerable<PluginPair> SelectPluginsByRegex(string match)
+        {
+            return _regexPlugins.Where(kv =>
+            {
+                var regexMatch = Regex.Match(match, kv.Key, RegexOptions.IgnoreCase);
+                if (regexMatch.Success)
+                    kv.Value.Metadata.FromKeyword = kv.Key;
+                return regexMatch.Success;
+            })
+            .GroupBy(kv => kv.Value.Metadata.Name)
+            .Select(kv => kv.First().Value);
+        }
 
         private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins)
         {
