@@ -70,7 +70,8 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
+            if(Results[0].FromPlugin.EnableHelp)
+                Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
             QuickResult = results.First().QuickResult;
         }
 

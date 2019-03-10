@@ -37,6 +37,11 @@ namespace Syrus.Plugin
         /// </summary>
         public string Icon { get; set; }
 
+        /// <summary>
+        /// If its <c>false</c>, help placeholder will be hidden.
+        /// </summary>
+        public bool EnableHelp { get; set; } = true;
+
         public IEnumerable<SearchingConfiguration> SearchingConfigurations { get; set; }
 
         /// <summary>
