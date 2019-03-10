@@ -70,9 +70,9 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            if(Results[0].FromPlugin.EnableHelp)
-                Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
-            QuickResult = results.First().QuickResult;
+            if (Results[0].FromPlugin.EnableHelp)
+                SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty);
+            ChangeQuickResult(results.First().QuickResult);
         }
 
         /// <summary>
@@ -98,15 +98,9 @@ namespace Syrus.ViewModel
             OnSelectPlugin.Invoke();
         }
 
-        public void ChangeQuickResult(string text)
-        {
-            throw new NotImplementedException();
-        }
+        public void ChangeQuickResult(string text) => QuickResult = text;
 
-        public void SetHelpPlaceholder(string text)
-        {
-            throw new NotImplementedException();
-        }
+        public void SetHelpPlaceholder(string text) => Placeholder = text;
     }
 
 }
