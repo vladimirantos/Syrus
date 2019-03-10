@@ -36,20 +36,18 @@ namespace Syrus.Core
             foreach (PluginPair pp in Plugins.Where(p => !p.Metadata.Default))
             {
                 if (pp.Metadata.CurrentSearchingConfiguration.Keywords != null)
-                    _keywordPlugins = ToKeyValues(pp, pp.Metadata.CurrentSearchingConfiguration.Keywords);
+                    ToKeyValues(ref _keywordPlugins, pp, pp.Metadata.CurrentSearchingConfiguration.Keywords);
 
                 if (pp.Metadata.CurrentSearchingConfiguration.RegularExpressions != null)
-                    _regexPlugins = ToKeyValues(pp, pp.Metadata.CurrentSearchingConfiguration.RegularExpressions);
+                    ToKeyValues(ref _regexPlugins, pp, pp.Metadata.CurrentSearchingConfiguration.RegularExpressions);
             }
              
             _defaultPlugins = Plugins.Where(p => p.Metadata.Default);
 
-            ICollection<KeyValuePair<string, PluginPair>> ToKeyValues(PluginPair plugin, IEnumerable<string> col)
+            void ToKeyValues(ref ICollection<KeyValuePair<string, PluginPair>> keyValuePairs, PluginPair plugin, IEnumerable<string> col)
             {
-                List<KeyValuePair<string, PluginPair>> keyValuePairs = new List<KeyValuePair<string, PluginPair>>();
                 foreach (string item in col)
                     keyValuePairs.Add(new KeyValuePair<string, PluginPair>(item, plugin));
-                return keyValuePairs;
             }
         }
 
