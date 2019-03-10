@@ -6,7 +6,7 @@
   "searchingConfigurations": [
     {
       "language": "en",
-      "regularExpressions":  ["^\d$"]
+      "regularExpressions":  ["^\\d$"]
     },
 
     {

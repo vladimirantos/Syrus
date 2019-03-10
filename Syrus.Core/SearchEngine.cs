@@ -19,6 +19,7 @@ namespace Syrus.Core
     {
         private Configuration _configuration;
         private ICollection<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
+        private ICollection<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
         private IEnumerable<PluginPair> _defaultPlugins;
         public IEnumerable<PluginPair> Plugins { get; set; }
 
@@ -31,9 +32,23 @@ namespace Syrus.Core
         {
             SelectSearchingConfigurationByLang(_configuration.Language);
             foreach (PluginPair pp in Plugins.Where(p => !p.Metadata.Default))
-                foreach (string keyword in pp.Metadata.CurrentSearchingConfiguration.Keywords)
-                    _keywordPlugins.Add(new KeyValuePair<string, PluginPair>(keyword, pp));
+            {
+                if (pp.Metadata.CurrentSearchingConfiguration.Keywords != null)
+                    _keywordPlugins = ToKeyValues(pp, pp.Metadata.CurrentSearchingConfiguration.Keywords);
+
+                if (pp.Metadata.CurrentSearchingConfiguration.RegularExpressions != null)
+                    _regexPlugins = ToKeyValues(pp, pp.Metadata.CurrentSearchingConfiguration.RegularExpressions);
+            }
+             
             _defaultPlugins = Plugins.Where(p => p.Metadata.Default);
+
+            ICollection<KeyValuePair<string, PluginPair>> ToKeyValues(PluginPair plugin, IEnumerable<string> col)
+            {
+                List<KeyValuePair<string, PluginPair>> keyValuePairs = new List<KeyValuePair<string, PluginPair>>();
+                foreach (string item in col)
+                    keyValuePairs.Add(new KeyValuePair<string, PluginPair>(item, plugin));
+                return keyValuePairs;
+            }
         }
 
         public async Task<IEnumerable<Result>> Search(Query query)

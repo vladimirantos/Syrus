@@ -7,12 +7,11 @@ namespace Syrus.Plugins.Calculator
     {
         public void OnInitialize(PluginContext context)
         {
-            throw new System.NotImplementedException();
         }
 
         public IEnumerable<Result> Search(Query query)
         {
-            throw new System.NotImplementedException();
+            return new List<Result>();
         }
     }
 }
