@@ -16,6 +16,7 @@ namespace Syrus.ViewModel
         private string _placeholder;
         private string _quickResult;
         private Core.Syrus _syrus;
+        private readonly string _defaultPlaceholder = "Search";
         public event PluginSelected OnSelectPlugin;
 
         public string SearchingQuery 
@@ -57,6 +58,7 @@ namespace Syrus.ViewModel
             });
             _syrus.LoadPlugins().Initialize();
             Results = new ObservableCollection<Result>();
+            Placeholder = _defaultPlaceholder;
         }
 
         public async void Search(string newValue)
@@ -64,7 +66,7 @@ namespace Syrus.ViewModel
             if (string.IsNullOrEmpty(newValue))
             {
                 Results = new ObservableCollection<Result>();
-                Placeholder = string.Empty;
+                Placeholder = _defaultPlaceholder;
                 QuickResult = string.Empty;
                 return;
             }
