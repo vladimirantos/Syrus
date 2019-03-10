@@ -37,7 +37,7 @@ namespace Syrus.ViewModel
         }
 
         public ICommand CompleteTextByTabCommand => new Command((object obj) 
-            => ChangeQuery(Results.First().Text.ToLower() + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
+            => ChangeQuery(Results.First().FromPlugin.FromKeyword + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
 
         public ICommand SelectResultCommand => new Command((object obj) => ((Result)obj).OnClick(this, obj as Result));
 
