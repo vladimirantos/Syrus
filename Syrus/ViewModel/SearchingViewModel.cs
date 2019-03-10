@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace Syrus.ViewModel
 {
     public delegate void PluginSelected();
-    class SearchingViewModel : NotifyPropertyChanges
+    class SearchingViewModel : NotifyPropertyChanges, IAppApi
     {
         private string _query;
         private string _placeholder;
@@ -36,9 +36,10 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _results, value);
         }
 
-        public ICommand CompleteTextByTabCommand => new Command((object obj) => CompleteText(Results.First()), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
+        public ICommand CompleteTextByTabCommand => new Command((object obj) 
+            => ChangeQuery(Results.First().Text.ToLower() + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
 
-        public ICommand SelectResultCommand => new Command((object obj) => CompleteText((Result)obj));
+        public ICommand SelectResultCommand => new Command((object obj) => ((Result)obj).OnClick(this, obj as Result));
 
         public SearchingViewModel()
         {
@@ -64,13 +65,6 @@ namespace Syrus.ViewModel
             Placeholder = Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty;
         }
 
-        private void CompleteText(Result result)
-        {
-            SearchingQuery = result.Text.ToLower() + " ";
-            Placeholder = null;
-            OnSelectPlugin.Invoke();
-        }
-
         /// <summary>
         /// Kontroluje, jestli je možné zobrazit nápovědu (placeholder) a zároveň doplnit command pomocí TAB.
         /// Řeší případy command, command_, command_argument
@@ -86,6 +80,23 @@ namespace Syrus.ViewModel
         /// <param name="result">Aktuálně nalezený výsledek hledání</param>
         private string CreateHelp(string text, Result result)
             => Regex.Replace(result.FromPlugin.FromKeyword, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
+
+        public void ChangeQuery(string query, bool append = false)
+        {
+            SearchingQuery = append ? SearchingQuery + query : query;
+            Placeholder = null;
+            OnSelectPlugin.Invoke();
+        }
+
+        public void ChangeQuickResult(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetHelpPlaceholder(string text)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

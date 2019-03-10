@@ -37,7 +37,8 @@
                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                 <i:InvokeCommandAction
                                 Command="{Binding DataContext.SelectResultCommand, 
-                                RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
+                                RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"
+                                CommandParameter="{Binding}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <Image Source="{Binding Icon}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
