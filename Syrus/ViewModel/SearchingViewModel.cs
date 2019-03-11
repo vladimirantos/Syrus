@@ -15,6 +15,8 @@ namespace Syrus.ViewModel
         private string _query;
         private string _placeholder;
         private string _quickResult;
+        private string _currentPluginIcon;
+
         private Core.Syrus _syrus;
         private readonly string _defaultPlaceholder = "Search";
         public event PluginSelected OnSelectPlugin;
@@ -35,6 +37,12 @@ namespace Syrus.ViewModel
         {
             get => _quickResult;
             set => SetProperty(ref _quickResult, value);
+        }
+
+        public string CurrentPluginIcon 
+        {
+            get => _currentPluginIcon;
+            set => SetProperty(ref _currentPluginIcon, value);
         }
 
         private ObservableCollection<Result> _results;
@@ -68,10 +76,12 @@ namespace Syrus.ViewModel
                 Results = new ObservableCollection<Result>();
                 Placeholder = _defaultPlaceholder;
                 QuickResult = string.Empty;
+                CurrentPluginIcon = string.Empty;
                 return;
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
+            CurrentPluginIcon = Results.Count == 1 ? Results.First().Icon : string.Empty;
             if (Results[0].FromPlugin.EnableHelp)
                 SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty);
             ChangeQuickResult(results.First().QuickResult);

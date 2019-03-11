@@ -11,7 +11,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*"/>
             <ColumnDefinition Width="2.8*"/>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
@@ -20,6 +20,7 @@
             <TextBox Text="{Binding Placeholder}" Style="{StaticResource Placeholder}"/>
             <Label Content="{Binding QuickResult}" Style="{StaticResource QuickResult}"/>
         </StackPanel>
-        <TextBlock Grid.Column="2" Text="ICON"/>
+        <Image Grid.Column="2" Source="{Binding CurrentPluginIcon}" Width="30" Height="30"
+               VerticalAlignment="Center" HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>
