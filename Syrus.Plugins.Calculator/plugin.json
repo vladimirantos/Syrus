@@ -3,6 +3,7 @@
   "fullName": "Syrus.Plugins.Calculator",
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
+  "icon": "icon.png",
   "enableHelp": false,
   "searchingConfigurations": [
     {

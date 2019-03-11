@@ -3,5 +3,6 @@
   "fullName": "Syrus.Plugins.Google",
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
-  "default":  true
+  "default": true,
+  "icon": "icon.png"
 }
