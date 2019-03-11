@@ -79,6 +79,8 @@ namespace Syrus.Core
             foreach(var result in results)
             {
                 result.FromQuery = query;
+                if (string.IsNullOrEmpty(result.Icon))
+                    result.Icon = result.FromPlugin.Icon;
             }
             return results;
         }
