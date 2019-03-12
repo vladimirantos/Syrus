@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Syrus.View"
-             xmlns:utils="clr-namespace:Syrus.Utils">
+             xmlns:utils="clr-namespace:Syrus.Utils" Padding="0">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.3*"/>
@@ -35,34 +35,36 @@
             </ItemsControl.GroupStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Style="{StaticResource ResultItem}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                <i:InvokeCommandAction
+                    <Border Padding="20 0 0 0"  Style="{StaticResource ResultItem}">
+                        <StackPanel Orientation="Horizontal">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction
                                 Command="{Binding DataContext.SelectResultCommand, 
                                 RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"
                                 CommandParameter="{Binding}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <Image Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            <Image.Resources>
-                                <Style TargetType="Image">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.IsEnabledDarkMode, 
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Image Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <Image.Resources>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DataContext.IsEnabledDarkMode, 
                                             RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="False">
-                                            <Setter Property="Source" Value="{Binding Icon}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding NightIcon}" Value="{x:Null}">
-                                            <Setter Property="Source" Value="{Binding Icon}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                    <Setter Property="Source" Value="{Binding NightIcon}"/>
-                                </Style>
-                            </Image.Resources>
-                        </Image>
-                        <TextBlock Text="{Binding DataContext.IsEnabledDarkMode, 
+                                                <Setter Property="Source" Value="{Binding Icon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding NightIcon}" Value="{x:Null}">
+                                                <Setter Property="Source" Value="{Binding Icon}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Source" Value="{Binding NightIcon}"/>
+                                    </Style>
+                                </Image.Resources>
+                            </Image>
+                            <TextBlock Text="{Binding DataContext.IsEnabledDarkMode, 
                                             RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
-                    </StackPanel>
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
