@@ -44,8 +44,24 @@
                                 CommandParameter="{Binding}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <Image Source="{Binding Icon}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{Binding Text}"/>
+                        <Image Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Image.Resources>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.IsEnabledDarkMode, 
+                                            RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="False">
+                                            <Setter Property="Source" Value="{Binding Icon}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding NightIcon}" Value="{x:Null}">
+                                            <Setter Property="Source" Value="{Binding Icon}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="Source" Value="{Binding NightIcon}"/>
+                                </Style>
+                            </Image.Resources>
+                        </Image>
+                        <TextBlock Text="{Binding DataContext.IsEnabledDarkMode, 
+                                            RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

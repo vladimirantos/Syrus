@@ -2,6 +2,7 @@
 using Syrus.Utils.Hotkeys;
 using Syrus.ViewModel;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Syrus

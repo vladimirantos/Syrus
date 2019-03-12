@@ -1,9 +1,11 @@
-﻿using Syrus.Plugin;
+﻿using Microsoft.Win32;
+using Syrus.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -52,6 +54,12 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _results, value);
         }
 
+        /// <summary>
+        /// Returns true when windows dark mode is enabled.
+        /// </summary>
+        public bool IsEnabledDarkMode 
+            => (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0;
+
         public ICommand CompleteTextByTabCommand => new Command((object obj) 
             => ChangeQuery(Results.First().FromPlugin.FromKeyword + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
 
@@ -68,6 +76,9 @@ namespace Syrus.ViewModel
             Results = new ObservableCollection<Result>();
             Placeholder = _defaultPlaceholder;
         }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int RegGetValue(int nIndex);
 
         public async void Search(string newValue)
         {

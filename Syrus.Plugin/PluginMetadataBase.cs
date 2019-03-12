@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Syrus.Plugin
@@ -36,6 +37,11 @@ namespace Syrus.Plugin
         /// Local path to icon.
         /// </summary>
         public string Icon { get; set; }
+
+        /// <summary>
+        /// It will be used when dark mode is activated.
+        /// </summary>
+        public string NightIcon { get; set; }
 
         /// <summary>
         /// If its <c>false</c>, help placeholder will be hidden.

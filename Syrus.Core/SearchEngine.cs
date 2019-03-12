@@ -81,6 +81,8 @@ namespace Syrus.Core
                 result.FromQuery = query;
                 if (string.IsNullOrEmpty(result.Icon))
                     result.Icon = result.FromPlugin.Icon;
+                if (string.IsNullOrEmpty(result.NightIcon))
+                    result.NightIcon = result.FromPlugin.NightIcon;
             }
             return results;
         }
