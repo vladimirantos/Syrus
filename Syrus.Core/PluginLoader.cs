@@ -28,7 +28,7 @@ namespace Syrus.Core
             {
                 string pluginPath = Path.Combine(_pluginLocation, directories[i]);
                 PluginMetadata metadata = LoadMetadata(pluginPath);
-                metadata.Icon = Path.Combine(pluginPath, metadata.Icon);
+                metadata.Icon = metadata.Icon != null ? Path.Combine(pluginPath, metadata.Icon) : null;
                 metadata.NightIcon = metadata.NightIcon != null ? Path.Combine(pluginPath, metadata.NightIcon) : null;
                 IPlugin plugin;
                 try
