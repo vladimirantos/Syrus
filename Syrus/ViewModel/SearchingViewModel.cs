@@ -104,7 +104,8 @@ namespace Syrus.ViewModel
         /// </summary>
         private bool CanDisplayHelp(Result result) => result.FromQuery.HasCommand 
             && !result.FromQuery.HasArguments 
-            && !result.FromQuery.Original.EndsWith(' ');
+            && !result.FromQuery.Original.EndsWith(' ') 
+            && result.FromPlugin.FromKeyword != null; //pro defaultní pluginy
 
         /// <summary>
         /// Ze zadaného výsledku hledání vybere zbývající část textu a zobrazí ji v Placeholderu.

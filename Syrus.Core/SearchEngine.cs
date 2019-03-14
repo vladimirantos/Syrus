@@ -74,7 +74,10 @@ namespace Syrus.Core
             }
             results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
             if (results.Count == 0)
+            {
                 results.AddRange(ResultsFromPlugins(plugins));
+                results.AddRange(DefaultResults(query.Original));
+            }
 
             foreach(var result in results)
             {
@@ -125,6 +128,23 @@ namespace Syrus.Core
                 });
             }
             return results;
+        }
+
+        /// <summary>
+        /// Searching by default plugins
+        /// </summary>
+        private IEnumerable<Result> DefaultResults(string match)
+        {
+            foreach(PluginPair p in _defaultPlugins)
+            {
+                yield return new Result()
+                {
+                    Text = p.Metadata.Name,
+                    Group = "Vyhledat online",
+                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
+                    FromPlugin = p.Metadata
+                };
+            }
         }
 
         private void SelectSearchingConfigurationByLang(string language)
