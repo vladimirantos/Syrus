@@ -1,4 +1,8 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Syrus.Plugin
 {
@@ -14,5 +18,28 @@ namespace Syrus.Plugin
         /// Deserialize JSON to type
         /// </summary>
         public T Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json);
+        
+        /// <summary>
+        /// Parse json to JObject
+        /// </summary>
+        public JObject JObjectParse(string json) => JObject.Parse(json);
+
+        /// <summary>
+        /// Download json from url and parse to JObject.
+        /// </summary>
+        /// <param name="url">Url to json source</param>
+        public JObject JObjectFromHttp(string url) => JObject.Parse(new WebClient().DownloadString(url));
+
+        /// <summary>
+        /// Donwload json from url async and parse to JObject
+        /// </summary>
+        public async Task<JObject> JObjectFromHttpAsync(string url)
+        {
+            using (WebClient client = new WebClient())
+            {
+                var result = await client.DownloadStringTaskAsync(url);
+                return JObject.Parse(result);
+            }
+        }
     }
 }
