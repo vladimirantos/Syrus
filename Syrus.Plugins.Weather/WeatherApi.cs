@@ -15,13 +15,13 @@ namespace Syrus.Plugins.Weather
         public WeatherFactory(string apiKey) => _apiKey = apiKey;
 
         public WeatherApi GetWeather(string query) => new WeatherApi(JObject.Parse(
-                new WebClient().DownloadString($"{_baseUrl}?appid={_apiKey}&q={query}")));
+                new WebClient().DownloadString($"{_baseUrl}?appid={_apiKey}&q={query}&units=metric")));
     }
 
     internal class WeatherApi
     {
         public Coord Coord { get; private set; }
-        public Main Main { get; private set; }
+        public MainWeather Main { get; private set; }
         public Wind Wind { get; private set; }
         public Rain Rain { get; private set; }
         public Snow Snow { get; private set; }
@@ -34,7 +34,7 @@ namespace Syrus.Plugins.Weather
         public WeatherApi(JObject json)
         {
             Coord = new Coord(json["coord"]);
-            Main = new Main(json["main"]);
+            Main = new MainWeather(json["main"]);
             Wind = new Wind(json["wind"]);
             Clouds = new Clouds(json["clouds"]);
             Sys = new Sys(json["sys"]);
@@ -59,9 +59,11 @@ namespace Syrus.Plugins.Weather
             Latitude = double.Parse(token["lat"].ToString());
             Longitude = double.Parse(token["lon"].ToString());
         }
+
+        public override string ToString() => $"[{Latitude}, {Longitude}]";
     }
 
-    internal class Main
+    internal class MainWeather
     {
         public double Temperature { get; }
         public double MinTemperature { get; }
@@ -69,7 +71,7 @@ namespace Syrus.Plugins.Weather
         public double Pressure { get; }
         public double Humidity { get; }
 
-        public Main(JToken token)
+        public MainWeather(JToken token)
         {
             Temperature = double.Parse(token["temp"].ToString());
             MinTemperature = double.Parse(token["temp_min"].ToString());
@@ -77,6 +79,8 @@ namespace Syrus.Plugins.Weather
             Pressure = double.Parse(token["pressure"].ToString());
             Humidity = double.Parse(token["humidity"].ToString());
         }
+
+        public override string ToString() => $"{Temperature}°C";
     }
 
     internal class Wind
@@ -108,7 +112,8 @@ namespace Syrus.Plugins.Weather
         public Wind(JToken token)
         {
             Speed = double.Parse(token["speed"].ToString());
-            Degree = double.Parse(token["deg"].ToString());
+            if(token.SelectToken("deg") != null)
+                Degree = double.Parse(token.SelectToken("deg").ToString());
             Direction = assignDirection(Degree);
         }
 

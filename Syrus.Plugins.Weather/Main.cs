@@ -1,5 +1,6 @@
 ﻿using Syrus.Plugin;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 
 namespace Syrus.Plugins.Weather
@@ -7,53 +8,38 @@ namespace Syrus.Plugins.Weather
     public class Main : IPlugin
     {
         private const string ApiKey = "2747ba3ddb5d7e5e4d358c143ce2f61f";
-        private const string ApiUrl = "http://api.openweathermap.org/data/2.5/";
 
         private PluginContext _pluginContext;
-        private readonly HttpClient _httpClient = new HttpClient();
+        private WeatherFactory _weatherFactory;
 
         public void OnInitialize(PluginContext context)
         {
             _pluginContext = context;
-
-            //api.openweathermap.org/data/2.5/weather?q={city name}&APPID=ApiKey
+            _weatherFactory = new WeatherFactory(ApiKey);
         }
 
         public IEnumerable<Result> Search(Query query)
         {
             if (!query.HasArguments || query.Arguments.Length < 3)
                 return new List<Result>();
-            Load(query.Arguments);
-            return new List<Result>()
-            {
-                new Result()
-                {
-                    Text = $"Počasí v {query.Arguments}",
-                    QuickResult = $"- {query.Arguments} 19 °C, zataženo"
-                }
-            };
-        }
-
-        private async void Load(string x)
-        {
             try
             {
-                string url = GetCityWeatherUrl(x);
-                var a = _pluginContext.JObjectFromHttp(url);
-                Coord c = new Coord(a["coord"]);
+                WeatherApi weather = _weatherFactory.GetWeather(query.Arguments);
+                return new List<Result>()
+                {
+                    new Result()
+                    {
+                        Text = $"Počasí v {query.Arguments}",
+                        QuickResult = $"- {query.Arguments} {weather.Main}"
+                    }
+                };
             }
-            catch (HttpRequestException e)
+            catch (WebException)
             {
 
             }
+            return new List<Result>();
         }
-
-        private void GetCurrentPosition()
-        {
-            //var x = geo.Position;
-        }
-
-        private string GetCityWeatherUrl(string city) => $"{ApiUrl}/weather?q={city}&APPID={ApiKey}";
     }
 
 
