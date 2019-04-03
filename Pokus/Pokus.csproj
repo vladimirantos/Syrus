@@ -17,7 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Template.xaml" />
     <None Remove="UserControl1.xaml" />
   </ItemGroup>
 
@@ -32,9 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Template.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="UserControl1.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

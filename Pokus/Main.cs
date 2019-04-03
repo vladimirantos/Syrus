@@ -20,7 +20,6 @@ namespace Pokus
             {
                 Text = "BANIK PICO",
                 Group = "Pičoviny",
-                Content = new DataTemplate()
             }
         };
             

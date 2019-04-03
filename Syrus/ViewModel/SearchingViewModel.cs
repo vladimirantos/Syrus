@@ -23,33 +23,28 @@ namespace Syrus.ViewModel
         private readonly string _defaultPlaceholder = "Search";
         public event PluginSelected OnSelectPlugin;
 
-        public string SearchingQuery 
-        {
+        public string SearchingQuery {
             get => _query;
             set => SetProperty(ref _query, value, Search);
         }
 
-        public string Placeholder 
-        {
+        public string Placeholder {
             get => _placeholder;
             set => SetProperty(ref _placeholder, value);
         }
 
-        public string QuickResult 
-        {
+        public string QuickResult {
             get => _quickResult;
             set => SetProperty(ref _quickResult, value);
         }
 
-        public string CurrentPluginIcon 
-        {
+        public string CurrentPluginIcon {
             get => _currentPluginIcon;
             set => SetProperty(ref _currentPluginIcon, value);
         }
 
         private ObservableCollection<Result> _results;
-        public ObservableCollection<Result> Results 
-        {
+        public ObservableCollection<Result> Results {
             get => _results;
             set => SetProperty(ref _results, value);
         }
@@ -57,13 +52,20 @@ namespace Syrus.ViewModel
         /// <summary>
         /// Returns true when windows dark mode is enabled.
         /// </summary>
-        public bool IsEnabledDarkMode 
+        public bool IsEnabledDarkMode
             => (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0;
 
-        public ICommand CompleteTextByTabCommand => new Command((object obj) 
+        public ICommand CompleteTextByTabCommand => new Command((object obj)
             => ChangeQuery(Results.First().FromPlugin.FromKeyword + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
 
-        public ICommand SelectResultCommand => new Command((object obj) => ((Result)obj).OnClick(this, obj as Result));
+        public ICommand SelectResultCommand => new Command((object obj) => {
+            var x = ((Result)obj);
+            if(x.OnClick == null)
+            {
+
+            }
+            x.OnClick(this, obj as Result);
+            });
 
         public SearchingViewModel()
         {

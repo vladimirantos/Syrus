@@ -67,7 +67,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
-        <TextBlock Grid.Column="1" VerticalAlignment="Stretch" Background="#fff"/>
+
+        <ContentControl ContentTemplate="{StaticResource MyTemplate}"></ContentControl>
     </Grid>
 </UserControl>
