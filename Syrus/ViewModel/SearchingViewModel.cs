@@ -1,10 +1,12 @@
 ﻿using Microsoft.Win32;
+using Syrus.Core;
 using Syrus.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -62,7 +64,8 @@ namespace Syrus.ViewModel
             var x = ((Result)obj);
             if(x.OnClick == null)
             {
-
+                var y = x.Content.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
+                var contentcontrol = ObjectActivator.CreateInstance<IPlugin>(y.FirstOrDefault());
             }
             x.OnClick(this, obj as Result);
             });

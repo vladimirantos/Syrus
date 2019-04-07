@@ -68,6 +68,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <ContentControl ContentTemplate="{StaticResource MyTemplate}"></ContentControl>
+        <!--<ContentControl ContentTemplate="{StaticResource MyTemplate}"></ContentControl>-->
     </Grid>
 </UserControl>

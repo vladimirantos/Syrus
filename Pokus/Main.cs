@@ -20,6 +20,7 @@ namespace Pokus
             {
                 Text = "BANIK PICO",
                 Group = "Pičoviny",
+                Content = typeof(UserControl1)
             }
         };
             

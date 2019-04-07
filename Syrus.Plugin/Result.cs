@@ -8,7 +8,7 @@ namespace Syrus.Plugin
         public string QuickResult { get; set; }
         public string Icon { get; set; }
         public string NightIcon { get; set; }
-        public object Content { get; set; }
+        public Type Content { get; set; }
         public string Group { get; set; }
         public Query FromQuery { get; set; }
         public PluginMetadata FromPlugin { get; set; }

@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Syrus.Core
 {
-    internal static class ObjectActivator
+    public static class ObjectActivator
     {
         private delegate object Activator(params object[] args);
 
