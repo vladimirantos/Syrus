@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pokus\Pokus.csproj" />
     <ProjectReference Include="..\Syrus.Core\Syrus.Core.csproj" />
+    <ProjectReference Include="..\Syrus.Plugin\Syrus.Plugin.csproj" />
   </ItemGroup>
 
   <ItemGroup>

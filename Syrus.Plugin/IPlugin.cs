@@ -9,10 +9,4 @@ namespace Syrus.Plugin
 
         IEnumerable<Result> Search(Query query);
     }
-
-    public interface IViewablePlugin : IPlugin
-    {
-        object ViewModel { get; set; }
-        ResourceDictionary View { get; set; }
-    }
 }

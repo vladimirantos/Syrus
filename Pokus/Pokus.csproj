@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="UserControl1.xaml" />
+    <None Remove="View.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,13 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="UserControl1.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UserControl1.xaml">
+    <Page Update="View.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

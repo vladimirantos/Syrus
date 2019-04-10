@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Syrus.ViewModel
@@ -51,6 +52,13 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _results, value);
         }
 
+        private BaseViewModel _resultDetail;
+        public BaseViewModel ResultDetail {
+            get => _resultDetail;
+            set => SetProperty(ref _resultDetail, value);
+        }
+
+
         /// <summary>
         /// Returns true when windows dark mode is enabled.
         /// </summary>
@@ -61,13 +69,13 @@ namespace Syrus.ViewModel
             => ChangeQuery(Results.First().FromPlugin.FromKeyword + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
 
         public ICommand SelectResultCommand => new Command((object obj) => {
-            var x = ((Result)obj);
+            var x = (Result)obj;
             if(x.OnClick == null)
             {
-                var y = x.Content.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
-                var contentcontrol = ObjectActivator.CreateInstance<IPlugin>(y.FirstOrDefault());
-            }
-            x.OnClick(this, obj as Result);
+                Application.Current.Resources.MergedDictionaries.Add(x.Content.Template);//new ResourceDictionary() { Source = new Uri("pack://application:,,,/Pokus;component/View.xaml") });
+                ResultDetail = x.Content.ViewModel;
+            }else
+                x.OnClick(this, obj as Result);
             });
 
         public SearchingViewModel()
@@ -132,4 +140,9 @@ namespace Syrus.ViewModel
         public void SetHelpPlaceholder(string text) => Placeholder = text;
     }
 
+
+    class X : BaseViewModel
+    {
+        public string Title => "NECUM NA ME";
+    }
 }

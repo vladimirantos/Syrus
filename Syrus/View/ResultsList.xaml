@@ -4,9 +4,10 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Syrus.View"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:Syrus.Plugin;assembly=Syrus.Plugin"
              xmlns:utils="clr-namespace:Syrus.Utils" Padding="0">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.3*"/>
@@ -68,6 +69,13 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <!--<ContentControl ContentTemplate="{StaticResource MyTemplate}"></ContentControl>-->
+        <!--<ContentControl ContentTemplate="{Binding ResultDetail}"></ContentControl>-->
+        <!--<TabControl Grid.Column="1" ItemsSource="{Binding ResultDetail}"/>-->
+        <StackPanel Grid.Column="1">
+            <TextBlock Text="{Binding ResultDetail.Title}"/>
+            <ContentControl Content="{Binding ResultDetail}" />
+            <!--<TabControl ItemsSource="{Binding Workspaces}"/>-->
+
+        </StackPanel>
     </Grid>
 </UserControl>
