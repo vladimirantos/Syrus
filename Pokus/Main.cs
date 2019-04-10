@@ -10,17 +10,17 @@ namespace Pokus
     public class Main : IPlugin
     {
         private object ViewModel { get; set; }
-        private ResourceDictionary ViewTemplate { get; set; } = new ResourceDictionary();
+        private ResourceDictionary ViewTemplate { get; set; }
         private Random _rand = new Random();
         public Main()
         {
             //ViewTemplate.Source = new Uri("C:/Users/vladi/AppData/Roaming/Syrus/plugins/Syrus.Plugins.Pokus/Pokus;component/View.xaml",
             //UriKind.RelativeOrAbsolute);
-            ViewTemplate.Source = new Uri("pack://application:,,,/Pokus;component/View.xaml", UriKind.Absolute);
         }
 
         public void OnInitialize(PluginContext context)
         {
+            ViewTemplate = context.CreateView("pack://application:,,,/Pokus;component/View.xaml");
         }
 
         public IEnumerable<Result> Search(Query query)

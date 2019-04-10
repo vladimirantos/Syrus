@@ -18,7 +18,7 @@ namespace Syrus.Plugins.Weather
         {
             _pluginContext = context;
             _weatherFactory = new WeatherFactory(ApiKey);
-            ViewTemplate.Source = new Uri("pack://application:,,,/Syrus.Plugins.Weather;component/View.xaml", UriKind.Absolute);
+            ViewTemplate = context.CreateView("pack://application:,,,/Syrus.Plugins.Weather;component/View.xaml");
         }
 
         public IEnumerable<Result> Search(Query query)
