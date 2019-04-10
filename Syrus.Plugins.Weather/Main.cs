@@ -11,11 +11,12 @@ namespace Syrus.Plugins.Weather
 
         private PluginContext _pluginContext;
         private WeatherFactory _weatherFactory;
-
+        private ResourceDictionary ViewTemplate { get; set; } = new ResourceDictionary();
         public void OnInitialize(PluginContext context)
         {
             _pluginContext = context;
             _weatherFactory = new WeatherFactory(ApiKey);
+            ViewTemplate.Source = new Uri("pack://application:,,,/Pokus;component/View.xaml", UriKind.Absolute);
         }
 
         public IEnumerable<Result> Search(Query query)
@@ -30,7 +31,11 @@ namespace Syrus.Plugins.Weather
                     new Result()
                     {
                         Text = $"Počasí v {query.Arguments}",
-                        QuickResult = $"- {query.Arguments} {weather.Main}"
+                        QuickResult = $"- {query.Arguments} {weather.Main}",
+                        Content = new View()
+                        {
+                            Template = 
+                        }
                     }
                 };
             }
@@ -42,6 +47,12 @@ namespace Syrus.Plugins.Weather
         }
     }
 
+
+    public class WeatherVm : BaseViewModel
+    {
+        public string City { get; set; }
+        public string Temperature { get; set; }
+    }
 
 }
 

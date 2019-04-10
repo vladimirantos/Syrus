@@ -2,12 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:fa="http://schemas.fontawesome.io/icons/"
                     xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-                    xmlns:vm="clr-namespace:Syrus.Plugin;assembly=Syrus.Plugin"
-                    xmlns:vm1="clr-namespace:Pokus">
-    <DataTemplate DataType="{x:Type vm1:PokusVm}">
-        <StackPanel>
-            <Label Content="NADPISEK"/>
-            <TextBlock Text="{Binding Title}" Background="DarkKhaki"/>
-        </StackPanel>
+                    xmlns:vm1="clr-namespace:Syrus.Plugins.Weather">
+    <DataTemplate DataType="{x:Type vm1:WeatherVm}">
+       
     </DataTemplate>
 </ResourceDictionary>
