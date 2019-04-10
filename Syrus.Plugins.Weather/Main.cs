@@ -1,7 +1,9 @@
 ﻿using Syrus.Plugin;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Windows;
 
 namespace Syrus.Plugins.Weather
 {
@@ -16,7 +18,7 @@ namespace Syrus.Plugins.Weather
         {
             _pluginContext = context;
             _weatherFactory = new WeatherFactory(ApiKey);
-            ViewTemplate.Source = new Uri("pack://application:,,,/Pokus;component/View.xaml", UriKind.Absolute);
+            ViewTemplate.Source = new Uri("pack://application:,,,/Syrus.Plugins.Weather;component/View.xaml", UriKind.Absolute);
         }
 
         public IEnumerable<Result> Search(Query query)
@@ -34,7 +36,12 @@ namespace Syrus.Plugins.Weather
                         QuickResult = $"- {query.Arguments} {weather.Main}",
                         Content = new View()
                         {
-                            Template = 
+                            Template = ViewTemplate,
+                            ViewModel = new WeatherVm()
+                            {
+                                City = query.Arguments,
+                                Temperature = $"{weather.Main.Temperature} °C"
+                            }
                         }
                     }
                 };

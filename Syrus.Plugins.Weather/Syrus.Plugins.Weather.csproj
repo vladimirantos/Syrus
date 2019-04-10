@@ -21,6 +21,10 @@
   </Target>
   
   <ItemGroup>
+    <ProjectReference Include="..\Syrus.Plugin\Syrus.Plugin.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Page Update="View.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
