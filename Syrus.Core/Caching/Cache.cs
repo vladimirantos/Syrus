@@ -36,7 +36,7 @@ namespace Syrus.Core.Caching
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        /// <param name="timeout">Timeout in miliseconds</param>
+        /// <param name="timeout">Timeout in seconds</param>
         public void Add(K key, T value, int timeout = Timeout.Infinite)
         {
             if (_disposed)
