@@ -13,6 +13,8 @@ namespace Syrus.Core.Caching
         private ReaderWriterLockSlim _locker = new ReaderWriterLockSlim();
         private bool _disposed;
 
+        public T this[K key] => Get(key);
+
         public void Dispose()
         {
             Dispose(true);
