@@ -1,30 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Syrus.Core.Caching
 {
     internal class Cache<K, T> : IDisposable
     {
-        public void Add(K key, T value)
-        {
+        private Dictionary<K, T> _cache = new Dictionary<K, T>();
+        private Dictionary<K, Timer> _timers = new Dictionary<K, Timer>();
+        private ReaderWriterLockSlim _locker = new ReaderWriterLockSlim();
+        private bool _disposed;
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+            _disposed = true;
+            if (disposing)
+            {
+                Clear();
+                _locker.Dispose();
+            }
         }
 
         /// <summary>
-        /// Add item to cache. When timeout is up, this item is deleted.
+        /// Add item to cache. When timeout is up, this item is deleted. When cache contains this key, nothing happens.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="timeout">Timeout in miliseconds</param>
-        public void Add(K key, T value, double timeout)
+        public void Add(K key, T value, double timeout = Timeout.Infinite)
         {
-
+            if (_disposed)
+                return;
+            if (timeout < 1 && timeout != Timeout.Infinite)
+                throw new ArgumentOutOfRangeException("Timeout must be greather than zero.");
+            _locker.EnterWriteLock();
+            try
+            {
+                if (!_cache.ContainsKey(key))
+                    _cache.Add(key, value);
+            }
+            finally
+            {
+                _locker.ExitWriteLock();
+            }
         }
 
+        /// <summary>
+        /// Update value in the specified key. When cache does not contains key, throw ArgumentException.
+        /// </summary>
         public void Update(K key, T value)
         {
+            if (_disposed)
+                return;
+            _locker.EnterWriteLock();
+            try
+            {
+                if (!_cache.ContainsKey(key))
+                    throw new ArgumentException($"Cache not contains the specified key: {key}");
+                _cache[key] = value;
+            }
+            finally
+            {
+                _locker.ExitWriteLock();
+            }
+        }
 
+        public void AddOrUpdate(K key, T value, int timeout = Timeout.Infinite)
+        {
+            if (_disposed)
+                return;
+            if (timeout < 1 && timeout != Timeout.Infinite)
+                throw new ArgumentOutOfRangeException("Timeout must be greather than zero.");
+
+            _locker.EnterWriteLock();
+            try
+            {
+                if (!_cache.ContainsKey(key))
+                    _cache.Add(key, value);
+                else
+                    _cache[key] = value;
+            }
+            finally
+            {
+                _locker.ExitWriteLock();
+
+            }
         }
 
         /// <summary>
@@ -32,7 +102,18 @@ namespace Syrus.Core.Caching
         /// </summary>
         public T Get(K key)
         {
-            return default(T);
+            if (_disposed)
+                return default(T);
+            _locker.EnterReadLock();
+            try
+            {
+                T value;
+                return _cache.TryGetValue(key, out value) ? value : default(T);
+            }
+            finally
+            {
+                _locker.ExitReadLock();
+            }
         }
 
         /// <summary>
@@ -43,8 +124,20 @@ namespace Syrus.Core.Caching
         /// <returns></returns>
         public bool TryGet(K key, out T value)
         {
-            value = default(T);
-            return false;
+            if (_disposed)
+            {
+                value = default(T);
+                return false;
+            }
+            _locker.EnterReadLock();
+            try
+            {
+                return _cache.TryGetValue(key, out value);
+            }
+            finally
+            {
+                _locker.ExitReadLock();
+            }
         }
 
         /// <summary>
@@ -52,7 +145,20 @@ namespace Syrus.Core.Caching
         /// </summary>
         public void Remove(K key)
         {
-
+            if (_disposed)
+                return;
+            _locker.EnterWriteLock();
+            try
+            {
+                if(_cache.ContainsKey(key))
+                {
+                    _cache.Remove(key);
+                }
+            }
+            finally
+            {
+                _locker.ExitWriteLock();
+            }
         }
 
         /// <summary>
@@ -60,7 +166,21 @@ namespace Syrus.Core.Caching
         /// </summary>
         public void Remove(Predicate<K> keyPattern)
         {
-
+            if (_disposed)
+                return;
+            _locker.EnterWriteLock();
+            try
+            {
+                var keysForRemove = _cache.Keys.Where(key => keyPattern(key));
+                foreach(K key in keysForRemove)
+                {
+                    _cache.Remove(key);
+                }
+            }
+            finally
+            {
+                _locker.ExitWriteLock();
+            }
         }
 
         /// <summary>
@@ -68,7 +188,17 @@ namespace Syrus.Core.Caching
         /// </summary>
         public bool Exists(K key)
         {
-            return false;
+            if (_disposed)
+                return false;
+            _locker.EnterReadLock();
+            try
+            {
+                return _cache.ContainsKey(key);
+            }
+            finally
+            {
+                _locker.ExitReadLock();
+            }
         }
 
         /// <summary>
@@ -76,12 +206,15 @@ namespace Syrus.Core.Caching
         /// </summary>
         public void Clear()
         {
-
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+            _locker.EnterWriteLock();
+            try
+            {
+                _cache.Clear();
+            }
+            finally
+            {
+                _locker.ExitReadLock();
+            }
         }
     }
 }
