@@ -37,7 +37,7 @@ namespace Syrus.Core.Caching
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="timeout">Timeout in miliseconds</param>
-        public void Add(K key, T value, double timeout = Timeout.Infinite)
+        public void Add(K key, T value, int timeout = Timeout.Infinite)
         {
             if (_disposed)
                 return;
@@ -46,6 +46,7 @@ namespace Syrus.Core.Caching
             _locker.EnterWriteLock();
             try
             {
+                CheckTimer(key, timeout);
                 if (!_cache.ContainsKey(key))
                     _cache.Add(key, value);
             }
@@ -85,6 +86,7 @@ namespace Syrus.Core.Caching
             _locker.EnterWriteLock();
             try
             {
+                CheckTimer(key, timeout);
                 if (!_cache.ContainsKey(key))
                     _cache.Add(key, value);
                 else
@@ -152,6 +154,12 @@ namespace Syrus.Core.Caching
             {
                 if(_cache.ContainsKey(key))
                 {
+                    try
+                    {
+                        _timers[key].Dispose();
+                    }
+                    catch { }
+                    _timers.Remove(key);
                     _cache.Remove(key);
                 }
             }
@@ -174,6 +182,12 @@ namespace Syrus.Core.Caching
                 var keysForRemove = _cache.Keys.Where(key => keyPattern(key));
                 foreach(K key in keysForRemove)
                 {
+                    try
+                    {
+                        _timers[key].Dispose();
+                    }
+                    catch { }
+                    _timers.Remove(key);
                     _cache.Remove(key);
                 }
             }
@@ -209,12 +223,30 @@ namespace Syrus.Core.Caching
             _locker.EnterWriteLock();
             try
             {
+                try
+                {
+                    foreach (Timer t in _timers.Values)
+                        t.Dispose();
+                }
+                catch { }
+                
+                _timers.Clear();
                 _cache.Clear();
             }
             finally
             {
-                _locker.ExitReadLock();
+                _locker.ExitWriteLock();
             }
+        }
+
+        private void CheckTimer(K key, int timeout)
+        {
+            void TimerRemove(object state)
+            {
+                Remove((K)state);
+            }
+            _timers.Add(key, new Timer(new TimerCallback(TimerRemove), key,
+                        timeout == Timeout.Infinite ? Timeout.Infinite : timeout * 1000, Timeout.Infinite));
         }
     }
 }
