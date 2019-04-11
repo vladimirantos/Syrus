@@ -14,5 +14,14 @@
       "language": "cs",
       "keywords": [ "banik", "předpověď" ]
     }
-  ]
+  ],
+  "caching": {
+    "results": {
+      "mode": "selected",
+      "duration": "100"
+    },
+    "queries": {
+      "duration": "120"
+    }
+  }
 }

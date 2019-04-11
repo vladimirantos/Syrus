@@ -59,6 +59,8 @@ namespace Syrus.Plugin
         /// Readonly constants, It's not configurable.
         /// </summary>
         public Dictionary<string, object> ReadonlyConstants { get; set; }
+
+        public Caching Caching { get; set; }
     }
 
     public class SearchingConfiguration
@@ -66,5 +68,26 @@ namespace Syrus.Plugin
         public string Language { get; set; }
         public IEnumerable<string> Keywords { get; set; }
         public IEnumerable<string> RegularExpressions { get; set; }
+    }
+
+    public class Caching
+    {
+        public CacheSettings Queries { get; set; }
+        public ResultsCacheSettings Results { get; set; }
+    }
+
+    public class CacheSettings
+    {
+        public int Duration { get; set; }
+    }
+
+    public class ResultsCacheSettings : CacheSettings
+    {
+        public ResultsCacheTypes Type { get; set; }
+    }
+
+    public enum ResultsCacheTypes
+    {
+        Selected, All
     }
 }
