@@ -6,14 +6,12 @@ using System.Threading;
 
 namespace Syrus.Core.Caching
 {
-    internal class Cache<K, T> : IDisposable
+    internal abstract class CacheBase<K> : IDisposable
     {
-        private Dictionary<K, T> _cache = new Dictionary<K, T>();
-        private Dictionary<K, Timer> _timers = new Dictionary<K, Timer>();
-        private ReaderWriterLockSlim _locker = new ReaderWriterLockSlim();
-        private bool _disposed;
+        protected readonly ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+        protected readonly Dictionary<K, Timer> timers = new Dictionary<K, Timer>();
 
-        public T this[K key] => Get(key);
+        protected bool Disposed { get; private set; }
 
         public void Dispose()
         {
@@ -23,15 +21,36 @@ namespace Syrus.Core.Caching
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
+            if (Disposed)
                 return;
-            _disposed = true;
+            Disposed = true;
             if (disposing)
             {
                 Clear();
-                _locker.Dispose();
+                locker.Dispose();
             }
         }
+
+        public abstract void Clear();
+        public abstract void Remove(K key);
+        public abstract bool Exists(K key);
+
+        protected void CheckTimer(K key, int timeout)
+        {
+            void TimerRemove(object state)
+            {
+                Remove((K)state);
+            }
+            timers.Add(key, new Timer(new TimerCallback(TimerRemove), key,
+                        timeout == Timeout.Infinite ? Timeout.Infinite : timeout * 1000, Timeout.Infinite));
+        }
+    }
+
+    internal class KeyValueCache<K, T> : CacheBase<K>
+    {
+        private Dictionary<K, T> _cache = new Dictionary<K, T>();
+
+        public T this[K key] => Get(key);
 
         /// <summary>
         /// Add item to cache. When timeout is up, this item is deleted. When cache contains this key, nothing happens.
@@ -41,11 +60,11 @@ namespace Syrus.Core.Caching
         /// <param name="timeout">Timeout in seconds</param>
         public void Add(K key, T value, int timeout = Timeout.Infinite)
         {
-            if (_disposed)
+            if (Disposed)
                 return;
             if (timeout < 1 && timeout != Timeout.Infinite)
                 throw new ArgumentOutOfRangeException("Timeout must be greather than zero.");
-            _locker.EnterWriteLock();
+            locker.EnterWriteLock();
             try
             {
                 CheckTimer(key, timeout);
@@ -54,7 +73,7 @@ namespace Syrus.Core.Caching
             }
             finally
             {
-                _locker.ExitWriteLock();
+                locker.ExitWriteLock();
             }
         }
 
@@ -63,9 +82,9 @@ namespace Syrus.Core.Caching
         /// </summary>
         public void Update(K key, T value)
         {
-            if (_disposed)
+            if (Disposed)
                 return;
-            _locker.EnterWriteLock();
+            locker.EnterWriteLock();
             try
             {
                 if (!_cache.ContainsKey(key))
@@ -74,18 +93,18 @@ namespace Syrus.Core.Caching
             }
             finally
             {
-                _locker.ExitWriteLock();
+                locker.ExitWriteLock();
             }
         }
 
         public void AddOrUpdate(K key, T value, int timeout = Timeout.Infinite)
         {
-            if (_disposed)
+            if (Disposed)
                 return;
             if (timeout < 1 && timeout != Timeout.Infinite)
                 throw new ArgumentOutOfRangeException("Timeout must be greather than zero.");
 
-            _locker.EnterWriteLock();
+            locker.EnterWriteLock();
             try
             {
                 CheckTimer(key, timeout);
@@ -96,7 +115,7 @@ namespace Syrus.Core.Caching
             }
             finally
             {
-                _locker.ExitWriteLock();
+                locker.ExitWriteLock();
 
             }
         }
@@ -106,9 +125,9 @@ namespace Syrus.Core.Caching
         /// </summary>
         public T Get(K key)
         {
-            if (_disposed)
+            if (Disposed)
                 return default(T);
-            _locker.EnterReadLock();
+            locker.EnterReadLock();
             try
             {
                 T value;
@@ -116,7 +135,7 @@ namespace Syrus.Core.Caching
             }
             finally
             {
-                _locker.ExitReadLock();
+                locker.ExitReadLock();
             }
         }
 
@@ -128,46 +147,46 @@ namespace Syrus.Core.Caching
         /// <returns></returns>
         public bool TryGet(K key, out T value)
         {
-            if (_disposed)
+            if (Disposed)
             {
                 value = default(T);
                 return false;
             }
-            _locker.EnterReadLock();
+            locker.EnterReadLock();
             try
             {
                 return _cache.TryGetValue(key, out value);
             }
             finally
             {
-                _locker.ExitReadLock();
+                locker.ExitReadLock();
             }
         }
 
         /// <summary>
         /// Remove item by key.
         /// </summary>
-        public void Remove(K key)
+        public override void Remove(K key)
         {
-            if (_disposed)
+            if (Disposed)
                 return;
-            _locker.EnterWriteLock();
+            locker.EnterWriteLock();
             try
             {
                 if(_cache.ContainsKey(key))
                 {
                     try
                     {
-                        _timers[key].Dispose();
+                        timers[key].Dispose();
                     }
                     catch { }
-                    _timers.Remove(key);
+                    timers.Remove(key);
                     _cache.Remove(key);
                 }
             }
             finally
             {
-                _locker.ExitWriteLock();
+                locker.ExitWriteLock();
             }
         }
 
@@ -176,9 +195,9 @@ namespace Syrus.Core.Caching
         /// </summary>
         public void Remove(Predicate<K> keyPattern)
         {
-            if (_disposed)
+            if (Disposed)
                 return;
-            _locker.EnterWriteLock();
+            locker.EnterWriteLock();
             try
             {
                 var keysForRemove = _cache.Keys.Where(key => keyPattern(key));
@@ -186,69 +205,64 @@ namespace Syrus.Core.Caching
                 {
                     try
                     {
-                        _timers[key].Dispose();
+                        timers[key].Dispose();
                     }
                     catch { }
-                    _timers.Remove(key);
+                    timers.Remove(key);
                     _cache.Remove(key);
                 }
             }
             finally
             {
-                _locker.ExitWriteLock();
+                locker.ExitWriteLock();
             }
         }
 
         /// <summary>
         /// Check when the specified key is in cache.
         /// </summary>
-        public bool Exists(K key)
+        public override bool Exists(K key)
         {
-            if (_disposed)
+            if (Disposed)
                 return false;
-            _locker.EnterReadLock();
+            locker.EnterReadLock();
             try
             {
                 return _cache.ContainsKey(key);
             }
             finally
             {
-                _locker.ExitReadLock();
+                locker.ExitReadLock();
             }
         }
 
         /// <summary>
         /// Clear all items.
         /// </summary>
-        public void Clear()
+        public override void Clear()
         {
-            _locker.EnterWriteLock();
+            locker.EnterWriteLock();
             try
             {
                 try
                 {
-                    foreach (Timer t in _timers.Values)
+                    foreach (Timer t in timers.Values)
                         t.Dispose();
                 }
                 catch { }
                 
-                _timers.Clear();
+                timers.Clear();
                 _cache.Clear();
             }
             finally
             {
-                _locker.ExitWriteLock();
+                locker.ExitWriteLock();
             }
         }
+    }
 
-        private void CheckTimer(K key, int timeout)
-        {
-            void TimerRemove(object state)
-            {
-                Remove((K)state);
-            }
-            _timers.Add(key, new Timer(new TimerCallback(TimerRemove), key,
-                        timeout == Timeout.Infinite ? Timeout.Infinite : timeout * 1000, Timeout.Infinite));
-        }
+    internal class Cache<T>
+    {
+
     }
 }
