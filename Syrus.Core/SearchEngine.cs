@@ -121,22 +121,8 @@ namespace Syrus.Core
         /// <summary>
         /// Convert plugin to result
         /// </summary>
-        private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins)
-        {
-            List<Result> results = new List<Result>();
-            foreach (PluginPair p in plugins)
-            {
-                results.Add(new Result()
-                {
-                    Text = p.Metadata.Name,
-                    Group = "Možnosti vyhledávání",
-                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
-                    FromPlugin = p.Metadata,
-                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeyword + " ")
-                });
-            }
-            return results;
-        }
+        private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins) 
+            => plugins.Select(plugin => (Result)plugin);
 
         /// <summary>
         /// Searching by default plugins
