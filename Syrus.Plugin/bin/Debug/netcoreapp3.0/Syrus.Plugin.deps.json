@@ -1,19 +1,21 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v3.0",
-    "signature": "e2fbc4d1d6a4859f1ef2f564f4ab7106d4effb0d"
+    "signature": "b963ff302d46acbb32d10526a2e6dedc4fd6a882"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.0": {
       "Syrus.Plugin/1.0.0": {
         "dependencies": {
+          "Microsoft.WindowsDesktop.App": "3.0.0-preview-27325-3",
           "Newtonsoft.Json": "12.0.1"
         },
         "runtime": {
           "Syrus.Plugin.dll": {}
         }
       },
+      "Microsoft.WindowsDesktop.App/3.0.0-preview-27325-3": {},
       "Newtonsoft.Json/12.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -29,6 +31,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Microsoft.WindowsDesktop.App/3.0.0-preview-27325-3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-031a8og3JVPZKZzrje0oJBvYr98vG6Jcnky5zYSup+bCS0dGEdWCdOmVuLW9cVounfuwA27QISjMUjdqmZBeDg==",
+      "path": "microsoft.windowsdesktop.app/3.0.0-preview-27325-3",
+      "hashPath": "microsoft.windowsdesktop.app.3.0.0-preview-27325-3.nupkg.sha512"
     },
     "Newtonsoft.Json/12.0.1": {
       "type": "package",

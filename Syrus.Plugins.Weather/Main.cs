@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Windows;
 
 namespace Syrus.Plugins.Weather
@@ -13,6 +14,7 @@ namespace Syrus.Plugins.Weather
 
         private PluginContext _pluginContext;
         private WeatherFactory _weatherFactory;
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private ResourceDictionary ViewTemplate { get; set; } = new ResourceDictionary();
         public void OnInitialize(PluginContext context)
         {
@@ -21,13 +23,14 @@ namespace Syrus.Plugins.Weather
             ViewTemplate = context.CreateView("pack://application:,,,/Syrus.Plugins.Weather;component/View.xaml");
         }
 
-        public IEnumerable<Result> Search(Query query)
+        public async System.Threading.Tasks.Task<IEnumerable<Result>> SearchAsync(Query query)
         {
+
             if (!query.HasArguments || query.Arguments.Length < 3)
                 return new List<Result>();
             try
             {
-                WeatherApi weather = _weatherFactory.GetWeather(query.Arguments);
+                WeatherApi weather = await _weatherFactory.GetWeatherAsync(query.Arguments, _cancellationTokenSource.Token);
                 return new List<Result>()
                 {
                     new Result()

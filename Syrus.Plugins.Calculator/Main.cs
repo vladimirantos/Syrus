@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Syrus.Plugin;
 
 namespace Syrus.Plugins.Calculator
@@ -9,9 +10,9 @@ namespace Syrus.Plugins.Calculator
         {
         }
 
-        public IEnumerable<Result> Search(Query query)
+        public Task<IEnumerable<Result>> SearchAsync(Query query)
         {
-            return new List<Result>();
+            return Task.FromResult<IEnumerable<Result>>(new List<Result>());
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Syrus.Core
     {
         private ILoader _loader;
         private ISearch _search;
-        private Cache<string> searchingHistory = new Cache<string>();
+        private Cache<string> _searchingHistory = new Cache<string>();
 
         public string PluginsLocation { get; private set; }
         public string CacheLocation { get; private set; }
@@ -55,6 +55,10 @@ namespace Syrus.Core
             {
                 resultsList.AddRange(_search.ConvertPluginsToResult(selectedPlugins));
                 resultsList.AddRange(_search.SearchByDefaultPlugins(query));
+            }
+            else
+            {
+             _searchingHistory.Add(term);
             }
             return AddIcons(resultsList, query);
         }

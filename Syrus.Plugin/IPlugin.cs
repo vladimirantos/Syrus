@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Syrus.Plugin
@@ -7,6 +8,6 @@ namespace Syrus.Plugin
     {
         void OnInitialize(PluginContext context);
 
-        IEnumerable<Result> Search(Query query);
+        Task<IEnumerable<Result>> SearchAsync(Query query);
     }
 }

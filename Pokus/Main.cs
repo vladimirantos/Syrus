@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Pokus
@@ -23,9 +24,9 @@ namespace Pokus
             ViewTemplate = context.CreateView("pack://application:,,,/Pokus;component/View.xaml");
         }
 
-        public IEnumerable<Result> Search(Query query)
+        public Task<IEnumerable<Result>> SearchAsync(Query query)
         {
-            return new List<Result>()
+            return Task.FromResult<IEnumerable<Result>>(new List<Result>()
             {
                 new Result()
                 {
@@ -40,7 +41,7 @@ namespace Pokus
                         }
                     }
                 }
-            };
+            });
             
         }
     }

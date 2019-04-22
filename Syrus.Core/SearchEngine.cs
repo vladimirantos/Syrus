@@ -69,10 +69,10 @@ namespace Syrus.Core
             foreach (PluginPair pluginPair in source)
             {
                 tasks[i] = Task.Factory.StartNew(() => {
-                    List<Result> results = pluginPair.Plugin.Search(query).ToList();
+                    IEnumerable<Result> results = pluginPair.Plugin.SearchAsync(query).Result;
                     foreach (Result result in results) 
                         result.FromPlugin = pluginPair.Metadata;
-                    return (IEnumerable<Result>)results;
+                    return results;
                 });
                 i++;
             }

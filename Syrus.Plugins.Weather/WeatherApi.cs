@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading;
 
 namespace Syrus.Plugins.Weather
 {
@@ -14,8 +15,17 @@ namespace Syrus.Plugins.Weather
 
         public WeatherFactory(string apiKey) => _apiKey = apiKey;
 
-        public WeatherApi GetWeather(string query) => new WeatherApi(JObject.Parse(
-                new WebClient().DownloadString($"{_baseUrl}?appid={_apiKey}&q={query}&units=metric")));
+        public async System.Threading.Tasks.Task<WeatherApi> GetWeatherAsync(string query, CancellationToken token)
+        {
+            using(WebClient webClient = new WebClient())
+            {
+                using (token.Register(webClient.CancelAsync))
+                {
+                    string data = await webClient.DownloadStringTaskAsync(new Uri($"{_baseUrl}?appid={_apiKey}&q={query}&units=metric"));
+                    return new WeatherApi(JObject.Parse(data));
+                }
+            }
+        }
     }
 
     internal class WeatherApi
