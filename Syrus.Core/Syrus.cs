@@ -1,4 +1,5 @@
-﻿using Syrus.Plugin;
+﻿using Syrus.Core.Caching;
+using Syrus.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Syrus.Core
     {
         private ILoader _loader;
         private ISearch _search;
-        
+        private Cache<string> searchingHistory = new Cache<string>();
+
         public string PluginsLocation { get; private set; }
         public string CacheLocation { get; private set; }
         public Configuration Configuration { get; private set; }
@@ -43,6 +45,10 @@ namespace Syrus.Core
             return this;
         }
 
-        public async Task<IEnumerable<Result>> SearchAsync(string term) => await _search.Search(Query.FromString(term));
+        public async Task<IEnumerable<Result>> SearchAsync(string term)
+        {
+            IEnumerable<Result> enumerable = await _search.Search(Query.FromString(term));
+            return enumerable;
+        }
     }
 }
