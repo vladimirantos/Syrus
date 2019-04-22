@@ -47,8 +47,29 @@ namespace Syrus.Core
 
         public async Task<IEnumerable<Result>> SearchAsync(string term)
         {
-            IEnumerable<Result> enumerable = await _search.Search(Query.FromString(term));
-            return enumerable;
+            Query query = Query.FromString(term);
+            IEnumerable<PluginPair> selectedPlugins = _search.SelectPlugins(query);
+            IEnumerable<Result> results = await _search.Search(query, (ICollection<PluginPair>)selectedPlugins);
+            List<Result> resultsList = results.ToList();
+            if (resultsList.Count == 0)
+            {
+                resultsList.AddRange(_search.ConvertPluginsToResult(selectedPlugins));
+                resultsList.AddRange(_search.SearchByDefaultPlugins(query));
+            }
+            return AddIcons(resultsList, query);
+        }
+
+        private IEnumerable<Result> AddIcons(IEnumerable<Result> results, Query query)
+        {
+            foreach (var result in results)
+            {
+                result.FromQuery = query;
+                if (string.IsNullOrEmpty(result.Icon))
+                    result.Icon = result.FromPlugin.Icon;
+                if (string.IsNullOrEmpty(result.NightIcon))
+                    result.NightIcon = result.FromPlugin.NightIcon;
+                yield return result;
+            }
         }
     }
 }

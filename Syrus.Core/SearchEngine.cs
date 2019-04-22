@@ -13,7 +13,10 @@ namespace Syrus.Core
     {
         IEnumerable<PluginPair> Plugins { get; set; }
         void Initialize();
-        Task<IEnumerable<Result>> Search(Query query);
+        IEnumerable<PluginPair> SelectPlugins(Query query);
+        Task<IEnumerable<Result>> Search(Query query, ICollection<PluginPair> source);
+        IEnumerable<Result> SearchByDefaultPlugins(Query query);
+        IEnumerable<Result> ConvertPluginsToResult(IEnumerable<PluginPair> plugins);
     }
 
     public class SearchEngine : ISearch
@@ -51,18 +54,20 @@ namespace Syrus.Core
             }
         }
 
-        public async Task<IEnumerable<Result>> Search(Query query)
+        public IEnumerable<PluginPair> SelectPlugins(Query query)
         {
-            List<Result> results;
-            
             List<PluginPair> plugins = SelectPluginsByKeyword(query.Command).ToList();
             plugins.AddRange(SelectPluginsByRegex(query.Command));
+            return plugins;
+        }
 
-            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[plugins.Count];
+        public async Task<IEnumerable<Result>> Search(Query query, ICollection<PluginPair> source)
+        {
+            List<Result> results = new List<Result>();
+            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[source.Count];
             int i = 0;
-            foreach (PluginPair pluginPair in plugins)
+            foreach (PluginPair pluginPair in source)
             {
-                Trace.WriteLine($"{i}: {pluginPair.Metadata.Name}");
                 tasks[i] = Task.Factory.StartNew(() => {
                     List<Result> results = pluginPair.Plugin.Search(query).ToList();
                     foreach (Result result in results) 
@@ -71,22 +76,42 @@ namespace Syrus.Core
                 });
                 i++;
             }
-            results = (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
-            if (results.Count == 0)
-            {
-                results.AddRange(ResultsFromPlugins(plugins));
-                results.AddRange(DefaultResults(query.Original));
-            }
+            return (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
+        }
 
-            foreach(var result in results)
+        /// <summary>
+        /// Searching by default plugins
+        /// </summary>
+        public IEnumerable<Result> SearchByDefaultPlugins(Query query)
+        {
+            foreach (PluginPair p in _defaultPlugins)
             {
-                result.FromQuery = query;
-                if (string.IsNullOrEmpty(result.Icon))
-                    result.Icon = result.FromPlugin.Icon;
-                if (string.IsNullOrEmpty(result.NightIcon))
-                    result.NightIcon = result.FromPlugin.NightIcon;
+                yield return new Result()
+                {
+                    Text = p.Metadata.Name,
+                    Group = "Vyhledat online",
+                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
+                    FromPlugin = p.Metadata
+                };
             }
-            return results;
+        }
+
+        /// <summary>
+        /// Convert plugin to result
+        /// </summary>
+        public IEnumerable<Result> ConvertPluginsToResult(IEnumerable<PluginPair> plugins)
+        {
+            foreach (PluginPair p in plugins)
+            {
+                yield return new Result()
+                {
+                    Text = p.Metadata.Name,
+                    Group = "Možnosti vyhledávání",
+                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
+                    FromPlugin = p.Metadata,
+                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeyword + " ")
+                };
+            }
         }
 
         /// <summary>
@@ -116,41 +141,6 @@ namespace Syrus.Core
             })
             .GroupBy(kv => kv.Value.Metadata.Name)
             .Select(kv => kv.First().Value);
-        }
-
-        /// <summary>
-        /// Convert plugin to result
-        /// </summary>
-        private IEnumerable<Result> ResultsFromPlugins(IEnumerable<PluginPair> plugins)
-        {
-            foreach(PluginPair p in plugins)
-            {
-                yield return new Result()
-                {
-                    Text = p.Metadata.Name,
-                    Group = "Možnosti vyhledávání",
-                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
-                    FromPlugin = p.Metadata,
-                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeyword + " ")
-                };
-            }
-        }
-
-        /// <summary>
-        /// Searching by default plugins
-        /// </summary>
-        private IEnumerable<Result> DefaultResults(string match)
-        {
-            foreach(PluginPair p in _defaultPlugins)
-            {
-                yield return new Result()
-                {
-                    Text = p.Metadata.Name,
-                    Group = "Vyhledat online",
-                    Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
-                    FromPlugin = p.Metadata
-                };
-            }
         }
 
         private void SelectSearchingConfigurationByLang(string language)
