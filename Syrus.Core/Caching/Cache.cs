@@ -308,7 +308,7 @@ namespace Syrus.Core.Caching
             }
         }
 
-        public void Add(T value)
+        public virtual void Add(T value)
         {
             if (Disposed)
                 return;
