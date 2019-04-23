@@ -64,17 +64,16 @@ namespace Syrus.Core
         public async Task<IEnumerable<Result>> Search(Query query, ICollection<PluginPair> source)
         {
             List<Result> results = new List<Result>();
-            Task<IEnumerable<Result>>[] tasks = new Task<IEnumerable<Result>>[source.Count];
-            int i = 0;
+            List<Task<IEnumerable<Result>>> tasks = new List<Task<IEnumerable<Result>>>();
+
             foreach (PluginPair pluginPair in source)
             {
-                tasks[i] = Task.Factory.StartNew(() => {
-                    IEnumerable<Result> results = pluginPair.Plugin.SearchAsync(query).Result;
-                    foreach (Result result in results) 
+                tasks.Add(Task.Run(async () => {
+                    IEnumerable<Result> results = await pluginPair.Plugin.SearchAsync(query);
+                    foreach (Result result in results)
                         result.FromPlugin = pluginPair.Metadata;
                     return results;
-                });
-                i++;
+                }));
             }
             return (await Task.WhenAll(tasks)).SelectMany(x => x).ToList();
         }
