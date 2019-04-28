@@ -42,7 +42,7 @@ namespace Syrus.Plugins.HexRgb
                     Clipboard.SetText($"rgb({rgb})");
                 }));
 
-                results.Add(CreateResult(hsv, "Převod do HSV", iconName, (IAppApi api, Result currentResult) =>
+                results.Add(CreateResult(hsv, "Převod do HSV", (IAppApi api, Result currentResult) =>
                 {
                     Clipboard.SetText(hsv);
                 }));
@@ -61,7 +61,7 @@ namespace Syrus.Plugins.HexRgb
                 {
                     Clipboard.SetText(c);
                 }));
-                results.Add(CreateResult(hsv, "Převod do HSV", iconName, (IAppApi api, Result currentResult) =>
+                results.Add(CreateResult(hsv, "Převod do HSV", (IAppApi api, Result currentResult) =>
                 {
                     Clipboard.SetText(hsv);
                 }));
@@ -90,6 +90,14 @@ namespace Syrus.Plugins.HexRgb
                 Text = text,
                 Group = group,
                 Icon = icon,
+                OnClick = onClick
+            };
+
+        private Result CreateResult(string text, string group, Action<IAppApi, Result> onClick)
+            => new Result()
+            {
+                Text = text,
+                Group = group,
                 OnClick = onClick
             };
 
