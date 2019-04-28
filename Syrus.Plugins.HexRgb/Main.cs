@@ -117,6 +117,6 @@ namespace Syrus.Plugins.HexRgb
         }
 
         private Color ColorFromHex(string hex) => ColorTranslator.FromHtml(hex);
-        private Color ColorFromRgb(int r, int g, int b) => Color.FromArgb(0, r, g, b);
+        private Color ColorFromRgb(int r, int g, int b) => Color.FromArgb(255, r, g, b);
     }
 }
