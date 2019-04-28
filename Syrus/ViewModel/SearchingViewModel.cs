@@ -105,7 +105,7 @@ namespace Syrus.ViewModel
             }
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            CurrentPluginIcon = Results.Count == 1 ? Results.First().Icon : string.Empty;
+            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? Results.First().FromPlugin.Icon : string.Empty;
             if (Results[0].FromPlugin.EnableHelp)
                 SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty);
             ChangeQuickResult(results.First().QuickResult);
@@ -138,6 +138,12 @@ namespace Syrus.ViewModel
         public void ChangeQuickResult(string text) => QuickResult = text;
 
         public void SetHelpPlaceholder(string text) => Placeholder = text;
+
+        private bool ResultsFromSinglePlugin(IEnumerable<Result> results)
+        {
+            List<Result> r = results.ToList();
+            return r.Count == 1 || r.Select(result => result.FromPlugin.FullName).Distinct().Count() < 2;
+        }
     }
 
 
