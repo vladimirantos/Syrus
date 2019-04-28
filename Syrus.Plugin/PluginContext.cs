@@ -12,6 +12,7 @@ namespace Syrus.Plugin
         public PluginMetadata Metadata { get; private set; }
         public string PluginsLocation { get; set; }
         public string CacheLocation { get; set; }
+        public Cache Cache => new Cache(CacheLocation, Metadata.FullName);
 
         public PluginContext(PluginMetadata metadata) => Metadata = metadata;
 
