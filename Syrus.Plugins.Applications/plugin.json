@@ -1,0 +1,18 @@
+﻿{
+  "name": "Applications",
+  "fullName": "Syrus.Plugins.Applications",
+  "author": "Vladimír Antoš",
+  "version": "0.0.0.1",
+  "enableHelp": false,
+  "searchingConfigurations": [
+    {
+      "language": "en",
+      "regularExpressions": [ "^.*$" ]
+    },
+
+    {
+      "language": "cs",
+      "regularExpressions": [ "^.*$" ]
+    }
+  ]
+}
