@@ -1,12 +1,20 @@
 ﻿using Microsoft.Win32;
+using Syrus.Plugin;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Syrus.Plugins.Applications
 {
     internal class ApplicationSearcher
     {
+        private PluginContext pluginContext;
         public ICollection<AppInfo> AppInfos { get; private set; } = new List<AppInfo>();
+
+        public ApplicationSearcher(PluginContext pluginContext) => this.pluginContext = pluginContext;
 
         public void Initialize(string registryKey)
         {
@@ -24,10 +32,15 @@ namespace Syrus.Plugins.Applications
                         
                         if (string.IsNullOrEmpty(name))
                             continue;
+                        string iconLocation = Path.Combine(pluginContext.Cache.Path, 
+                            $"{Regex.Replace(name, @"[^\w\.@-]", "", RegexOptions.None, TimeSpan.FromSeconds(1.0))}.png");
+                        var displayIcon = subkey.GetValue("DisplayIcon")?.ToString();
+                        if (!string.IsNullOrEmpty(displayIcon))
+                            SaveIcon(iconLocation, displayIcon);
                         AppInfos.Add(new AppInfo()
                         {
                             Name = name,
-                            Icon = subkey.GetValue("DisplayIcon")?.ToString(),
+                            Icon = iconLocation,
                             UninstallPath = subkey.GetValue("UninstallString")?.ToString(),
                             AppVersion = subkey.GetValue("DisplayVersion")?.ToString(),
                             Publisher = subkey.GetValue("Publisher")?.ToString(),
@@ -36,6 +49,18 @@ namespace Syrus.Plugins.Applications
                         });
                     }
                 }
+            }
+        }
+
+        private static void SaveIcon(string iconLocation, string displayIcon)
+        {
+                var icon = displayIcon.Split(',');
+            try
+            {
+                Icon.ExtractAssociatedIcon(icon[0]).ToBitmap().Save(iconLocation);
+            }catch(FileNotFoundException e)
+            {
+
             }
         }
 

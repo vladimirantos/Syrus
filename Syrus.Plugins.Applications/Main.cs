@@ -11,13 +11,9 @@ namespace Syrus.Plugins.Applications
     {
         private ApplicationSearcher _applicationSearcher;
 
-        public Main()
-        {
-            _applicationSearcher = new ApplicationSearcher();
-        }
-
         public void OnInitialize(PluginContext context)
         {
+            _applicationSearcher = new ApplicationSearcher(context);
             _applicationSearcher.Initialize(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
             _applicationSearcher.Initialize(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
         }
