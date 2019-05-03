@@ -17,11 +17,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Syrus.Plugin\Syrus.Plugin.csproj" />
   </ItemGroup>
   
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
