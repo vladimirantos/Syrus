@@ -33,10 +33,10 @@ namespace Syrus.Plugins.Applications
                         string urlInfoAbout = subkey.GetValue("UrlInfoAbout")?.ToString();
                         string installLocation = GetInstallLocation(subkey);
                         string name = subkey.GetValue("DisplayName")?.ToString();
-                        
+
                         if (string.IsNullOrEmpty(name))
                             continue;
-                        string iconLocation = Path.Combine(pluginContext.Cache.Path, 
+                        string iconLocation = Path.Combine(pluginContext.Cache.Path,
                             $"{Regex.Replace(name, @"[^\w\.@-]", "", RegexOptions.None, TimeSpan.FromSeconds(1.0))}.png");
                         var displayIcon = subkey.GetValue("DisplayIcon")?.ToString();
                         if (!string.IsNullOrEmpty(displayIcon))
@@ -59,11 +59,12 @@ namespace Syrus.Plugins.Applications
 
         private static void SaveIcon(string iconLocation, string displayIcon)
         {
-                var icon = displayIcon.Split(',');
+            var icon = displayIcon.Split(',');
             try
             {
                 Icon.ExtractAssociatedIcon(icon[0]).ToBitmap().Save(iconLocation);
-            }catch(FileNotFoundException e)
+            }
+            catch (FileNotFoundException e)
             {
 
             }

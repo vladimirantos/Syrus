@@ -24,14 +24,14 @@ namespace Syrus.Plugins.Applications
         public Task<IEnumerable<Result>> SearchAsync(Query query)
         {
             int length = query.Original.Length;
-            if (previous.Length > length || length < 3)
+            if (previous.Length > length || length < 2)
             {
                 previous = query.Original;
                 return Task.FromResult<IEnumerable<Result>>(new List<Result>());
             }
             previous = query.Original;
             string q = query.Original.ToLower();
-            List<AppInfo> selectedApps = _applicationSearcher.AppInfos.Retrieve(q);
+            IEnumerable<AppInfo> selectedApps = _applicationSearcher.AppInfos.Retrieve(q).Take(10);
             List<Result> results = new List<Result>();
             foreach (AppInfo app in selectedApps)
             {
