@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syrus.Plugins.Weather", "Sy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syrus.Plugins.HexRgb", "Syrus.Plugins.HexRgb\Syrus.Plugins.HexRgb.csproj", "{2BB5A771-71A4-45B4-BFCB-CB34614EA02B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syrus.Plugins.Applications", "Syrus.Plugins.Applications\Syrus.Plugins.Applications.csproj", "{B0777AB2-12C0-4552-9501-BFF40EDC92C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syrus.Plugins.Applications", "Syrus.Plugins.Applications\Syrus.Plugins.Applications.csproj", "{B0777AB2-12C0-4552-9501-BFF40EDC92C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syrus.Styles", "Syrus.Styles\Syrus.Styles.csproj", "{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -283,6 +285,26 @@ Global
 		{B0777AB2-12C0-4552-9501-BFF40EDC92C8}.Release|x64.Build.0 = Release|Any CPU
 		{B0777AB2-12C0-4552-9501-BFF40EDC92C8}.Release|x86.ActiveCfg = Release|Any CPU
 		{B0777AB2-12C0-4552-9501-BFF40EDC92C8}.Release|x86.Build.0 = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|ARM.Build.0 = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|x64.Build.0 = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Debug|x86.Build.0 = Debug|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|ARM.ActiveCfg = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|ARM.Build.0 = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|ARM64.Build.0 = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|x64.ActiveCfg = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|x64.Build.0 = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|x86.ActiveCfg = Release|Any CPU
+		{3615CC0F-EFAC-4EFD-86F4-0B0344B96434}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
