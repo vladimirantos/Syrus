@@ -13,8 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentWPF" Version="0.6.1" />
-    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.0.1" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
@@ -22,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Syrus.Core\Syrus.Core.csproj" />
     <ProjectReference Include="..\Syrus.Plugin\Syrus.Plugin.csproj" />
+    <ProjectReference Include="..\Syrus.Styles\Syrus.Styles.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,9 +34,6 @@
 
   <ItemGroup>
     <Page Update="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="View\ResultsList.xaml">

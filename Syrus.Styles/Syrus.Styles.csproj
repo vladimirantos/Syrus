@@ -9,14 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Base.xaml" />
     <None Remove="Plugin.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.6.1" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Base.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

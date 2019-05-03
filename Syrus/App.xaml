@@ -8,7 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--  FluentWPF Controls  -->
                 <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Syrus.Styles;component/Base.xaml" />
                 <!--<ResourceDictionary Source="/Pokus;component/View.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
