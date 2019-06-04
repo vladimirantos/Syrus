@@ -24,12 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\ResultsList.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\SearchPanel.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Update="View\ResultsList.xaml.cs" />
+    <Compile Update="View\SearchPanel.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>

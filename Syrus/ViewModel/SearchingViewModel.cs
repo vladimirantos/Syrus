@@ -106,6 +106,7 @@ namespace Syrus.ViewModel
             CurrentPluginIcon = ResultsFromSinglePlugin(results) ? Results.First().FromPlugin.Icon : string.Empty;
             if (Results[0].FromPlugin.EnableHelp)
                 SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty);
+            else Placeholder = null; //disabled default placeholder when searchbox is not empty
             ChangeQuickResult(results.First().QuickResult);
         }
 
