@@ -4,11 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-                  xmlns:view="clr-namespace:Syrus.View" 
-                  Width="860"
-                  Height="500" Topmost="True" SizeToContent="Height"
+        xmlns:view="clr-namespace:Syrus.View" 
+        Width="860" Height="500" Topmost="True" SizeToContent="Height"
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" 
-                  ShowInTaskbar="False"
+        ShowInTaskbar="False" AcrylicWindowStyle="None"
         Deactivated="AcrylicWindow_Deactivated" BorderThickness="0">
     <Grid>
         <Grid.RowDefinitions>
