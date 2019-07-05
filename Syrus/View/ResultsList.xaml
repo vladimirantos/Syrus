@@ -23,8 +23,8 @@
             </CollectionViewSource>
         </Grid.Resources>
 
-        <ItemsControl Grid.Column="0" ItemsSource="{Binding Source={StaticResource GroupedItems}}">
-            <ItemsControl.GroupStyle>
+        <ListBox Grid.Column="0" ItemsSource="{Binding Source={StaticResource GroupedItems}}" Name="ResultListBox">
+            <ListBox.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
@@ -33,8 +33,8 @@
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
-            </ItemsControl.GroupStyle>
-            <ItemsControl.ItemTemplate>
+            </ListBox.GroupStyle>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Padding="20 0 0 0"  Style="{StaticResource ResultItem}">
                         <StackPanel Orientation="Horizontal">
@@ -66,8 +66,8 @@
                         </StackPanel>
                     </Border>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <!--<ContentControl ContentTemplate="{Binding ResultDetail}"></ContentControl>-->
         <!--<TabControl Grid.Column="1" ItemsSource="{Binding ResultDetail}"/>-->

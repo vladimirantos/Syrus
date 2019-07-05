@@ -16,7 +16,7 @@
         <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
             <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Style="{StaticResource SearchInput}"/>
+                     Style="{StaticResource SearchInput}" PreviewKeyDown="SearchingInput_PreviewKeyDown"/>
             <TextBox Text="{Binding Placeholder}" Style="{StaticResource Placeholder}"/>
             <Label Content="{Binding QuickResult}" Style="{StaticResource QuickResult}"/>
         </StackPanel>

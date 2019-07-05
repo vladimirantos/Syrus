@@ -19,10 +19,14 @@ namespace Syrus.Utils.Hotkeys
         public uint Key { get; }
         public Action Action { get; }
 
-        public HotKey(int id, Modifiers modifier, Keys key, Action action)
+        public HotKey(int id, Modifiers modifier, Keys key, Action action) :this(id, key, action)
+        {
+            Modifier = (uint)modifier;
+        }
+
+        public HotKey(int id, Keys key, Action action)
         {
             Id = id;
-            Modifier = (uint)modifier;
             Key = (uint)key;
             Action = action;
         }

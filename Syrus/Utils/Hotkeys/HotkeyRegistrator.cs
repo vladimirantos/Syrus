@@ -34,6 +34,10 @@ namespace Syrus.Utils.Hotkeys
         public void Add(Modifiers modifier, Keys key, Action action)
             => _hotKeys.Add(new HotKey(HotkeyId + _hotKeys.Count, modifier, key, action));
 
+        public void Add(Keys key, Action action)
+            => _hotKeys.Add(new HotKey(HotkeyId + _hotKeys.Count, key, action));
+
+
         public void Register()
         {
             foreach (var hotKey in _hotKeys)
