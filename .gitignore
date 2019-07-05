@@ -36,3 +36,11 @@
 /Syrus.Plugins.Applications/obj
 /Syrus.Styles/bin/Debug/netcoreapp3.0
 /Syrus.Styles/obj
+/Plugins/Syrus.Plugins.Applications/obj
+/Plugins/Syrus.Plugins.Calculator/obj
+/Plugins/Syrus.Plugins.Google/obj
+/Plugins/Syrus.Plugins.HexRgb/obj
+/Plugins/Syrus.Plugins.TestPlugin/obj
+/Plugins/Syrus.Plugins.Translate/obj
+/Plugins/Syrus.Plugins.Weather/obj
+/Plugins/Syrus.Plugins.Wiki/obj

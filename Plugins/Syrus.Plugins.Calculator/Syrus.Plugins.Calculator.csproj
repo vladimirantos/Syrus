@@ -17,7 +17,7 @@
   </Target>
   
   <ItemGroup>
-    <ProjectReference Include="..\Syrus.Plugin\Syrus.Plugin.csproj" />
+    <ProjectReference Include="..\..\Syrus.Plugin\Syrus.Plugin.csproj" />
   </ItemGroup>
 
 </Project>
