@@ -23,8 +23,8 @@ namespace Syrus.Core
     {
         private Regex _regex;
         private Configuration _configuration;
-        private ICollection<KeyValuePair<string, PluginPair>> _keywordPlugins = new List<KeyValuePair<string, PluginPair>>();
-        private ICollection<KeyValuePair<string, PluginPair>> _regexPlugins = new List<KeyValuePair<string, PluginPair>>();
+        private ICollection<KeyValuePair<ConditionObject, PluginPair>> _keywordPlugins = new List<KeyValuePair<ConditionObject, PluginPair>>();
+        private ICollection<KeyValuePair<ConditionObject, PluginPair>> _regexPlugins = new List<KeyValuePair<ConditionObject, PluginPair>>();
         private IEnumerable<PluginPair> _defaultPlugins;
         public IEnumerable<PluginPair> Plugins { get; set; }
 
@@ -47,10 +47,11 @@ namespace Syrus.Core
              
             _defaultPlugins = Plugins.Where(p => p.Metadata.Default);
 
-            void ToKeyValues(ref ICollection<KeyValuePair<string, PluginPair>> keyValuePairs, PluginPair plugin, IEnumerable<string> col)
+            void ToKeyValues(ref ICollection<KeyValuePair<ConditionObject, PluginPair>> keyValuePairs, 
+                PluginPair plugin, IEnumerable<ConditionObject> col)
             {
-                foreach (string item in col)
-                    keyValuePairs.Add(new KeyValuePair<string, PluginPair>(item, plugin));
+                foreach (ConditionObject item in col)
+                    keyValuePairs.Add(new KeyValuePair<ConditionObject, PluginPair>(item, plugin));
             }
         }
 
@@ -118,10 +119,14 @@ namespace Syrus.Core
         /// </summary>
         private IEnumerable<PluginPair> SelectPluginsByKeyword(string match)
             => _keywordPlugins.Where(kv => {
-                    bool isKeyword = kv.Key.StartsWith(match, StringComparison.InvariantCultureIgnoreCase);
-                    if(isKeyword)
+                    string selectedKeyword = kv.Key.Text.FirstOrDefault(keyword 
+                        => keyword.StartsWith(match, StringComparison.InvariantCultureIgnoreCase));
+                    if(selectedKeyword != null)
+                    {
                         kv.Value.Metadata.FromKeyword = kv.Key;
-                    return isKeyword;
+                        kv.Value.Metadata.FromKeywordString = selectedKeyword;
+                    }
+                    return selectedKeyword != null;
                 })
                 .GroupBy(kv => kv.Value.Metadata.Name)
                 .Select(kv => kv.First().Value);
@@ -133,10 +138,14 @@ namespace Syrus.Core
         {
             return _regexPlugins.Where(kv =>
             {
-                var regexMatch = Regex.Match(match, kv.Key, RegexOptions.IgnoreCase);
-                if (regexMatch.Success)
+                List<Regex> regices = kv.Key.Text.Select(pattern => new Regex(pattern, RegexOptions.IgnoreCase)).ToList();
+                Regex matchedRegex = regices.FirstOrDefault(regex => regex.IsMatch(match));
+                if(matchedRegex != null)
+                {
                     kv.Value.Metadata.FromKeyword = kv.Key;
-                return regexMatch.Success;
+                    kv.Value.Metadata.FromKeywordString = null;
+                }
+                return matchedRegex != null;
             })
             .GroupBy(kv => kv.Value.Metadata.Name)
             .Select(kv => kv.First().Value);

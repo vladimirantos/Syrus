@@ -66,8 +66,8 @@ namespace Syrus.Plugin
     public class SearchingConfiguration
     {
         public string Language { get; set; }
-        public IEnumerable<string> Keywords { get; set; }
-        public IEnumerable<string> RegularExpressions { get; set; }
+        public IEnumerable<ConditionObject> Keywords { get; set; }
+        public IEnumerable<ConditionObject> RegularExpressions { get; set; }
     }
 
     public class Caching
@@ -89,5 +89,11 @@ namespace Syrus.Plugin
     public enum ResultsCacheTypes
     {
         Selected, All
+    }
+
+    public class ConditionObject
+    {
+        public int Id { get; set; }
+        public string[] Text { get; set; }
     }
 }

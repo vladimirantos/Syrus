@@ -7,12 +7,22 @@
   "searchingConfigurations": [
     {
       "language": "en",
-      "regularExpressions": [ "^.*$" ]
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^.*$" ]
+        }
+      ]
     },
 
     {
       "language": "cs",
-      "regularExpressions": [ "^.*$" ]
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^.*$" ]
+        }
+      ]
     }
   ]
 }

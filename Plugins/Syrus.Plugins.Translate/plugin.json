@@ -7,12 +7,22 @@
   "searchingConfigurations": [
     {
       "language": "en",
-      "keywords": [ "translate", "tr" ]
+      "keywords": [
+        {
+          "id": 1,
+          "text": [ "translate", "tr" ]
+        }  
+      ]
     },
 
     {
       "language": "cs",
-      "keywords": [ "přelož" ]
+      "keywords": [
+        {
+          "id": 1,
+          "text": [ "přelož" ]
+        }
+      ]
     }
   ]
 }

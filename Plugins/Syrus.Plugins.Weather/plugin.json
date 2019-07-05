@@ -7,12 +7,30 @@
   "searchingConfigurations": [
     {
       "language": "en",
-      "keywords": [ "weather", "forecast" ]
+      "keywords": [
+        {
+          "id": 1,
+          "text": [ "weather" ]
+        },
+        {
+          "id": 2,
+          "text": [ "forecast" ]
+        }
+      ]
     },
 
     {
       "language": "cs",
-      "keywords": [ "počasí", "předpověď" ]
+      "keywords": [
+        {
+          "id": 1,
+          "text": [ "počasí" ]
+        },
+        {
+          "id": 2,
+          "text": [ "předpověd" ]
+        }
+      ]
     }
   ]
   //"command": "weather",

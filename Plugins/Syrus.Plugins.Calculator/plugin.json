@@ -8,12 +8,22 @@
   "searchingConfigurations": [
     {
       "language": "en",
-      "regularExpressions": [ "^\\s*([-+]?)(\\d+)(?:\\s*([-+*\\/])?\\s*((?:\\s[-+])?\\d+)?\\s*)+$" ]
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^\\s*([-+]?)(\\d+)(?:\\s*([-+*\\/])?\\s*((?:\\s[-+])?\\d+)?\\s*)+$" ]
+        }
+      ]
     },
 
     {
       "language": "cs",
-      "regularExpressions": [ "^\\s*([-+]?)(\\d+)(?:\\s*([-+*\\/])?\\s*((?:\\s[-+])?\\d+)?\\s*)+$" ]
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^\\s*([-+]?)(\\d+)(?:\\s*([-+*\\/])?\\s*((?:\\s[-+])?\\d+)?\\s*)+$" ]
+        }
+      ]
     }
   ]
 }

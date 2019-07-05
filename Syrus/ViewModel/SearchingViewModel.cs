@@ -64,7 +64,8 @@ namespace Syrus.ViewModel
             => (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0;
 
         public ICommand CompleteTextByTabCommand => new Command((object obj)
-            => ChangeQuery(Results.First().FromPlugin.FromKeyword + " "), _ => Results.Count > 0 && CanDisplayHelp(Results.First()));
+            => ChangeQuery(Results.First().FromPlugin.FromKeywordString + " "), _ => 
+            Results.Count > 0 && CanDisplayHelp(Results.First()));
 
         public ICommand SelectResultCommand => new Command((object obj) => {
             var x = (Result)obj;
@@ -125,7 +126,7 @@ namespace Syrus.ViewModel
         /// <param name="text">Text napsaný do vyhledávacího pole</param>
         /// <param name="result">Aktuálně nalezený výsledek hledání</param>
         private string CreateHelp(string text, Result result)
-            => Regex.Replace(result.FromPlugin.FromKeyword, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
+            => Regex.Replace(result.FromPlugin.FromKeywordString, text, string.Empty, RegexOptions.IgnoreCase).ToLower();
 
         public void ChangeQuery(string query, bool append = false)
         {
