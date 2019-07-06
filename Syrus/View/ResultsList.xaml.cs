@@ -1,4 +1,6 @@
 ﻿using MVVMLight.Messaging;
+using Syrus.Plugin;
+using Syrus.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,5 +35,11 @@ namespace Syrus.View
                 (Keyboard.FocusedElement as UIElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
+
+
+
+        private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            => (DataContext as SearchingViewModel).SelectResultCommand.Execute((sender as ListBoxItem).Content as Result);
+
     }
 }
