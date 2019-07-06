@@ -12,9 +12,50 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
-        <Style x:Key="myLBStyle" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Margin" Value="-5 0 0 0 "/>
+
+        <Style x:Key="SimpleListBoxItem" TargetType="ListBoxItem">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="Border" Padding="2" SnapsToDevicePixels="true" Style="{StaticResource ResultItem}">
+                            <StackPanel Orientation="Horizontal">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.SelectResultCommand, 
+                                            RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"
+                                            CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <Image Width="30" Height="30" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                    <Image.Resources>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DataContext.IsEnabledDarkMode, 
+                                            RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}" Value="False">
+                                                    <Setter Property="Source" Value="{Binding Icon}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding NightIcon}" Value="{x:Null}">
+                                                    <Setter Property="Source" Value="{Binding Icon}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Source" Value="{Binding NightIcon}"/>
+                                        </Style>
+                                    </Image.Resources>
+                                </Image>
+                                <TextBlock Text="{Binding Text}"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="Background" 
+                                        Value="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Resources>
 
@@ -32,9 +73,8 @@
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
         </Grid.Resources>
-
-        <ListBox Grid.Column="0" ItemsSource="{Binding Source={StaticResource GroupedItems}}" Name="ResultListBox"
-                 ItemContainerStyle="{StaticResource myLBStyle}">
+        <ListBox x:Name="ResultListBox" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
+                 ItemContainerStyle="{StaticResource SimpleListBoxItem}">
             <ListBox.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -45,6 +85,9 @@
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </ListBox.GroupStyle>
+        </ListBox>
+        <!--<ListBox Grid.Column="0" ItemsSource="{Binding Source={StaticResource GroupedItems}}" Name="ResultListBox">
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Padding="20 0 0 0"  Style="{StaticResource ResultItem}">
@@ -78,15 +121,25 @@
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
 
-        <!--<ContentControl ContentTemplate="{Binding ResultDetail}"></ContentControl>-->
-        <!--<TabControl Grid.Column="1" ItemsSource="{Binding ResultDetail}"/>-->
+        --><!--<ContentControl ContentTemplate="{Binding ResultDetail}"></ContentControl>-->
+        <!--<TabControl Grid.Column="1" ItemsSource="{Binding ResultDetail}"/>--><!--
         <StackPanel Grid.Column="1">
             <TextBlock Text="{Binding ResultDetail.Title}"/>
             <ContentControl Content="{Binding ResultDetail}" />
-            <!--<TabControl ItemsSource="{Binding Workspaces}"/>-->
+            --><!--<TabControl ItemsSource="{Binding Workspaces}"/>--><!--
 
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </UserControl>
