@@ -11,7 +11,7 @@ namespace Syrus.Plugins.Weather
     public class Main : IPlugin
     {
         private const string ApiKey = "2747ba3ddb5d7e5e4d358c143ce2f61f";
-
+        private int _requestNumber = -1;
         private PluginContext _pluginContext;
         private WeatherFactory _weatherFactory;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -25,12 +25,15 @@ namespace Syrus.Plugins.Weather
 
         public async System.Threading.Tasks.Task<IEnumerable<Result>> SearchAsync(Query query)
         {
-
+            int count = ++_requestNumber;
             if (!query.HasArguments || query.Arguments.Length < 3)
                 return new List<Result>();
             try
             {
                 WeatherApi weather = await _weatherFactory.GetWeatherAsync(query.Arguments, _cancellationTokenSource.Token);
+                if (count != _requestNumber)
+                    return new List<Result>();
+
                 return new List<Result>()
                 {
                     new Result()
