@@ -9,23 +9,25 @@
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" 
         ShowInTaskbar="False" AcrylicWindowStyle="None"
         Deactivated="AcrylicWindow_Deactivated" BorderThickness="0">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <view:SearchPanel Grid.Row="0" x:Name="SearchPanel"/>
-        <view:ResultsList Grid.Row="1">
-            <view:ResultsList.Resources>
-                <Style TargetType="view:ResultsList">
-                    <Setter Property="Visibility" Value="Visible"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Results.Count}" Value="0">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </view:ResultsList.Resources>
-        </view:ResultsList>
-    </Grid>
+    <Border BorderBrush="{StaticResource SystemBaseLowColorBrush}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <view:SearchPanel Grid.Row="0" x:Name="SearchPanel"/>
+            <view:ResultsList Grid.Row="1">
+                <view:ResultsList.Resources>
+                    <Style TargetType="view:ResultsList">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Results.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </view:ResultsList.Resources>
+            </view:ResultsList>
+        </Grid>
+    </Border>
 </fw:AcrylicWindow>
