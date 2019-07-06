@@ -109,7 +109,7 @@ namespace Syrus.Core
                     Group = "Možnosti vyhledávání",
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
                     FromPlugin = p.Metadata,
-                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeyword + " ")
+                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeywordString + " ")
                 };
             }
         }
