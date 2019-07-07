@@ -13,10 +13,12 @@ namespace Syrus.View
         public ResultsList()
         {
             InitializeComponent();
-            Messenger.Default.Register<Key>(this, "selectResult", SelectResult);
+            Messenger.Default.Register<Key>(this, "highlightResult", HighlightResult);
+            Messenger.Default.Register<object>(this, "selectResult", SelectResult);
         }
 
-        private void SelectResult(Key key)
+
+        private void HighlightResult(Key key)
         {
             var list = ResultListBox;
             switch (key)
@@ -36,10 +38,16 @@ namespace Syrus.View
             }
         }
 
-
+        private void SelectResult(object obj) => InvokeSelectedResultCommand(ResultListBox.SelectedItem as Result);
 
         private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-            => (DataContext as SearchingViewModel).SelectResultCommand.Execute((sender as ListBoxItem).Content as Result);
+            => InvokeSelectedResultCommand(sender as ListBoxItem);
 
+        private void InvokeSelectedResultCommand(ListBoxItem listBoxItem)
+            => InvokeSelectedResultCommand(listBoxItem.Content as Result);
+
+
+        private void InvokeSelectedResultCommand(Result result)
+            => (DataContext as SearchingViewModel).SelectResultCommand.Execute(result);
     }
 }
