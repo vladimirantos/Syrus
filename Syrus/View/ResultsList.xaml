@@ -41,9 +41,33 @@
                                 <TextBlock Text="{Binding Text}"/>
                             </StackPanel>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                <Setter Property="Panel.Background" Value="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}"/>
+                                <Setter Property="TextBlock.Foreground" Value="{StaticResource SystemBaseHighColorBrush}"/>
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                    <Condition Property="Selector.IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Panel.Background" TargetName="Border" 
+                                        Value="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}"/>
+                                <Setter Property="TextBlock.Foreground" TargetName="Border" 
+                                        Value="{StaticResource SystemBaseHighColorBrush}"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True" >
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Background" Value="Yellow" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
@@ -52,7 +76,7 @@
             <ColumnDefinition Width="2.3*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Grid.Resources>
             <utils:NullToVisibilityConverter x:Key="NullToVisibility"/>
             <CollectionViewSource x:Key="GroupedItems" Source="{Binding Results}">
