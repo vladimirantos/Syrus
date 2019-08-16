@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Syrus.View.SearchPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:fa="http://schemas.fontawesome.io/icons/">
+             xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF">
     <UserControl.InputBindings>
         <KeyBinding
                 Key="Tab" 

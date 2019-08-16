@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.7.0" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.1.1" />
     <PackageReference Include="MVVMLight.Messaging" Version="1.0.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
@@ -42,4 +43,9 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.0.0-preview7-27912-14\ref\netcoreapp3.0\System.Windows.Forms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
