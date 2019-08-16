@@ -56,6 +56,11 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _resultDetail, value);
         }
 
+        private ResultsView _viewType;
+        public ResultsView ResultViewType {
+            get => _viewType;
+            set => SetProperty(ref _viewType, value);
+        }
 
         /// <summary>
         /// Returns true when windows dark mode is enabled.
@@ -102,11 +107,14 @@ namespace Syrus.ViewModel
                 CurrentPluginIcon = string.Empty;
                 return;
             }
-                IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
+
+            IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
-            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? Results.First().FromPlugin.Icon : string.Empty;
-            if (Results[0].FromPlugin.EnableHelp)
-                SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(Results[0]) ? CreateHelp(newValue, Results[0]) : string.Empty);
+            Result mainResult = Results.First();
+            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? mainResult.FromPlugin.Icon : string.Empty;
+            ResultViewType = !mainResult.ViewType.HasValue ? ResultsView.Default : mainResult.ViewType.Value;
+            if (mainResult.FromPlugin.EnableHelp)
+                SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(mainResult) ? CreateHelp(newValue, mainResult) : string.Empty);
             else Placeholder = null; //disabled default placeholder when searchbox is not empty
             ChangeQuickResult(results.First().QuickResult);
         }

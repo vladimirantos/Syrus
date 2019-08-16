@@ -44,7 +44,8 @@ namespace Syrus.Plugins.Text
         private Result Length(string text)
             => new Result()
             {
-                QuickResult = text.Length.ToString()
+                QuickResult = text.Length.ToString(),
+                ViewType = ResultsView.Hide
             };
 
         private Result Decode(string text) => new Result()
