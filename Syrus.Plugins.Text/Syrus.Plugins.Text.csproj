@@ -3,7 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-
+  
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Text</OutputPath>
   </PropertyGroup>
@@ -17,22 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="plugin.json">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>plugin.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="plugin.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>plugin.json</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>

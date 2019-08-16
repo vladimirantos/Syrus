@@ -102,7 +102,7 @@ namespace Syrus.ViewModel
                 CurrentPluginIcon = string.Empty;
                 return;
             }
-            IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
+                IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             CurrentPluginIcon = ResultsFromSinglePlugin(results) ? Results.First().FromPlugin.Icon : string.Empty;
             if (Results[0].FromPlugin.EnableHelp)
