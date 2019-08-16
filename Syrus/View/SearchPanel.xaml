@@ -10,17 +10,19 @@
     <Grid Name="SearchLine">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*"/>
-            <ColumnDefinition Width="2.8*"/>
-            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="2.1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <fa:ImageAwesome Grid.Column="0" Icon="Search" Style="{StaticResource SearchIcon}"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" FocusManager.FocusedElement="{Binding ElementName=SearchingInput}">
             <TextBox Name="SearchingInput" Text="{Binding SearchingQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource SearchInput}" PreviewKeyDown="SearchingInput_PreviewKeyDown"/>
             <TextBox Text="{Binding Placeholder}" Style="{StaticResource Placeholder}"/>
-            <Label Content="{Binding QuickResult}" Style="{StaticResource QuickResult}"/>
         </StackPanel>
-        <Image Grid.Column="2" Source="{Binding CurrentPluginIcon}" Width="30" Height="30"
-               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Label Content="{Binding QuickResult}" Style="{StaticResource QuickResult}"/>
+            <Image Source="{Binding CurrentPluginIcon}" Width="40" Height="40"
+               VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20 0 20 0"/>
+        </StackPanel>
     </Grid>
 </UserControl>
