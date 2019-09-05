@@ -56,12 +56,12 @@ namespace Syrus.ViewModel
             set => SetProperty(ref _resultDetail, value);
         }
 
-        private ResultsView _viewMode;
+        private ResultsViewMode _viewMode;
         
         /// <summary>
         /// Mod zobrazení výsledků
         /// </summary>
-        public ResultsView ResultViewMode {
+        public ResultsViewMode ResultViewMode {
             get => _viewMode;
             set => SetProperty(ref _viewMode, value);
         }
@@ -112,11 +112,11 @@ namespace Syrus.ViewModel
                 return;
             }
 
-            IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
+         IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             Result mainResult = Results.First();
             CurrentPluginIcon = ResultsFromSinglePlugin(results) ? mainResult.FromPlugin.Icon : string.Empty;
-            ResultViewMode = !mainResult.ViewType.HasValue ? ResultsView.Default : mainResult.ViewType.Value;
+            ResultViewMode = !mainResult.ViewType.HasValue ? ResultsViewMode.Default : mainResult.ViewType.Value;
             if (mainResult.FromPlugin.EnableHelp)
                 SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(mainResult) ? CreateHelp(newValue, mainResult) : string.Empty);
             else Placeholder = null; //disabled default placeholder when searchbox is not empty

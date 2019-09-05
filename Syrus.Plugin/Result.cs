@@ -10,7 +10,7 @@ namespace Syrus.Plugin
         public string Icon { get; set; }
         public string NightIcon { get; set; }
         public string Group { get; set; }
-        public ResultsView? ViewType { get; set; }
+        public ResultsViewMode? ViewType { get; set; } = ResultsViewMode.Default;
         public Query FromQuery { get; set; }
         public PluginMetadata FromPlugin { get; set; }
         public View Content { get; set; }
@@ -26,7 +26,7 @@ namespace Syrus.Plugin
     /// <summary>
     /// Typy zobrazení výsledků
     /// </summary>
-    public enum ResultsView
+    public enum ResultsViewMode
     {
         /// <summary>
         /// Výchozí dvouokení zobrazení. Vlevo seznam výsledků, vpravo detail

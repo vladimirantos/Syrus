@@ -38,24 +38,26 @@ namespace Syrus.Plugins.Text
             if(!query.HasArguments)
                 return Task.FromResult<IEnumerable<Result>>(new List<Result>());
             Result result = _availableFunctions[(TextOperations)_context.Metadata.FromKeyword.Id].Invoke(query.Arguments);
-            return Task.FromResult<IEnumerable<Result>>(new List<Result>() { result });
+            return Task.FromResult<IEnumerable<Result>>(new List<Result>() { result, result });
         }
 
         private Result Length(string text)
             => new Result()
             {
                 QuickResult = text.Length.ToString(),
-                ViewType = ResultsView.Hide
+                ViewType = ResultsViewMode.Hide
             };
 
         private Result Decode(string text) => new Result()
         {
             Text = Uri.UnescapeDataString(text),
+            ViewType = ResultsViewMode.Fullscreen
         };
 
         private Result Encode(string text) => new Result()
         {
-            Text = Uri.EscapeDataString(text)
+            Text = Uri.EscapeDataString(text),
+            ViewType = ResultsViewMode.Fullscreen
         };
     }
 }

@@ -20,7 +20,7 @@ namespace Syrus.View
 
         private void HighlightResult(Key key)
         {
-            var list = ResultListBox;
+            var list = ResultListBox.Visibility == Visibility.Visible ? ResultListBox : ResultListBoxFullscreen;
             switch (key)
             {
                 case Key.Down:
@@ -38,7 +38,10 @@ namespace Syrus.View
             }
         }
 
-        private void SelectResult(object obj) => InvokeSelectedResultCommand(ResultListBox.SelectedItem as Result);
+        private void SelectResult(object obj) => InvokeSelectedResultCommand(
+            ResultListBox.Visibility == Visibility.Visible ?
+            ResultListBox.SelectedItem as Result :
+            ResultListBoxFullscreen.SelectedItem as Result);
 
         private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
             => InvokeSelectedResultCommand(sender as ListBoxItem);
