@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(ProjectDir)plugin.json C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Text" />
+    <Exec Command="copy $(ProjectDir)plugin.json C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Text&#xD;&#xA;copy $(ProjectDir)icon.png C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Text&#xD;&#xA;copy $(ProjectDir)night-icon.png C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Text" />
   </Target>
 
   <ItemGroup>

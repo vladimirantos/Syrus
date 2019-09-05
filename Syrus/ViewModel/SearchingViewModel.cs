@@ -57,7 +57,7 @@ namespace Syrus.ViewModel
         }
 
         private ResultsViewMode _viewMode;
-        
+
         /// <summary>
         /// Mod zobrazení výsledků
         /// </summary>
@@ -73,24 +73,27 @@ namespace Syrus.ViewModel
             => (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0;
 
         public ICommand CompleteTextByTabCommand => new Command((object obj)
-            => ChangeQuery(Results.First().FromPlugin.FromKeywordString + " "), _ => 
+            => ChangeQuery(Results.First().FromPlugin.FromKeywordString + " "), _ =>
             Results.Count > 0 && CanDisplayHelp(Results.First()));
 
-        public ICommand SelectResultCommand => new Command((object obj) => {
+        public ICommand SelectResultCommand => new Command((object obj) =>
+        {
             var x = (Result)obj;
-            if(x.OnClick == null)
+            if (x.OnClick == null)
             {
                 Application.Current.Resources.MergedDictionaries.Add(x.Content.Template);//new ResourceDictionary() { Source = new Uri("pack://application:,,,/Pokus;component/View.xaml") });
                 ResultDetail = x.Content.ViewModel;
-            }else
+            }
+            else
                 x.OnClick(this, obj as Result);
-            });
+        });
 
         public SearchingViewModel()
         {
             string pluginsLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "plugins");
             string cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "cache");
-            _syrus = new Core.Syrus(pluginsLocation, cacheLocation, new Core.Configuration() {
+            _syrus = new Core.Syrus(pluginsLocation, cacheLocation, new Core.Configuration()
+            {
                 Language = "cs"
             });
             _syrus.LoadPlugins().Initialize();
@@ -112,10 +115,10 @@ namespace Syrus.ViewModel
                 return;
             }
 
-         IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
+            IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             Result mainResult = Results.First();
-            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? mainResult.FromPlugin.Icon : string.Empty;
+            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? SelectIcon(mainResult.FromPlugin) : string.Empty;
             ResultViewMode = !mainResult.ViewType.HasValue ? ResultsViewMode.Default : mainResult.ViewType.Value;
             if (mainResult.FromPlugin.EnableHelp)
                 SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(mainResult) ? CreateHelp(newValue, mainResult) : string.Empty);
@@ -127,9 +130,9 @@ namespace Syrus.ViewModel
         /// Kontroluje, jestli je možné zobrazit nápovědu (placeholder) a zároveň doplnit command pomocí TAB.
         /// Řeší případy command, command_, command_argument
         /// </summary>
-        private bool CanDisplayHelp(Result result) => result.FromQuery.HasCommand 
-            && !result.FromQuery.HasArguments 
-            && !result.FromQuery.Original.EndsWith(' ') 
+        private bool CanDisplayHelp(Result result) => result.FromQuery.HasCommand
+            && !result.FromQuery.HasArguments
+            && !result.FromQuery.Original.EndsWith(' ')
             && result.FromPlugin.FromKeyword != null; //pro defaultní pluginy
 
         /// <summary>
@@ -156,6 +159,12 @@ namespace Syrus.ViewModel
             List<Result> r = results.ToList();
             return r.Count == 1 || r.Select(result => result.FromPlugin.FullName).Distinct().Count() < 2;
         }
+
+        /// <summary>
+        /// Vybere ikonu na základě použitého tématu
+        /// </summary>
+        private string SelectIcon(PluginMetadata plugin) 
+            => !IsEnabledDarkMode || plugin.NightIcon == null ? plugin.Icon : plugin.NightIcon;
     }
 
 
