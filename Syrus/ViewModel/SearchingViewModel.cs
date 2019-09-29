@@ -106,7 +106,7 @@ namespace Syrus.ViewModel
 
         public async void Search(string newValue)
         {
-            if (string.IsNullOrEmpty(newValue))
+            if (string.IsNullOrWhiteSpace(newValue))
             {
                 Results = new ObservableCollection<Result>();
                 Placeholder = _defaultPlaceholder;
