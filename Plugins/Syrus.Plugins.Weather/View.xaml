@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm1="clr-namespace:Syrus.Plugins.Weather">
+
     <DataTemplate DataType="{x:Type vm1:WeatherVm}">
         <StackPanel HorizontalAlignment="Center">
-            <Label Content="{Binding Temperature}" FontSize="20" FontWeight="Bold"/>
+            <Label Content="{Binding Temperature}" Style="{StaticResource Title}"/>
             <TextBlock Text="{Binding City}"/>
         </StackPanel>
     </DataTemplate>

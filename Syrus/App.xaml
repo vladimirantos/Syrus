@@ -9,7 +9,8 @@
                 <!--  FluentWPF Controls  -->
                 <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Syrus.Styles;component/Base.xaml" />
-                <!--<ResourceDictionary Source="/Pokus;component/View.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/Syrus.Styles;component/Plugin.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

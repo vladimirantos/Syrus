@@ -68,81 +68,85 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.3*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
+    <DockPanel>
+        <Border BorderThickness="0 1 0 0" BorderBrush="{StaticResource SystemBaseLowColorBrush}">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.3*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <utils:NullToVisibilityConverter x:Key="NullToVisibility"/>
-                <CollectionViewSource x:Key="GroupedItems" Source="{Binding Results}">
-                    <CollectionViewSource.GroupDescriptions>
-                        <PropertyGroupDescription PropertyName="Group" />
-                    </CollectionViewSource.GroupDescriptions>
-                </CollectionViewSource>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Default}">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-            <ListBox x:Name="ResultListBox" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
-                 ItemContainerStyle="{StaticResource SimpleListBoxItem}">
-                <ListBox.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Name}" Style="{StaticResource ResultItemHeader}" 
+                    <Grid.Resources>
+                        <utils:NullToVisibilityConverter x:Key="NullToVisibility"/>
+                        <CollectionViewSource x:Key="GroupedItems" Source="{Binding Results}">
+                            <CollectionViewSource.GroupDescriptions>
+                                <PropertyGroupDescription PropertyName="Group" />
+                            </CollectionViewSource.GroupDescriptions>
+                        </CollectionViewSource>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Default}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+                    <ListBox x:Name="ResultListBox" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
+                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" Margin="-2 -1 0 -2">
+                        <ListBox.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name}" Style="{StaticResource ResultItemHeader}" 
                                        Visibility="{Binding Path=Name, Converter={StaticResource NullToVisibility}}"/>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListBox.GroupStyle>
-            </ListBox>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListBox.GroupStyle>
+                    </ListBox>
 
-            <StackPanel Grid.Column="1">
-                <TextBlock Text="{Binding ResultDetail.Title}"/>
-                <ContentControl Content="{Binding ResultDetail}" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding ResultDetail.Title}"/>
+                        <ContentControl Content="{Binding ResultDetail}" />
+                    </StackPanel>
+                </Grid>
+
+                <!--Fullscreen-->
+                <Grid>
+                    <Grid.Resources>
+                        <utils:NullToVisibilityConverter x:Key="NullToVisibility"/>
+                        <CollectionViewSource x:Key="GroupedItems" Source="{Binding Results}">
+                            <CollectionViewSource.GroupDescriptions>
+                                <PropertyGroupDescription PropertyName="Group" />
+                            </CollectionViewSource.GroupDescriptions>
+                        </CollectionViewSource>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Fullscreen}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+
+                    <ListBox x:Name="ResultListBoxFullscreen" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
+                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" Margin="-2 -1 -2 -2">
+                        <ListBox.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name}" Style="{StaticResource ResultItemHeader}" 
+                                       Visibility="{Binding Path=Name, Converter={StaticResource NullToVisibility}}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListBox.GroupStyle>
+                    </ListBox>
+                </Grid>
             </StackPanel>
-        </Grid>
-
-        <!--Fullscreen-->
-        <Grid>
-            <Grid.Resources>
-                <utils:NullToVisibilityConverter x:Key="NullToVisibility"/>
-                <CollectionViewSource x:Key="GroupedItems" Source="{Binding Results}">
-                    <CollectionViewSource.GroupDescriptions>
-                        <PropertyGroupDescription PropertyName="Group" />
-                    </CollectionViewSource.GroupDescriptions>
-                </CollectionViewSource>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Fullscreen}">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-
-            <ListBox x:Name="ResultListBoxFullscreen" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
-                 ItemContainerStyle="{StaticResource SimpleListBoxItem}">
-                <ListBox.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Name}" Style="{StaticResource ResultItemHeader}" 
-                                       Visibility="{Binding Path=Name, Converter={StaticResource NullToVisibility}}"/>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListBox.GroupStyle>
-            </ListBox>
-        </Grid>
-    </StackPanel>
+        </Border>
+    </DockPanel>
 </UserControl>
