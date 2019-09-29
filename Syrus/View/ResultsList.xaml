@@ -8,6 +8,7 @@
         <Style TargetType="ListBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="-2 -1 -2 -2"/>
         </Style>
 
         <Style x:Key="SimpleListBoxItem" TargetType="ListBoxItem">
@@ -94,7 +95,8 @@
                         </Style>
                     </Grid.Resources>
                     <ListBox x:Name="ResultListBox" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
-                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" Margin="-2 -1 0 -2">
+                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" BorderThickness="0 0 1 0" BorderBrush="{StaticResource SystemBaseLowColorBrush}"
+                             Padding="0 0 -1 0">
                         <ListBox.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.HeaderTemplate>
@@ -133,7 +135,7 @@
                     </Grid.Resources>
 
                     <ListBox x:Name="ResultListBoxFullscreen" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
-                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" Margin="-2 -1 -2 -2">
+                 ItemContainerStyle="{StaticResource SimpleListBoxItem}">
                         <ListBox.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.HeaderTemplate>
