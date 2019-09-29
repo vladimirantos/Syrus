@@ -79,13 +79,30 @@ namespace Syrus.ViewModel
         public ICommand SelectResultCommand => new Command((object obj) =>
         {
             var result = (Result)obj;
+            if(result.OnClick == null)
+            {
+                result.Content = new Plugin.View()
+                {
+                    Template = new ResourceDictionary()
+                    {
+                        Source = new Uri("pack://application:,,,/Syrus;component/View/DefaultResultDetail.xaml")
+                    },
+                    ViewModel = new DefaultResultDetailViewModel()
+                };
+            }
             if (result.CanOpenDetail)
             {
                 Application.Current.Resources.MergedDictionaries.Add(result.Content.Template);//new ResourceDictionary() { Source = new Uri("pack://application:,,,/Pokus;component/View.xaml") });
                 ResultDetail = result.Content.ViewModel;
+                return;
             }
-            else
-                result.OnClick(this, obj as Result);
+            if(result.OnClick == null)
+            {
+                
+                ResultDetail = result.Content.ViewModel;
+                return;
+            }else
+                result.OnClick.Invoke(this, obj as Result);
         });
 
         public SearchingViewModel()

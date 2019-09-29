@@ -57,7 +57,7 @@ namespace Syrus.Plugins.Text
         private Result Encode(string text) => new Result()
         {
             Text = Uri.EscapeDataString(text),
-            ViewType = ResultsViewMode.Fullscreen
+            ViewType = ResultsViewMode.Default
         };
     }
 }
