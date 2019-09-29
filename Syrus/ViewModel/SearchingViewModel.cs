@@ -22,6 +22,7 @@ namespace Syrus.ViewModel
 
         private Core.Syrus _syrus;
         private readonly string _defaultPlaceholder = "Search";
+
         public event PluginSelected OnSelectPlugin;
 
         public string SearchingQuery {
@@ -79,29 +80,9 @@ namespace Syrus.ViewModel
         public ICommand SelectResultCommand => new Command((object obj) =>
         {
             var result = (Result)obj;
-            if(result.OnClick == null)
-            {
-                result.Content = new Plugin.View()
-                {
-                    Template = new ResourceDictionary()
-                    {
-                        Source = new Uri("pack://application:,,,/Syrus;component/View/DefaultResultDetail.xaml")
-                    },
-                    ViewModel = new DefaultResultDetailViewModel()
-                };
-            }
-            if (result.CanOpenDetail)
-            {
-                Application.Current.Resources.MergedDictionaries.Add(result.Content.Template);//new ResourceDictionary() { Source = new Uri("pack://application:,,,/Pokus;component/View.xaml") });
-                ResultDetail = result.Content.ViewModel;
-                return;
-            }
-            if(result.OnClick == null)
-            {
-                
-                ResultDetail = result.Content.ViewModel;
-                return;
-            }else
+            if (result.OnClick == null)
+                DisplayView(result);
+            else
                 result.OnClick.Invoke(this, obj as Result);
         });
 
@@ -180,8 +161,32 @@ namespace Syrus.ViewModel
         /// <summary>
         /// Vybere ikonu na základě použitého tématu
         /// </summary>
-        private string SelectIcon(PluginMetadata plugin) 
+        private string SelectIcon(PluginMetadata plugin)
             => !IsEnabledDarkMode || plugin.NightIcon == null ? plugin.Icon : plugin.NightIcon;
+
+        /// <summary>
+        /// Přidá view do Resources a zobrazí jej (pomocí property ResultDetail).
+        /// Pokud plugin nemá nastavené žádné view, bude použito výchozí.
+        /// </summary>
+        private void DisplayView(Result result)
+        {
+            result.Content = result.Content ?? GetDefaultView(result);
+            Application.Current.Resources.MergedDictionaries.Add(result.Content.Template);
+            ResultDetail = result.Content.ViewModel;
+        }
+
+        /// <summary>
+        /// Vytvoří defaultní view, které zobrazuje informace o pluginu (výsledku)
+        /// </summary>
+        /// <param name="result"></param>
+        private Plugin.View GetDefaultView(Result result) => new Plugin.View()
+        {
+            Template = new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/Syrus;component/View/DefaultResultDetail.xaml")
+            },
+            ViewModel = new DefaultResultDetailViewModel(result)
+        };
     }
 
 

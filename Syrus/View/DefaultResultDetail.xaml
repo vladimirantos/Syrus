@@ -2,6 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm1="clr-namespace:Syrus.ViewModel">
     <DataTemplate DataType="{x:Type vm1:DefaultResultDetailViewModel}">
-        <TextBlock Text="DEFAULT"/>
+        <Label Content="{Binding Result.FromPlugin.FullName}" Style="{StaticResource Title}"/>
     </DataTemplate>
 </ResourceDictionary>

@@ -5,10 +5,9 @@ using System.Text;
 
 namespace Syrus.ViewModel
 {
-    class DefaultResultDetailViewModel : BaseViewModel
+    internal class DefaultResultDetailViewModel : BaseViewModel
     {
-        public DefaultResultDetailViewModel()
-        {
-        }
+        public Result Result { get; private set; }
+        public DefaultResultDetailViewModel(Result result) => Result = result;
     }
 }

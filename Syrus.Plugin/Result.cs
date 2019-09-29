@@ -16,6 +16,9 @@ namespace Syrus.Plugin
         public View Content { get; set; }
         public Action<IAppApi, Result> OnClick { get; set; }// = (IAppApi api, Result result) => { };
 
+        /// <summary>
+        /// Určuje, jestli lze otevřít detail výsledku. Pokud není nastaven OnClick event a zároveň je nastaveno View, může být zobrazeno.
+        /// </summary>
         public bool CanOpenDetail => OnClick == null && Content != null;
     }
 
