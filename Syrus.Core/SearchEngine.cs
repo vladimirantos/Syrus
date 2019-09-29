@@ -72,7 +72,9 @@ namespace Syrus.Core
                 tasks.Add(Task.Run(async () => {
                     IEnumerable<Result> results = await pluginPair.Plugin.SearchAsync(query);
                     foreach (Result result in results)
+                    {
                         result.FromPlugin = pluginPair.Metadata;
+                    }
                     return results;
                 }));
             }

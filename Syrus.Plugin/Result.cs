@@ -14,7 +14,9 @@ namespace Syrus.Plugin
         public Query FromQuery { get; set; }
         public PluginMetadata FromPlugin { get; set; }
         public View Content { get; set; }
-        public Action<IAppApi, Result> OnClick { get; set; }
+        public Action<IAppApi, Result> OnClick { get; set; } = (IAppApi api, Result result) => { };
+
+        public bool CanOpenDetail => OnClick == null && Content != null;
     }
 
     public class View
