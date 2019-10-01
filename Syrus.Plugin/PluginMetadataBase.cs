@@ -4,7 +4,21 @@ using System.Linq;
 
 namespace Syrus.Plugin
 {
-    public class PluginMetadataBase
+    public interface IResultConfigurable
+    {
+        public ResultConfiguration ResultConfiguration { get; set; }
+    }
+
+    /**
+     * Priorita ResultConfiguration (nejvyšší číslo má nejvyšší prioritu):
+     * 1. Plugin
+     * 2. SearchingConfiguration
+     * 3. ConditionObject
+     * 4. Result
+     * 
+     * Výsledký ResultConfiguration je kombinací všech nastavených dle těchto priorit.
+     */
+    public class PluginMetadataBase : IResultConfigurable
     {
         /// <summary>
         /// Plugin name
@@ -61,13 +75,23 @@ namespace Syrus.Plugin
         public Dictionary<string, object> ReadonlyConstants { get; set; }
 
         public Caching Caching { get; set; }
+
+        /// <summary>
+        /// Konfigurace výsledků vyhledávání - globální nastavení pro celý plugin.
+        /// </summary>
+        public ResultConfiguration ResultConfiguration { get; set; } = ResultConfiguration.Default;
     }
 
-    public class SearchingConfiguration
+    public class SearchingConfiguration : IResultConfigurable
     {
         public string Language { get; set; }
         public IEnumerable<ConditionObject> Keywords { get; set; }
         public IEnumerable<ConditionObject> RegularExpressions { get; set; }
+
+        /// <summary>
+        /// Konfigurace výsledků vyhledávání - scope SearchingConfiguration
+        /// </summary>
+        public ResultConfiguration ResultConfiguration { get; set; } = ResultConfiguration.Default;
     }
 
     public class Caching
@@ -91,9 +115,30 @@ namespace Syrus.Plugin
         Selected, All
     }
 
-    public class ConditionObject
+    public class ConditionObject : IResultConfigurable
     {
         public int Id { get; set; }
         public string[] Text { get; set; }
+
+        /// <summary>
+        /// Nastavení výsledků pro konkrétní conditionObject.
+        /// </summary>
+        public ResultConfiguration ResultConfiguration { get; set; } = ResultConfiguration.Default;
+    }
+
+    /// <summary>
+    /// Objekt pro nastavení výsledku vyhledávání.
+    /// </summary>
+    public class ResultConfiguration
+    {
+        /// <summary>
+        /// Režim zobrazení výsledků
+        /// </summary>
+        public ResultsViewMode ViewMode { get; set; }
+
+        public static ResultConfiguration Default => new ResultConfiguration()
+        {
+            ViewMode = ResultsViewMode.NotSet
+        };
     }
 }

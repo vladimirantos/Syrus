@@ -15,6 +15,7 @@ namespace Syrus.Plugin
         public ConditionObject FromKeyword { get; set; }
 
         public SearchingConfiguration? CurrentSearchingConfiguration { get; set; }
+
         public string FromKeywordString { get; set; }
     }
 }

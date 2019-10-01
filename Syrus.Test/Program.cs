@@ -580,4 +580,57 @@ namespace Syrus.Test
 
         #endregion
     }
+
+
+    //enum Config { C1, C2, C3, C4 }
+    //enum Config2 { C21, C22, C23, C24 }
+
+    //class Configuration
+    //{
+    //    public Config Const1 { get; set; }
+    //    public Config2 Const2 { get; set; }
+    //}
+
+    //class A
+    //{
+    //    public Configuration Config 
+    //    {
+    //        get => CombineConfigs();
+    //    }
+    //    public B B { get; set; }
+
+    //    private Configuration CombineConfigs()
+    //    {
+    //        Config c1 = B?.Config?.Const1
+    //     ?? B?.C?.Config?.Const1
+    //     ?? B?.C?.D?.Config?.Const1
+    //     ?? Test.Config.C1;
+    //        Config2 c2 = B.Config != null && B.Config.Const2 != null ? B.Config.Const2 :
+    //            B.C.Config != null && B.C.Config.Const2 != null ? B.C.Config.Const2 :
+    //            B.C.D.Config != null && B.C.D.Config.Const2 != null ? B.C.D.Config.Const2 :
+    //            Test.Config2.C21;
+    //        return new Configuration()
+    //        {
+    //            Const1 = c1,
+    //            Const2 = c2
+    //        };
+    //    }
+    //}
+
+    //class B
+    //{
+    //    public Configuration Config { get; set; }
+    //    public C C { get; set; }
+    //}
+
+    //class C
+    //{
+    //    public Configuration Config { get; set; }
+    //    public D D { get; set; }
+    //}
+
+    //class D
+    //{
+    //    public Configuration Config { get; set; }
+    //}
 }

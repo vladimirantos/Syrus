@@ -35,7 +35,7 @@ namespace Syrus.Plugins.Text
 
         public Task<IEnumerable<Result>> SearchAsync(Query query)
         {
-            if(!query.HasArguments)
+            if (!query.HasArguments)
                 return Task.FromResult<IEnumerable<Result>>(new List<Result>());
             Result result = _availableFunctions[(TextOperations)_context.Metadata.FromKeyword.Id].Invoke(query.Arguments);
             return Task.FromResult<IEnumerable<Result>>(new List<Result>() { result, result });
@@ -45,19 +45,28 @@ namespace Syrus.Plugins.Text
             => new Result()
             {
                 QuickResult = text.Length.ToString(),
-                ViewType = ResultsViewMode.Hide
+                ResultConfiguration = new ResultConfiguration()
+                {
+                    ViewMode = ResultsViewMode.Hide
+                }
             };
 
         private Result Decode(string text) => new Result()
         {
             Text = Uri.UnescapeDataString(text),
-            ViewType = ResultsViewMode.Fullscreen
+            ResultConfiguration = new ResultConfiguration()
+            {
+                ViewMode = ResultsViewMode.Fullscreen
+            }
         };
 
         private Result Encode(string text) => new Result()
         {
             Text = Uri.EscapeDataString(text),
-            ViewType = ResultsViewMode.Default
+            ResultConfiguration = new ResultConfiguration()
+            {
+                ViewMode = ResultsViewMode.Default
+            }
         };
     }
 }
