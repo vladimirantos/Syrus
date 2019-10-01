@@ -44,7 +44,7 @@ namespace Syrus.Plugin
                 fromKeyword?.ViewMode ??
                 fromCurrentSearchingConfiguration?.ViewMode ??
                 fromPlugin?.ViewMode ??
-                ResultsViewMode.Default;
+                ResultsViewMode.Classic;
 
             return new ResultConfiguration()
             {
@@ -73,7 +73,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Výchozí dvouokení zobrazení. Vlevo seznam výsledků, vpravo detail
         /// </summary>
-        Default,
+        Classic,
 
         /// <summary>
         /// Seznam výsledků přes celou šířku okna, bez detailu.
@@ -83,7 +83,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Kompletně skryté výsledky. Pro zobrazení výsledků slouží jen QuickResult.
         /// </summary>
-        Hide
+        Hidden
     }
 
     public class BaseViewModel
