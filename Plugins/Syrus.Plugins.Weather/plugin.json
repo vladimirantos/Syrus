@@ -5,7 +5,8 @@
   "version": "0.0.0.1",
   "icon": "icon.png",
   "resultConfiguration": {
-    "viewMode": "fullscreen"
+    "viewMode": "classic",
+    "openDetailMode": "immediately"
   },
   "searchingConfigurations": [
     {

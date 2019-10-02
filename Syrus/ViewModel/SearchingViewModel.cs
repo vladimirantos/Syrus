@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Syrus.Core.Metadata;
 using Syrus.Plugin;
 using System;
 using System.Collections.Generic;
@@ -202,19 +203,25 @@ namespace Syrus.ViewModel
                 Placeholder = _defaultPlaceholder;
                 QuickResult = string.Empty;
                 CurrentPluginIcon = string.Empty;
+                ResultDetail = null;
                 return;
             }
 
             IEnumerable<Result> results = await _syrus.SearchAsync(newValue);
             Results = new ObservableCollection<Result>(results);
             var mainResult = Results.First();
-            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? SelectIcon(mainResult.FromPlugin) : string.Empty;
 
+            CurrentPluginIcon = ResultsFromSinglePlugin(results) ? SelectIcon(mainResult.FromPlugin) : string.Empty;
             ResultViewMode = mainResult.ResultConfiguration.ViewMode.HasValue ? mainResult.ResultConfiguration.ViewMode.Value : ResultViewMode.Classic;
+
             if (mainResult.FromPlugin.EnableHelp)
                 SetHelpPlaceholder(Results.Count > 0 && CanDisplayHelp(mainResult) ? CreateHelp(newValue, mainResult) : string.Empty);
             else Placeholder = null; //disabled default placeholder when searchbox is not empty
             ChangeQuickResult(results.First().QuickResult);
+
+            TryOpenDetail(mainResult, Results.Count);
+            if (mainResult is MetadataResult)
+                ResultDetail = null;
         }
 
         /// <summary>
@@ -264,8 +271,16 @@ namespace Syrus.ViewModel
         private void DisplayView(Result result)
         {
             result.Content = result.Content ?? GetDefaultView(result);
-            Application.Current.Resources.MergedDictionaries.Add(result.Content.Template);
-            ResultDetail = result.Content.ViewModel;
+            DisplayView(result.Content);  
+        }
+
+        /// <summary>
+        /// Nastaví template do ResourceDictionary a zobrazí v okně detailu
+        /// </summary>
+        private void DisplayView(Plugin.View view)
+        {
+            Application.Current.Resources.MergedDictionaries.Add(view.Template);
+            ResultDetail = view.ViewModel;
         }
 
         /// <summary>
@@ -280,5 +295,16 @@ namespace Syrus.ViewModel
             },
             ViewModel = new DefaultResultDetailViewModel(result)
         };
+
+        private void TryOpenDetail(Result result, int countResults)
+        {
+            if (result.ResultConfiguration.OpenDetailMode.HasValue 
+                && result.ResultConfiguration.OpenDetailMode.Value == OpenDetailMode.OnClick || !result.CanOpenDetail)
+                return;
+            OpenDetailMode openDetailMode = result.ResultConfiguration.OpenDetailMode.Value;
+            if (openDetailMode == OpenDetailMode.Immediately 
+                || (openDetailMode == OpenDetailMode.ImmediatelyWhenSingle && countResults == 1))
+                DisplayView(result.Content);
+        }
     }
 }

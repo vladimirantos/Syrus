@@ -14,6 +14,7 @@ namespace Syrus.Core.Metadata
             get {
                 var config = base.ResultConfiguration;
                 config.ViewMode = ResultViewMode.Classic;
+                config.OpenDetailMode = OpenDetailMode.OnClick;
                 return config;
             }
             set => base.ResultConfiguration = value;

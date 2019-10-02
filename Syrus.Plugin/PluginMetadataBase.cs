@@ -115,6 +115,7 @@ namespace Syrus.Plugin
         Selected, All
     }
 
+
     public class ConditionObject : IResultConfigurable
     {
         public int Id { get; set; }
@@ -127,6 +128,48 @@ namespace Syrus.Plugin
     }
 
     /// <summary>
+    /// Typy zobrazení výsledků
+    /// </summary>
+    public enum ResultViewMode
+    {
+        /// <summary>
+        /// Výchozí dvouokení zobrazení. Vlevo seznam výsledků, vpravo detail
+        /// </summary>
+        Classic,
+
+        /// <summary>
+        /// Seznam výsledků přes celou šířku okna, bez detailu.
+        /// </summary>
+        Fullscreen,
+
+        /// <summary>
+        /// Kompletně skryté výsledky. Pro zobrazení výsledků slouží jen QuickResult.
+        /// </summary>
+        Hidden
+    }
+
+    /// <summary>
+    /// Režimy otevírání detailu
+    /// </summary>
+    public enum OpenDetailMode
+    {
+        /// <summary>
+        /// Otevření na kliknutí. Defaultní hodnota
+        /// </summary>
+        OnClick,
+
+        /// <summary>
+        /// Detail bude otevřen pouze v případě, že plugin vrátil pouze jeden výsledek
+        /// </summary>
+        ImmediatelyWhenSingle,
+
+        /// <summary>
+        /// Otevře detail ihned po načtení, nerozhoduje počet výsledků. Otevřen bude vždy první.
+        /// </summary>
+        Immediately
+    }
+
+    /// <summary>
     /// Objekt pro nastavení výsledku vyhledávání.
     /// </summary>
     public class ResultConfiguration
@@ -135,5 +178,7 @@ namespace Syrus.Plugin
         /// Režim zobrazení výsledků
         /// </summary>
         public ResultViewMode? ViewMode { get; set; }
+
+        public OpenDetailMode? OpenDetailMode { get; set; }
     }
 }

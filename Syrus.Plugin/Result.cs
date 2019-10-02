@@ -50,9 +50,16 @@ namespace Syrus.Plugin
                 fromPlugin?.ViewMode ??
                 ResultViewMode.Classic;
 
+            OpenDetailMode openDetailMode = _resultConfiguration?.OpenDetailMode ??
+                fromKeyword?.OpenDetailMode ??
+                fromCurrentSearchingConfiguration?.OpenDetailMode ??
+                fromPlugin?.OpenDetailMode ??
+                OpenDetailMode.OnClick;
+
             return new ResultConfiguration()
             {
-                ViewMode = viewMode
+                ViewMode = viewMode,
+                OpenDetailMode = openDetailMode
             };
         }
     }
@@ -61,27 +68,6 @@ namespace Syrus.Plugin
     {
         public BaseViewModel ViewModel { get; set; }
         public ResourceDictionary Template { get; set; }
-    }
-
-    /// <summary>
-    /// Typy zobrazení výsledků
-    /// </summary>
-    public enum ResultViewMode
-    {
-        /// <summary>
-        /// Výchozí dvouokení zobrazení. Vlevo seznam výsledků, vpravo detail
-        /// </summary>
-        Classic,
-
-        /// <summary>
-        /// Seznam výsledků přes celou šířku okna, bez detailu.
-        /// </summary>
-        Fullscreen,
-
-        /// <summary>
-        /// Kompletně skryté výsledky. Pro zobrazení výsledků slouží jen QuickResult.
-        /// </summary>
-        Hidden
     }
 
     public class BaseViewModel
