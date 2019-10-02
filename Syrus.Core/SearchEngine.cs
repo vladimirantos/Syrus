@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Syrus.Core.Metadata;
 
 namespace Syrus.Core
 {
@@ -105,13 +106,13 @@ namespace Syrus.Core
         {
             foreach (PluginPair p in plugins)
             {
-                yield return new Result()
+                yield return new MetadataResult()
                 {
                     Text = p.Metadata.Name,
                     Group = "Možnosti vyhledávání",
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
                     FromPlugin = p.Metadata,
-                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeywordString + " ")
+                    OnClick = (IAppApi api, Result currentResult) => api.ChangeQuery(currentResult.FromPlugin.FromKeywordString + " "),
                 };
             }
         }

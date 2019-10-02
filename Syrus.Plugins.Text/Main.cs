@@ -47,7 +47,7 @@ namespace Syrus.Plugins.Text
                 QuickResult = text.Length.ToString(),
                 ResultConfiguration = new ResultConfiguration()
                 {
-                    ViewMode = ResultsViewMode.Hidden
+                    ViewMode = ResultViewMode.Hidden
                 }
             };
 
@@ -56,7 +56,7 @@ namespace Syrus.Plugins.Text
             Text = Uri.UnescapeDataString(text),
             ResultConfiguration = new ResultConfiguration()
             {
-                ViewMode = ResultsViewMode.Fullscreen
+                ViewMode = ResultViewMode.Fullscreen
             }
         };
 
@@ -65,7 +65,7 @@ namespace Syrus.Plugins.Text
             Text = Uri.EscapeDataString(text),
             ResultConfiguration = new ResultConfiguration()
             {
-                ViewMode = ResultsViewMode.Classic
+                ViewMode = ResultViewMode.Classic
             }
         };
     }

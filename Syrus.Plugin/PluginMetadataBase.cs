@@ -79,7 +79,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Konfigurace výsledků vyhledávání - globální nastavení pro celý plugin.
         /// </summary>
-        public ResultConfiguration ResultConfiguration { get; set; } = ResultConfiguration.Default;
+        public ResultConfiguration? ResultConfiguration { get; set; }
     }
 
     public class SearchingConfiguration : IResultConfigurable
@@ -91,7 +91,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Konfigurace výsledků vyhledávání - scope SearchingConfiguration
         /// </summary>
-        public ResultConfiguration ResultConfiguration { get; set; } = ResultConfiguration.Default;
+        public ResultConfiguration? ResultConfiguration { get; set; }
     }
 
     public class Caching
@@ -123,7 +123,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Nastavení výsledků pro konkrétní conditionObject.
         /// </summary>
-        public ResultConfiguration ResultConfiguration { get; set; } = ResultConfiguration.Default;
+        public ResultConfiguration? ResultConfiguration { get; set; }
     }
 
     /// <summary>
@@ -134,11 +134,6 @@ namespace Syrus.Plugin
         /// <summary>
         /// Režim zobrazení výsledků
         /// </summary>
-        public ResultsViewMode ViewMode { get; set; }
-
-        public static ResultConfiguration Default => new ResultConfiguration()
-        {
-            ViewMode = ResultsViewMode.NotSet
-        };
+        public ResultViewMode? ViewMode { get; set; }
     }
 }

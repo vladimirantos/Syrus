@@ -25,7 +25,7 @@
                 <Label.Resources>
                     <Style TargetType="Label" BasedOn="{StaticResource QuickResult}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Hidden}">
+                            <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultViewMode.Hidden}">
                                 <Setter Property="Foreground" Value="{StaticResource SystemBaseHighColorBrush}"/>
                             </DataTrigger>
                         </Style.Triggers>

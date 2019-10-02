@@ -17,7 +17,10 @@ namespace Syrus.Plugin
         public Action<IAppApi, Result> OnClick { get; set; }// = (IAppApi api, Result result) => { };
         //public ResultsViewMode? ViewMode { get; set; } = ResultsViewMode.Default;
 
-        public ResultConfiguration ResultConfiguration {
+        /// <summary>
+        /// Možnost nastavení výsledku vyhledávání. Vrací první nastavení, které najde v hierarchii.
+        /// </summary>
+        public virtual ResultConfiguration ResultConfiguration {
             get => CombineConfigurations();
             set => _resultConfiguration = value;
         }
@@ -40,11 +43,12 @@ namespace Syrus.Plugin
             ResultConfiguration fromPlugin = FromPlugin.ResultConfiguration;
             ResultConfiguration fromCurrentSearchingConfiguration = FromPlugin.CurrentSearchingConfiguration.ResultConfiguration;
             ResultConfiguration fromKeyword = FromPlugin.FromKeyword.ResultConfiguration;
-            ResultsViewMode viewMode = _resultConfiguration?.ViewMode ??
+
+            ResultViewMode viewMode = _resultConfiguration?.ViewMode ??
                 fromKeyword?.ViewMode ??
                 fromCurrentSearchingConfiguration?.ViewMode ??
                 fromPlugin?.ViewMode ??
-                ResultsViewMode.Classic;
+                ResultViewMode.Classic;
 
             return new ResultConfiguration()
             {
@@ -62,14 +66,8 @@ namespace Syrus.Plugin
     /// <summary>
     /// Typy zobrazení výsledků
     /// </summary>
-    public enum ResultsViewMode
+    public enum ResultViewMode
     {
-        /// <summary>
-        /// Výchozí hodnota v konfiguraci plugin.json. Neměla by být nikdy nastavována pro Result. 
-        /// Pokud je v nějaké konfiguraci tato hodnota, znamená to, že bude přeskočena a použije se hodnota z následující konfigurace.
-        /// </summary>
-        NotSet,
-
         /// <summary>
         /// Výchozí dvouokení zobrazení. Vlevo seznam výsledků, vpravo detail
         /// </summary>

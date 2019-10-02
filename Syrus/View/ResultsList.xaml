@@ -88,7 +88,7 @@
                         <Style TargetType="Grid">
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Classic}">
+                                <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultViewMode.Classic}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -127,7 +127,7 @@
                         <Style TargetType="Grid">
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultsViewMode.Fullscreen}">
+                                <DataTrigger Binding="{Binding ResultViewMode}" Value="{x:Static plugin:ResultViewMode.Fullscreen}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
