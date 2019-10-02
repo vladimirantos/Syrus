@@ -48,4 +48,8 @@
       <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.0.0-preview7-27912-14\ref\netcoreapp3.0\System.Windows.Forms.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy $(ProjectDir)settings.json C:\Users\vladi\AppData\Roaming\Syrus\" />
+  </Target>
 </Project>

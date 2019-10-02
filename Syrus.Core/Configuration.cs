@@ -2,10 +2,11 @@
 {
     public class Configuration
     {
+
         /// <summary>
-        /// Current language.
+        /// Jazyk vyhledávání. Podle něj se vybírají searchingConfigurations.
         /// </summary>
-        public string Language { get; set; }
+        public string SearchingLanguages { get; set; }
 
         /// <summary>
         /// Maximum of searched results.

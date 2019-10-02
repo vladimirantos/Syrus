@@ -36,7 +36,7 @@ namespace Syrus.Core
         /// </summary>
         public void Initialize()
         {
-            SelectSearchingConfigurationByLang(_configuration.Language);
+            SelectSearchingConfigurationByLang(_configuration.SearchingLanguages);
             foreach (PluginPair pp in Plugins.Where(p => !p.Metadata.Default))
             {
                 if (pp.Metadata.CurrentSearchingConfiguration.Keywords != null)

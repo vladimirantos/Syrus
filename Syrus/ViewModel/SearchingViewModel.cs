@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Syrus.Core;
 using Syrus.Core.Metadata;
 using Syrus.Plugin;
 using System;
@@ -112,6 +113,8 @@ namespace Syrus.ViewModel
         private string _placeholder;
         private string _quickResult;
         private string _currentPluginIcon;
+        private AppSettings _appSettings;
+
 
         private Core.Syrus _syrus;
         private readonly string _defaultPlaceholder = "Search";
@@ -181,12 +184,12 @@ namespace Syrus.ViewModel
 
         public SearchingViewModel()
         {
-            string pluginsLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "plugins");
-            string cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus", "cache");
-            _syrus = new Core.Syrus(pluginsLocation, cacheLocation, new Core.Configuration()
-            {
-                Language = "cs"
-            });
+            string appLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus");
+            string pluginsLocation = Path.Combine(appLocation, "plugins");
+            string cacheLocation = Path.Combine(appLocation, "cache");
+            _appSettings = SettingsLoader.Load(Path.Combine(appLocation, "settings.json"));
+
+            _syrus = new Core.Syrus(pluginsLocation, cacheLocation, _appSettings);
             _syrus.LoadPlugins().Initialize();
             Results = new ObservableCollection<Result>();
             Placeholder = _defaultPlaceholder;
