@@ -62,7 +62,8 @@ namespace Syrus.Core
             {
                 _searchingHistory.Add(term);
             }
-            return AddIcons(resultsList, query);
+
+            return AddIcons(resultsList, query).Take(Configuration.MaxResults);
         }
 
         private IEnumerable<Result> AddIcons(IEnumerable<Result> results, Query query)
