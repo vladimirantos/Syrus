@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
 namespace Syrus.Core.Caching
 {
-    internal class KeyValueCache<K, T> : CacheBase<K>, ICacheDataProvider<Dictionary<K, T>>
+    internal class KeyValueCache<K, T> : CacheBase<K>
     {
         private Dictionary<K, T> _cache = new Dictionary<K, T>();
 
@@ -219,19 +221,12 @@ namespace Syrus.Core.Caching
             }
         }
 
-        public Dictionary<K, T> GetValues()
+        public override string JsonSerialize() => JsonConvert.SerializeObject(_cache, Formatting.Indented);
+
+
+        public override void Deserialize(string json)
         {
-            if (Disposed)
-                return default(Dictionary<K, T>);
-            locker.EnterReadLock();
-            try
-            {
-                return _cache;
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
+            throw new NotImplementedException();
         }
     }
 }

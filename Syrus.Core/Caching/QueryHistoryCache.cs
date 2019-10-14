@@ -1,7 +1,11 @@
 ﻿namespace Syrus.Core.Caching
 {
-    internal class QueryHistoryCache : Cache<string>
+    internal class QueryHistoryCache : CacheFacade<string>
     {
+        public QueryHistoryCache(string location) : base(location)
+        {
+        }
+
         /// <summary>
         /// Add when not exist
         /// </summary>

@@ -13,7 +13,7 @@ namespace Syrus.Core
     {
         private ILoader _loader;
         private ISearch _search;
-        private QueryHistoryCache _searchingHistory = new QueryHistoryCache();
+        private QueryHistoryCache _searchingHistory;
 
         public string PluginsLocation { get; private set; }
         public string CacheLocation { get; private set; }
@@ -21,9 +21,12 @@ namespace Syrus.Core
 
         public Syrus(string pluginsLocation, string cacheLocation, Configuration configuration)
             : this(new PluginLoader(pluginsLocation), new SearchEngine(configuration), pluginsLocation, cacheLocation, configuration) { }
-           
-        public Syrus(ILoader loader, ISearch search, string pluginsLocation, string cacheLocation, Configuration configuration) 
-            => (_loader, _search, PluginsLocation, CacheLocation, Configuration) = (loader, search, pluginsLocation, cacheLocation, configuration);
+
+        public Syrus(ILoader loader, ISearch search, string pluginsLocation, string cacheLocation, Configuration configuration)
+        {
+            (_loader, _search, PluginsLocation, CacheLocation, Configuration) = (loader, search, pluginsLocation, cacheLocation, configuration);
+            _searchingHistory = new QueryHistoryCache(CacheLocation);
+        }
 
         public Syrus LoadPlugins()
         {

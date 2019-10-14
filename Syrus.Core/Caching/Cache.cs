@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 
 namespace Syrus.Core.Caching
 {
-    internal class Cache<T> : CacheBase<T>, ICacheDataProvider<IEnumerable<T>> where T : class
+    internal class Cache<T> : CacheBase<T> where T : class
     {
         private List<T> _cache = new List<T>();
 
@@ -68,19 +70,32 @@ namespace Syrus.Core.Caching
             }
         }
 
-        public IEnumerable<T> GetValues()
+        public override string JsonSerialize() => JsonConvert.SerializeObject(_cache, Formatting.Indented);
+
+
+        public override void Deserialize(string json)
         {
-            if (Disposed)
-                return new List<T>();
-            locker.EnterReadLock();
-            try
-            {
-                return _cache;
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
+            
         }
+    }
+
+    public class CacheFacade<T> where T: class
+    {
+        private Cache<T> _cache;
+        private string _location;
+
+        public CacheFacade(string location)
+        {
+            _location = location;
+            _cache = new Cache<T>();
+        }
+
+        public virtual void Add(T item) => _cache.Add(item);
+
+        public virtual void Remove(T item) => _cache.Remove(item);
+
+        public virtual bool Exists(T item) => _cache.Exists(item);
+
+        public void Save() => File.WriteAllText(_location, _cache.JsonSerialize());
     }
 }

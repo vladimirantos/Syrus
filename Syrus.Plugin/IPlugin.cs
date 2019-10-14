@@ -7,7 +7,7 @@ namespace Syrus.Plugin
     {
         void OnInitialize(PluginContext context);
 
-        void OnClose();
+        //void OnClose();
 
         Task<IEnumerable<Result>> SearchAsync(Query query);
     }
