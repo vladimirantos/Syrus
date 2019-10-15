@@ -4,6 +4,7 @@
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
   "enableHelp": false,
+  "enablePluginResult": false,
   "searchingConfigurations": [
     {
       "language": "en",

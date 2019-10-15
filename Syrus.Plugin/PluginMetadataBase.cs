@@ -64,6 +64,11 @@ namespace Syrus.Plugin
 
         public bool EnableQueryHistory { get; set; } = false;
 
+        /// <summary>
+        /// Umožní zobrazovat plugin jako výsledek v případě, že nebyl nalezen žádný výsledek.
+        /// </summary>
+        public bool EnablePluginResult { get; set; } = true;
+
         public IEnumerable<SearchingConfiguration> SearchingConfigurations { get; set; }
 
         /// <summary>

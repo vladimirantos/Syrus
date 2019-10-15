@@ -58,7 +58,7 @@ namespace Syrus.Core
             List<Result> resultsList = results.ToList();
             if (resultsList.Count == 0)
             {
-                resultsList.AddRange(_search.ConvertPluginsToResult(selectedPlugins));
+                resultsList.AddRange(_search.ConvertPluginsToResult(selectedPlugins.Where(plugin => plugin.Metadata.EnablePluginResult)));
                 resultsList.AddRange(_search.SearchByDefaultPlugins(query));
             }
             else

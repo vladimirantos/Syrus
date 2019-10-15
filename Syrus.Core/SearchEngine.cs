@@ -45,8 +45,13 @@ namespace Syrus.Core
                 if (pp.Metadata.CurrentSearchingConfiguration.RegularExpressions != null)
                     ToKeyValues(ref _regexPlugins, pp, pp.Metadata.CurrentSearchingConfiguration.RegularExpressions);
             }
-             
-            _defaultPlugins = Plugins.Where(p => p.Metadata.Default);
+
+
+            _defaultPlugins = Plugins.Where(p => p.Metadata.Default).Select(plugin => {
+                plugin.Metadata.FromKeyword = plugin.Metadata.CurrentSearchingConfiguration.RegularExpressions.FirstOrDefault();
+                return plugin;
+            });
+            var p = _defaultPlugins.ToList();
 
             void ToKeyValues(ref ICollection<KeyValuePair<ConditionObject, PluginPair>> keyValuePairs, 
                 PluginPair plugin, IEnumerable<ConditionObject> col)
@@ -94,7 +99,8 @@ namespace Syrus.Core
                     Text = p.Metadata.Name,
                     Group = "Vyhledat online",
                     Icon = p.Metadata.Icon != null ? Path.Combine(p.Metadata.PluginLocation, p.Metadata.Icon) : "",
-                    FromPlugin = p.Metadata
+                    FromPlugin = p.Metadata,
+                    FromQuery = query
                 };
             }
         }

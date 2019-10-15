@@ -4,5 +4,27 @@
   "author": "Vladimír Antoš",
   "version": "0.0.0.1",
   "default": true,
-  "icon": "icon.png"
+  "enableHelp":  false,
+  "icon": "icon.png",
+  "searchingConfigurations": [
+    {
+      "language": "en",
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^.*$" ]
+        }
+      ]
+    },
+
+    {
+      "language": "cs",
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^.*$" ]
+        }
+      ]
+    }
+  ]
 }
