@@ -253,7 +253,8 @@ namespace Syrus.Plugins.Weather
                 Type = int.Parse(sysData.SelectToken("type").ToString());
             if (sysData.SelectToken("id") != null)
                 ID = int.Parse(sysData.SelectToken("id").ToString());
-            Message = double.Parse(sysData.SelectToken("message").ToString());
+            if(sysData.SelectToken("message") != null)
+                Message = double.Parse(sysData.SelectToken("message").ToString());
             Country = sysData.SelectToken("country").ToString();
             Sunrise = convertUnixToDateTime(double.Parse(sysData.SelectToken("sunrise").ToString()));
             Sunset = convertUnixToDateTime(double.Parse(sysData.SelectToken("sunset").ToString()));

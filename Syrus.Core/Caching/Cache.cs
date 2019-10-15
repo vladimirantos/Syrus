@@ -12,6 +12,8 @@ namespace Syrus.Core.Caching
     {
         private List<T> _cache = new List<T>();
 
+        public List<T> Items => _cache;
+
         public override void Clear()
         {
             locker.EnterWriteLock();
@@ -79,10 +81,10 @@ namespace Syrus.Core.Caching
         }
     }
 
-    public class CacheFacade<T> where T: class
+    internal class CacheFacade<T> where T: class
     {
-        private Cache<T> _cache;
-        private string _location;
+        protected Cache<T> _cache;
+        protected string _location;
 
         public CacheFacade(string location)
         {
@@ -96,6 +98,8 @@ namespace Syrus.Core.Caching
 
         public virtual bool Exists(T item) => _cache.Exists(item);
 
-        public void Save() => File.WriteAllText(_location, _cache.JsonSerialize());
+        public virtual void Save() => File.WriteAllText(_location, SerializeCache());
+
+        public virtual string SerializeCache() => _cache.JsonSerialize();
     }
 }

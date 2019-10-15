@@ -111,6 +111,7 @@ namespace Syrus.ViewModel
     {
         private string _query;
         private string _placeholder;
+
         private string _quickResult;
         private string _currentPluginIcon;
         private AppSettings _appSettings;
@@ -255,6 +256,8 @@ namespace Syrus.ViewModel
         public void ChangeQuickResult(string text) => QuickResult = text;
 
         public void SetHelpPlaceholder(string text) => Placeholder = text;
+
+        internal void OnCloseHandler() => _syrus.SaveCache();
 
         private bool ResultsFromSinglePlugin(IEnumerable<Result> results)
         {

@@ -11,6 +11,8 @@ namespace Syrus
     {
         private HotkeyRegistrator _hotkeyRegistrator;
 
+        private SearchingViewModel _searchingViewModel;
+
         /// <summary>
         /// Get true when window is opened and activated.
         /// </summary>
@@ -20,8 +22,9 @@ namespace Syrus
         {
             InitializeComponent();
             Loaded += (s, e) => InitializePosition();
-            DataContext = new SearchingViewModel();
-            (DataContext as SearchingViewModel).OnSelectPlugin += 
+            _searchingViewModel = new SearchingViewModel();
+            DataContext = _searchingViewModel;
+            _searchingViewModel.OnSelectPlugin += 
                 () => SearchPanel.SearchingInput.CaretIndex = SearchPanel.SearchingInput.Text.Length;
         }
 
@@ -85,5 +88,7 @@ namespace Syrus
             WindowState = System.Windows.WindowState.Minimized;
             IsOpened = false;
         }
+
+        private void AcrylicWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) => _searchingViewModel.OnCloseHandler();
     }
 }

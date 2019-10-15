@@ -1,8 +1,10 @@
-﻿namespace Syrus.Core.Caching
+﻿using System.IO;
+
+namespace Syrus.Core.Caching
 {
     internal class QueryHistoryCache : CacheFacade<string>
     {
-        public QueryHistoryCache(string location) : base(location)
+        public QueryHistoryCache(string location) : base(Path.Combine(location, "searching-history.json"))
         {
         }
 
@@ -13,6 +15,11 @@
         {
             if(!Exists(value.TrimEnd()))
                 base.Add(value);
+        }
+
+        public override string SerializeCache()
+        {
+            return base.SerializeCache();
         }
     }
 }

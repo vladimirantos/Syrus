@@ -7,7 +7,7 @@
         Width="860" Height="500" Topmost="True" SizeToContent="Height"
         WindowStartupLocation="Manual" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" 
         ShowInTaskbar="False" AcrylicWindowStyle="None"
-        Deactivated="AcrylicWindow_Deactivated" BorderThickness="0">
+        Deactivated="AcrylicWindow_Deactivated" BorderThickness="0" Closing="AcrylicWindow_Closing">
     <Border BorderBrush="{StaticResource SystemBaseLowColorBrush}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>

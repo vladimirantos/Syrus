@@ -62,6 +62,8 @@ namespace Syrus.Plugin
         /// </summary>
         public bool EnableHelp { get; set; } = true;
 
+        public bool EnableQueryHistory { get; set; } = false;
+
         public IEnumerable<SearchingConfiguration> SearchingConfigurations { get; set; }
 
         /// <summary>
