@@ -171,8 +171,13 @@ namespace Syrus.ViewModel
                    (_appSettings.Theme == Themes.System &&
                    (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0);
 
-        public ICommand CompleteTextByTabCommand => new Command((object obj)
-            => ChangeQuery(Results.First().FromPlugin.FromKeywordString + " "), _ =>
+        public ICommand CompleteTextByTabCommand => new Command((object obj) => 
+            {
+                var result = Results.First();
+                string str = result.FromPlugin.FromKeywordString;
+                ChangeQuery( str != null ? $"{str} " : result.Text); 
+            },
+            _ =>
             Results.Count > 0 && CanDisplayHelp(Results.First()));
 
         public ICommand SelectResultCommand => new Command((object obj) =>

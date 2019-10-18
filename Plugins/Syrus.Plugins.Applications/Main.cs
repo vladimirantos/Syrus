@@ -20,7 +20,7 @@ namespace Syrus.Plugins.Applications
             _applicationSearcher.Initialize(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
             _applicationSearcher.Initialize(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
         }
-
+        
         public Task<IEnumerable<Result>> SearchAsync(Query query)
         {
             int length = query.Original.Length;
