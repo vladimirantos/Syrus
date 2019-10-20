@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using Syrus.Plugin;
 
 namespace Syrus.Plugins.Text
@@ -94,7 +95,8 @@ namespace Syrus.Plugins.Text
             ResultConfiguration = new ResultConfiguration()
             {
                 ViewMode = ResultViewMode.Fullscreen
-            }
+            },
+            OnClick = (IAppApi api, Result result) => Clipboard.SetText(text)
         };
     }
 }
