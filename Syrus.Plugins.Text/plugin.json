@@ -20,6 +20,18 @@
         {
           "id": 3,
           "text": [ "encode" ]
+        },
+        {
+          "id": 4,
+          "text": [ "reverse" ]
+        },
+        {
+          "id": 5,
+          "text": [ "upper" ]
+        },
+        {
+          "id": 6,
+          "text": [ "lower" ]
         }
       ]
     },
@@ -38,6 +50,18 @@
         {
           "id": 3,
           "text": [ "encode" ]
+        },
+        {
+          "id": 4,
+          "text": [ "otoc" ]
+        },
+        {
+          "id": 5,
+          "text": [ "upper" ]
+        },
+        {
+          "id": 6,
+          "text": [ "lower" ]
         }
       ]
     }

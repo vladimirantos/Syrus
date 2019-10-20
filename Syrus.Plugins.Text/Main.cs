@@ -9,7 +9,10 @@ namespace Syrus.Plugins.Text
     {
         Length = 1,
         UrlDecode = 2,
-        UrlEncode = 3
+        UrlEncode = 3,
+        Reverse = 4,
+        Upper = 5,
+        Lower = 6
     }
 
     public class Main : IPlugin
@@ -24,7 +27,10 @@ namespace Syrus.Plugins.Text
             {
                 {TextOperations.Length, Length },
                 {TextOperations.UrlDecode, Decode },
-                {TextOperations.UrlEncode, Encode }
+                {TextOperations.UrlEncode, Encode },
+                {TextOperations.Reverse, Reverse },
+                {TextOperations.Upper, Upper },
+                {TextOperations.Lower, Lower }
             };
         }
 
@@ -38,7 +44,7 @@ namespace Syrus.Plugins.Text
             if (!query.HasArguments)
                 return Task.FromResult<IEnumerable<Result>>(new List<Result>());
             Result result = _availableFunctions[(TextOperations)_context.Metadata.FromKeyword.Id].Invoke(query.Arguments);
-            return Task.FromResult<IEnumerable<Result>>(new List<Result>() { result, result });
+            return Task.FromResult<IEnumerable<Result>>(new List<Result>() { result });
         }
 
         private Result Length(string text)
@@ -51,21 +57,43 @@ namespace Syrus.Plugins.Text
                 }
             };
 
-        private Result Decode(string text) => new Result()
+        private Result Decode(string text) => GetFullscreenResult(Uri.UnescapeDataString(text));
+
+        private Result Encode(string text) => GetFullscreenResult(Uri.EscapeDataString(text));
+
+        private Result Reverse(string text)
         {
-            Text = Uri.UnescapeDataString(text),
+            unsafe String ReverseStr(String s)
+            {
+                char[] sarr = new char[s.Length];
+                fixed (char* c = s)
+                fixed (char* d = sarr)
+                {
+                    char* c1 = c;
+                    char* d1 = d + s.Length;
+                    while (d1 > d)
+                    {
+                        *--d1 = *c1++;
+                    }
+                }
+
+                return new String(sarr);
+            }
+
+            return GetFullscreenResult(ReverseStr(text));
+        }
+
+        private Result Lower(string text) => GetFullscreenResult(text.ToLower());
+
+        private Result Upper(string text) => GetFullscreenResult(text.ToUpper());
+
+
+        private Result GetFullscreenResult(string text) => new Result()
+        {
+            Text = text,
             ResultConfiguration = new ResultConfiguration()
             {
                 ViewMode = ResultViewMode.Fullscreen
-            }
-        };
-
-        private Result Encode(string text) => new Result()
-        {
-            Text = Uri.EscapeDataString(text),
-            ResultConfiguration = new ResultConfiguration()
-            {
-                ViewMode = ResultViewMode.Classic
             }
         };
     }
