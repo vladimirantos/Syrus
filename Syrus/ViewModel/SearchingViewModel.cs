@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -14,98 +15,6 @@ using System.Windows.Input;
 
 namespace Syrus.ViewModel
 {
-    //    public enum Priority
-    //    {
-    //        A, B, C
-    //    }
-
-    //    public class X
-    //    {
-    //        /// <summary>
-    //        /// Low priority
-    //        /// </summary>
-    //        public Priority Priority { get; set; }
-    //        public Y Y { get; set; }
-    //        public Priority CurrentPriority {
-    //            get {
-    //                Enum.TryParse((Priority | Y.Priority | Y.Z.Priority).ToString(), out Priority priority);
-    //                return priority;
-    //            }
-    //        }
-    //    }
-
-    //    public class Y
-    //    {
-    //        /// <summary>
-    //        /// Higher priority
-    //        /// </summary>
-    //        public Priority Priority { get; set; }
-    //        public Z Z { get; set; }
-    //    }
-
-    //    public class Z
-    //    {
-    //        /// <summary>
-    //        /// Highest priority
-    //        /// </summary>
-    //        public Priority Priority { get; set; }
-    //    }
-
-    //    public class Test
-    //    {
-    //        public Test()
-    //        {
-    //            var x = new X()
-    //            {
-    //                Priority = Priority.A,
-    //                Y = new Y()
-    //                {
-    //                    Priority = Priority.B,
-    //                    Z = new Z()
-    //                    {
-    //                        Priority = Priority.C
-    //                    }
-    //                }
-    //            };
-
-    //            var currentPriority = x.CurrentPriority; // C
-
-
-    //            var x2 = new X()
-    //            {
-    //                Priority = Priority.A,
-    //                Y = new Y()
-    //                {
-    //                    Priority = Priority.B
-    //                }
-    //            };
-
-    //            var currentPriority2 = x2.CurrentPriority; // C
-
-
-    //            var x3 = new X()
-    //            {
-    //                Priority = Priority.A
-    //            };
-
-    //            var currentPriority3 = x3.CurrentPriority; // C
-
-    //            var x4 = new X()
-    //            {
-    //                Priority = Priority.A,
-    //                Y = new Y()
-    //                {
-    //                    Z = new Z()
-    //                    {
-    //                        Priority = Priority.C
-    //                    }
-    //                }
-    //            };
-
-    //            var currentPriority4 = x4.CurrentPriority; // C
-    //        }
-    //    }
-
     public delegate void PluginSelected();
     class SearchingViewModel : NotifyPropertyChanges, IAppApi
     {

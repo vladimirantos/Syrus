@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Http\" />
-    <Folder Include="Logger\" />
     <Folder Include="Storage\" />
   </ItemGroup>
 
