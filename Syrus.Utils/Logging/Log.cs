@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace Syrus.Utils.Logging
+namespace Syrus.Shared.Logging
 {
     public static class Log
     {

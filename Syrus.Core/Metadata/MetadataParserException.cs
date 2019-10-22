@@ -1,4 +1,6 @@
-﻿namespace Syrus.Core.Metadata
+﻿using Syrus.Shared;
+
+namespace Syrus.Core.Metadata
 {
     /// <summary>
     /// Vznikne pokud metadata neobsahují povinné hodnoty.

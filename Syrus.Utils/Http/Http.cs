@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Syrus.Utils.Http
+namespace Syrus.Shared.Http
 {
     public static class Http
     {

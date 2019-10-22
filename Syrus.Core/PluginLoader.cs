@@ -1,5 +1,6 @@
 ﻿using Syrus.Core.Metadata;
 using Syrus.Plugin;
+using Syrus.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;

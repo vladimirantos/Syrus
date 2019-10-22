@@ -1,4 +1,4 @@
-﻿namespace Syrus.Utils.Storage
+﻿namespace Syrus.Shared.Storage
 {
     public class JsonStorage<T> : IStorage
     {
@@ -8,10 +8,10 @@
 
         public JsonStorage(string path) => Path = path;
 
-        public T Load()
-        {
-
-        }
+        //public T Load()
+        //{
+        //    return 
+        //}
 
         public void Delete()
         {

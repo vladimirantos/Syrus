@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syrus.Plugins.Wiki", "Plugi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syrus.Plugins.Text", "Syrus.Plugins.Text\Syrus.Plugins.Text.csproj", "{9364E32A-AD7E-41D5-9A03-5089ACDADB93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syrus.Utils", "Syrus.Utils\Syrus.Utils.csproj", "{6ABAEDD8-89A8-4E4E-BDDB-48C245B4590A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syrus.Shared", "Syrus.Utils\Syrus.Shared.csproj", "{6ABAEDD8-89A8-4E4E-BDDB-48C245B4590A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

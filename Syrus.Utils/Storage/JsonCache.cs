@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Syrus.Utils.Storage
+namespace Syrus.Shared.Storage
 {
     public class JsonCache<T> : JsonStorage<T>
     {

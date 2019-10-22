@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Syrus.Utils
+namespace Syrus.Shared
 {
     public class SyrusException : Exception
     {

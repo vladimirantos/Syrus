@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Syrus.Utils
+namespace Syrus.Shared
 {
     public static class Constants
     {

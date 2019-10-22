@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Syrus.Utils.Storage
+namespace Syrus.Shared.Storage
 {
     public interface IStorage
     {
