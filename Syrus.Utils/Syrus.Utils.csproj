@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Http\" />
     <Folder Include="Storage\" />
   </ItemGroup>
 
