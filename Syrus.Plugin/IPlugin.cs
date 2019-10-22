@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Syrus.Plugin
 {
@@ -14,6 +17,8 @@ namespace Syrus.Plugin
 
     public abstract class BasePlugin : IPlugin
     {
+        protected ResourceDictionary ViewTemplate { get; set; }
+
         public virtual void OnInitialize(PluginContext context)
         {
         }
@@ -24,5 +29,18 @@ namespace Syrus.Plugin
         }
 
         public abstract Task<IEnumerable<Result>> SearchAsync(Query query);
+
+        /// <summary>
+        /// Nastaví resource dictionary do property ViewTemplate.
+        /// </summary>
+        /// <param name="view"></param>
+        protected virtual void InitTemplate(string view)
+        {
+            string path = $"pack://application:,,,/{Assembly.GetCallingAssembly().GetName().Name};component/{view}.xaml";
+            ViewTemplate = new ResourceDictionary()
+            {
+                Source = new Uri(path)
+            };
+        }
     }
 }

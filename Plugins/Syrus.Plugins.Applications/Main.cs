@@ -8,20 +8,20 @@ using Syrus.Plugin;
 
 namespace Syrus.Plugins.Applications
 {
-    public class Main : IPlugin
+    public class Main : BasePlugin
     {
         private ApplicationSearcher _applicationSearcher;
         private ResourceDictionary ViewTemplate { get; set; }
         private string previous = string.Empty;
-        public void OnInitialize(PluginContext context)
+        public override void OnInitialize(PluginContext context)
         {
-            ViewTemplate = context.CreateView("pack://application:,,,/Syrus.Plugins.Applications;component/View.xaml");
+            InitTemplate(nameof(View));
             _applicationSearcher = new ApplicationSearcher(context);
             _applicationSearcher.Initialize(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall");
             _applicationSearcher.Initialize(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
         }
         
-        public Task<IEnumerable<Result>> SearchAsync(Query query)
+        public override Task<IEnumerable<Result>> SearchAsync(Query query)
         {
             int length = query.Original.Length;
             if (previous.Length > length || length < 2)

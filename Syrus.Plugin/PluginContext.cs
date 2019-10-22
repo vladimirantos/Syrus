@@ -43,14 +43,5 @@ namespace Syrus.Plugin
                 return JObject.Parse(result);
             }
         }
-
-        /// <summary>
-        /// Get ResourceDictionary by path to view
-        /// </summary>
-        public ResourceDictionary CreateView(string path)
-            => new ResourceDictionary()
-            {
-                Source = new Uri(path)
-            };
     }
 }

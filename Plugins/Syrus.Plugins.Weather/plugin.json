@@ -36,35 +36,8 @@
         }
       ]
     }
-  ]
-  //"command": "weather",
-  //"keywords": ["weather", "sunny", "cloudy", "rain", "snow"],
-  //"icon": "icon.png",
-  //"searchingPatterns": [
-  //  {
-  //    "name": 1,
-  //    "text": "Whats weather {day}",
-  //    "keywordPattern": true
-  //  },
-  //  {
-  //    "name": 2,
-  //    "text": "weather {day}",
-  //    "keywordPattern": true
-  //  },
-  //  {
-  //    "name": 3,
-  //    "text": "It will be {type}", //sunny
-  //    "keywordPattern": true
-  //  },
-  //  {
-  //    "name": 4,
-  //    "text": "weather in {city}",
-  //    "keywordPattern": true
-  //  },
-  //  {
-  //    "name": 5,
-  //    "text": "whats weather in {city}",
-  //    "keywordPattern": true
-  //  }
-  //]
+  ],
+  "readonlyConstants": {
+    "apiKey": "2747ba3ddb5d7e5e4d358c143ce2f61f"
+  }
 }
