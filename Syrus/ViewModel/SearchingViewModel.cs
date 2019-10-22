@@ -2,6 +2,7 @@
 using Syrus.Core;
 using Syrus.Core.Metadata;
 using Syrus.Plugin;
+using Syrus.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -100,12 +101,9 @@ namespace Syrus.ViewModel
 
         public SearchingViewModel()
         {
-            string appLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Syrus");
-            string pluginsLocation = Path.Combine(appLocation, "plugins");
-            string cacheLocation = Path.Combine(appLocation, "cache");
-            _appSettings = SettingsLoader.Load(Path.Combine(appLocation, "settings.json"));
+            _appSettings = SettingsLoader.Load(Constants.SettingsFile);
 
-            _syrus = new Core.Syrus(pluginsLocation, cacheLocation, _appSettings);
+            _syrus = new Core.Syrus(Constants.PluginsDirectory, Constants.CacheDirectory, _appSettings);
             _syrus.LoadPlugins().Initialize();
             Results = new ObservableCollection<Result>();
             Placeholder = _defaultPlaceholder;
