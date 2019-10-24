@@ -8,66 +8,66 @@ using System.Windows;
 
 namespace Syrus.Plugins.Weather
 {
-    public class Tmp : IPlugin
+    public class Tmp
     {
-        private const string ApiKey = "2747ba3ddb5d7e5e4d358c143ce2f61f";
-        private int _requestNumber = -1;
-        private PluginContext _pluginContext;
-        private WeatherFactory _weatherFactory;
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private ResourceDictionary ViewTemplate { get; set; } = new ResourceDictionary();
-        public void OnInitialize(PluginContext context)
-        {
-            _pluginContext = context;
-            _weatherFactory = new WeatherFactory(ApiKey);
-            //ViewTemplate = context.CreateView("pack://application:,,,/Syrus.Plugins.Weather;component/View.xaml");
+        //private const string ApiKey = "2747ba3ddb5d7e5e4d358c143ce2f61f";
+        //private int _requestNumber = -1;
+        //private PluginContext _pluginContext;
+        //private WeatherFactory _weatherFactory;
+        //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        //private ResourceDictionary ViewTemplate { get; set; } = new ResourceDictionary();
+        //public void OnInitialize(PluginContext context)
+        //{
+        //    _pluginContext = context;
+        //    _weatherFactory = new WeatherFactory(ApiKey);
+        //    //ViewTemplate = context.CreateView("pack://application:,,,/Syrus.Plugins.Weather;component/View.xaml");
+        //}
+
+        //public async System.Threading.Tasks.Task<IEnumerable<Result>> SearchAsync(Query query)
+        //{
+        //    int count = ++_requestNumber;
+        //    if (!query.HasArguments || query.Arguments.Length < 3)
+        //        return new List<Result>();
+        //    try
+        //    {
+        //        WeatherApi weather = await _weatherFactory.GetWeatherAsync(query.Arguments, _cancellationTokenSource.Token);
+        //        if (count != _requestNumber)
+        //            return new List<Result>();
+
+        //        return new List<Result>()
+        //        {
+        //            new Result()
+        //            {
+        //                Text = $"Počasí v {query.Arguments}",
+        //                QuickResult = $"- {query.Arguments} {weather.Main}",
+        //                Content = new View()
+        //                {
+        //                    Template = ViewTemplate,
+        //                    ViewModel = new WeatherVm()
+        //                    {
+        //                        City = query.Arguments,
+        //                        Temperature = $"{weather.Main.Temperature} °C"
+        //                    }
+        //                }
+        //            }
+        //        };
+        //    }
+        //    catch (WebException)
+        //    {
+
+        //    }
+        //    return new List<Result>();
         }
-
-        public async System.Threading.Tasks.Task<IEnumerable<Result>> SearchAsync(Query query)
-        {
-            int count = ++_requestNumber;
-            if (!query.HasArguments || query.Arguments.Length < 3)
-                return new List<Result>();
-            try
-            {
-                WeatherApi weather = await _weatherFactory.GetWeatherAsync(query.Arguments, _cancellationTokenSource.Token);
-                if (count != _requestNumber)
-                    return new List<Result>();
-
-                return new List<Result>()
-                {
-                    new Result()
-                    {
-                        Text = $"Počasí v {query.Arguments}",
-                        QuickResult = $"- {query.Arguments} {weather.Main}",
-                        Content = new View()
-                        {
-                            Template = ViewTemplate,
-                            ViewModel = new WeatherVm()
-                            {
-                                City = query.Arguments,
-                                Temperature = $"{weather.Main.Temperature} °C"
-                            }
-                        }
-                    }
-                };
-            }
-            catch (WebException)
-            {
-
-            }
-            return new List<Result>();
-        }
-    }
-
-
     public class WeatherVm : BaseViewModel
     {
         public string City { get; set; }
         public string Temperature { get; set; }
     }
+    }
 
-}
+
+
+
 
 
 // {{

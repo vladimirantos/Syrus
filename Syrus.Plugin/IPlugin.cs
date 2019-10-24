@@ -19,6 +19,8 @@ namespace Syrus.Plugin
     {
         protected ResourceDictionary ViewTemplate { get; set; }
 
+        protected IEnumerable<Result> Empty => new List<Result>();
+
         public virtual void OnInitialize(PluginContext context)
         {
         }
