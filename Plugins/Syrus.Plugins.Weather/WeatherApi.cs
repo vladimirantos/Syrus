@@ -16,8 +16,11 @@ namespace Syrus.Plugins.Weather
 
         public WeatherFactory(string apiKey) => _apiKey = apiKey;
 
-        public async System.Threading.Tasks.Task<WeatherApi> GetWeatherAsync(string query) 
-            => new WeatherApi(JObject.Parse(await Http.Get($"{_baseUrl}?appid={_apiKey}&q={query}&units=metric")));
+        public async System.Threading.Tasks.Task<WeatherApi> GetWeatherAsync(string query)
+        {
+            string jsonContent = await Http.Get($"{_baseUrl}?appid={_apiKey}&q={query}&units=metric", HttpStatusCode.NotFound);
+            return jsonContent != null ? new WeatherApi(JObject.Parse(jsonContent)) : null;
+        }
     }
 
     internal class WeatherApi

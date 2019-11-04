@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Syrus.Plugin;
 using Syrus.Shared.Logging;
@@ -22,11 +23,13 @@ namespace Syrus.Plugins.Weather
         public async override Task<IEnumerable<Result>> SearchAsync(Query query)
         {
             int count = ++_requestNumber;
-            if (!query.HasArguments || count != _requestNumber)
+            if ((!query.HasArguments && query.Arguments.Length < 2) || count != _requestNumber)
                 return Empty;
             try
             {
                 WeatherApi weather = await _weatherFactory.GetWeatherAsync(query.Arguments);
+                if (weather == null)
+                    return Empty;
                 return new List<Result>()
                 {
                     new Result()
@@ -45,10 +48,13 @@ namespace Syrus.Plugins.Weather
                     }
                 };
             }
-            catch(Exception e)
+            catch(HttpRequestException e) 
+            {
+            }catch(Exception e)
             {
                 Log.Exception("Exception in Weather", e);
             }
+
             return Empty;
         }
     }

@@ -26,9 +26,28 @@ namespace Syrus.Shared.Http
             try
             {
                 var response = await HttpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
+                var a = response.IsSuccessStatusCode;
+                //response.EnsureSuccessStatusCode();
                 string content = await response.Content.ReadAsStringAsync();
                 return content;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new SyrusException($"HTTP GET {url} throws exception.", e);
+            }
+        }
+
+        public static async Task<string> Get(string url, HttpStatusCode ignoredStatusCodes)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await HttpClient.GetAsync(url);
+                if(!response.IsSuccessStatusCode && (response.StatusCode & ignoredStatusCodes) == 0)
+                {
+                    response.EnsureSuccessStatusCode(); // throw exception
+                }
+                return response.IsSuccessStatusCode ? await response.Content.ReadAsStringAsync() : null;
             }
             catch (HttpRequestException e)
             {
