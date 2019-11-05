@@ -60,8 +60,7 @@ namespace Syrus.Plugins.Weather
         }
     public class WeatherVm : BaseViewModel
     {
-        public string City { get; set; }
-        public string Temperature { get; set; }
+        public WeatherApi Weather { get; set; }
     }
     }
 

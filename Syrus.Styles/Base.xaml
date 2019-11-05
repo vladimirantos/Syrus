@@ -6,6 +6,7 @@
     <!--Základní styly okna-->
     <Style TargetType="fw:AcrylicWindow">
         <Setter Property="Background" Value="{StaticResource SystemBaseLowColorBrush}"/>
+        <Setter Property="FontSize" Value="18"/>
     </Style>
 
     <!--Vyhledávací pole-->

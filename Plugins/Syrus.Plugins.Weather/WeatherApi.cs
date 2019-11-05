@@ -23,7 +23,7 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class WeatherApi
+    public class WeatherApi
     {
         public Coord Coord { get; private set; }
         public MainWeather Main { get; private set; }
@@ -54,10 +54,10 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class Coord
+    public class Coord
     {
         public double Latitude { get; private set; }
-        public  double Longitude { get; private set; }
+        public double Longitude { get; private set; }
 
         public Coord(JToken token)
         {
@@ -68,7 +68,7 @@ namespace Syrus.Plugins.Weather
         public override string ToString() => $"[{Latitude}, {Longitude}]";
     }
 
-    internal class MainWeather
+    public class MainWeather
     {
         public double Temperature { get; }
         public double MinTemperature { get; }
@@ -88,9 +88,9 @@ namespace Syrus.Plugins.Weather
         public override string ToString() => $"{Temperature}°C";
     }
 
-    internal class Wind
+    public class Wind
     {
-        internal enum DirectionEnum
+        public enum DirectionEnum
         {
             North,
             North_North_East,
@@ -117,7 +117,7 @@ namespace Syrus.Plugins.Weather
         public Wind(JToken token)
         {
             Speed = double.Parse(token["speed"].ToString());
-            if(token.SelectToken("deg") != null)
+            if (token.SelectToken("deg") != null)
                 Degree = double.Parse(token.SelectToken("deg").ToString());
             Direction = assignDirection(Degree);
         }
@@ -211,9 +211,9 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class Rain
+    public class Rain
     {
-        public readonly double H3;
+        public double H3 { get; set; }
 
         public Rain(JToken rainData)
         {
@@ -222,9 +222,9 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class Snow
+    public class Snow
     {
-        public readonly double H3;
+        public double H3 { get; set; }
 
         public Snow(JToken snowData)
         {
@@ -233,14 +233,14 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class Sys
+    public class Sys
     {
-        public readonly int Type;
-        public readonly int ID;
-        public readonly double Message;
-        public readonly string Country;
-        public readonly DateTime Sunrise;
-        public readonly DateTime Sunset;
+        public int Type { get; set; }
+        public int ID { get; set; }
+        public double Message { get; set; }
+        public string Country { get; set; }
+        public DateTime Sunrise { get; set; }
+        public DateTime Sunset { get; set; }
 
         public Sys(JToken sysData)
         {
@@ -248,7 +248,7 @@ namespace Syrus.Plugins.Weather
                 Type = int.Parse(sysData.SelectToken("type").ToString());
             if (sysData.SelectToken("id") != null)
                 ID = int.Parse(sysData.SelectToken("id").ToString());
-            if(sysData.SelectToken("message") != null)
+            if (sysData.SelectToken("message") != null)
                 Message = double.Parse(sysData.SelectToken("message").ToString());
             Country = sysData.SelectToken("country").ToString();
             Sunrise = convertUnixToDateTime(double.Parse(sysData.SelectToken("sunrise").ToString()));
@@ -262,9 +262,9 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class Clouds
+    public class Clouds
     {
-        public readonly double All;
+        public double All { get; set; }
 
         public Clouds(JToken cloudsData)
         {
@@ -272,12 +272,12 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    internal class Weather
+    public class Weather
     {
-        public readonly int ID;
-        public readonly string Main;
-        public readonly string Description;
-        public readonly string Icon;
+        public int ID { get; set; }
+        public string Main { get; set; }
+        public string Description { get; set; }
+        public string Icon { get; set; }
 
         public Weather(JToken weatherData)
         {
@@ -285,6 +285,29 @@ namespace Syrus.Plugins.Weather
             Main = weatherData.SelectToken("main").ToString();
             Description = weatherData.SelectToken("description").ToString();
             Icon = weatherData.SelectToken("icon").ToString();
+        }
+    }
+
+    static class IconConverter
+    {
+        private static Dictionary<string, string> map;
+        static IconConverter()
+        {
+            if (map == null)
+            {
+                //map = new Dictionary<string, string>()
+                //{
+                //    {"01", "Sun" },
+                //    {"02", "CloudSun" },
+                //    {"03", "" },
+                //    {"04", "" },
+                //    {"09", "" },
+                //    {"10", "" },
+                //    {"11", "" },
+                //    {"13", "" },
+                //    {"50", "" },
+                //}
+            }
         }
     }
 }

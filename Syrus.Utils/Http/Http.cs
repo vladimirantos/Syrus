@@ -39,6 +39,7 @@ namespace Syrus.Shared.Http
 
         public static async Task<string> Get(string url, HttpStatusCode ignoredStatusCodes)
         {
+            //Logging.Log.Debug($"HTTP GET: {url}");
             HttpResponseMessage response;
             try
             {

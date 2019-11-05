@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Syrus.Plugin;
+using Syrus.Shared;
 using Syrus.Shared.Logging;
 
 namespace Syrus.Plugins.Weather
@@ -35,14 +36,13 @@ namespace Syrus.Plugins.Weather
                     new Result()
                     {
                         Text = $"Počasí v {query.Arguments}",
-                        QuickResult = $"- {query.Arguments} {weather.Main}",
+                        QuickResult = $"- {query.Arguments.FirstToUpper()} {weather.Main}",
                         Content = new View()
                         {
                             Template = ViewTemplate,
                             ViewModel = new WeatherVm()
                             {
-                                City = query.Arguments,
-                                Temperature = $"{weather.Main.Temperature} °C"
+                                Weather = weather
                             }
                         }
                     }

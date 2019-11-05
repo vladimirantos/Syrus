@@ -77,9 +77,12 @@ namespace Syrus.ViewModel
         /// <summary>
         /// Returns true when windows dark mode is enabled.
         /// </summary>
-        public bool IsEnabledDarkMode => _appSettings.Theme == Themes.Dark ||
-                   (_appSettings.Theme == Themes.System &&
-                   (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0);
+        //public bool IsEnabledDarkMode => _appSettings.Theme == Themes.Dark ||
+        //           (_appSettings.Theme == Themes.System &&
+        //           (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\", "AppsUseLightTheme", 0) == 0);
+
+        public bool IsEnabledDarkMode => false;
+
 
         public ICommand CompleteTextByTabCommand => new Command((object obj) => 
             {

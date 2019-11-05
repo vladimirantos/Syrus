@@ -110,7 +110,6 @@
                     </ListBox>
 
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="{Binding ResultDetail.Title}"/>
                         <ContentControl Content="{Binding ResultDetail}" />
                     </StackPanel>
                 </Grid>
