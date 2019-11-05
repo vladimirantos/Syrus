@@ -78,9 +78,9 @@ namespace Syrus.Plugins.Weather
 
         public MainWeather(JToken token)
         {
-            Temperature = double.Parse(token["temp"].ToString());
-            MinTemperature = double.Parse(token["temp_min"].ToString());
-            MaxTemperature = double.Parse(token["temp_max"].ToString());
+            Temperature = Math.Round(double.Parse(token["temp"].ToString()), 1);
+            MinTemperature = Math.Round(double.Parse(token["temp_min"].ToString()), 1);
+            MaxTemperature = Math.Round(double.Parse(token["temp_max"].ToString()), 1);
             Pressure = double.Parse(token["pressure"].ToString());
             Humidity = double.Parse(token["humidity"].ToString());
         }

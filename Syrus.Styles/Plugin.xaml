@@ -3,12 +3,15 @@
                     xmlns:fa="http://schemas.fontawesome.io/icons/"
                     xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF">
     <Style x:Key="Title" TargetType="Label">
-        <Setter Property="FontSize" Value="36"/>
+        <Setter Property="FontSize" Value="32"/>
         <!--<Setter Property="Foreground" Value="{x:Static fw:AccentColors.ImmersiveSystemAccentDark3Brush}"/>-->
         <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumHighColorBrush}"/>
     </Style>
     <Style x:Key="Subtitle" TargetType="Label">
-        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontSize" Value="21"/>
         <Setter Property="Foreground" Value="{StaticResource SystemBaseMediumColorBrush}"/>
+    </Style>
+    <Style x:Key="StdText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="17"/>
     </Style>
 </ResourceDictionary>
