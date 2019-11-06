@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Syrus.Plugin;
@@ -31,11 +33,15 @@ namespace Syrus.Plugins.Weather
                 WeatherApi weather = await _weatherFactory.GetWeatherAsync(query.Arguments);
                 if (weather == null)
                     return Empty;
+                foreach(Weather w in weather.Weathers)
+                {
+                    w.Icon = await WeatherIconDownloader.SaveIcon(w.Icon, Path.Combine(_pluginContext.CacheLocation, _pluginContext.Metadata.FullName));
+                }
                 return new List<Result>()
                 {
                     new Result()
                     {
-                        Text = $"Počasí v {query.Arguments}",
+                        Text = $"Počasí v {query.Arguments.FirstToUpper()}",
                         QuickResult = $"- {query.Arguments.FirstToUpper()} {weather.Main}",
                         Content = new View()
                         {

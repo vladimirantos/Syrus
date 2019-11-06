@@ -2,9 +2,12 @@
 using Syrus.Shared.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Syrus.Plugins.Weather
 {
@@ -32,7 +35,7 @@ namespace Syrus.Plugins.Weather
         public Snow Snow { get; private set; }
         public Sys Sys { get; private set; }
         public Clouds Clouds { get; private set; }
-        public ICollection<Weather> Weathers { get; private set; } = new List<Weather>();
+        public ICollection<Weather> Weathers { get; set; } = new List<Weather>();
         public double Visibility { get; private set; }
         public string Name { get; private set; }
 
@@ -288,26 +291,37 @@ namespace Syrus.Plugins.Weather
         }
     }
 
-    static class IconConverter
+    public class WeatherIconDownloader
     {
-        private static Dictionary<string, string> map;
-        static IconConverter()
+        private const string Url = "http://openweathermap.org/img/wn/";
+        public static async Task<string> SaveIcon(string icon, string location)
         {
-            if (map == null)
+            string url = $"{Url}{icon}@2x.png";
+            location = Path.Combine(location, icon + ".png");
+            if (File.Exists(location))
+                return location;
+            System.Drawing.Image image = null;
+
+            try
             {
-                //map = new Dictionary<string, string>()
-                //{
-                //    {"01", "Sun" },
-                //    {"02", "CloudSun" },
-                //    {"03", "" },
-                //    {"04", "" },
-                //    {"09", "" },
-                //    {"10", "" },
-                //    {"11", "" },
-                //    {"13", "" },
-                //    {"50", "" },
-                //}
+                HttpWebRequest webRequest = (HttpWebRequest)HttpWebRequest.Create(url);
+                webRequest.AllowWriteStreamBuffering = true;
+                webRequest.Timeout = 30000;
+
+                WebResponse webResponse = await webRequest.GetResponseAsync();
+
+                Stream stream = webResponse.GetResponseStream();
+
+                image = System.Drawing.Image.FromStream(stream);
+
+                webResponse.Close();
+                image.Save(location);
             }
+            catch (Exception ex)
+            {
+            }
+                return location;
+
         }
     }
 }

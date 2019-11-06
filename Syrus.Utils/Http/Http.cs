@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace Syrus.Shared.Http
         private static readonly HttpClientHandler _clientHandler = new HttpClientHandler();
         
         private static readonly Lazy<HttpClient> _lazyInstance = new Lazy<HttpClient>(() => new HttpClient(_clientHandler, false));
-        private static HttpClient HttpClient => _lazyInstance.Value;
+        public static HttpClient HttpClient => _lazyInstance.Value;
 
         static Http()
         {
@@ -22,7 +23,7 @@ namespace Syrus.Shared.Http
 
         public static async Task<string> Get(string url)
         {
-            Logging.Log.Debug($"HTTP GET: {url}");
+            //Logging.Log.Debug($"HTTP GET: {url}");
             try
             {
                 var response = await HttpClient.GetAsync(url);

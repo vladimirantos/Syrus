@@ -17,8 +17,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <fa:ImageAwesome Icon="Cloud" 
-                                 Width="45" Height="45" Margin="30 10 10 10" VerticalAlignment="Center"/>
+                <Image Source="{Binding Weather.Weathers[0].Icon}" Width="70" Height="70" Margin="30 10 10 10" VerticalAlignment="Center"/>
                 <StackPanel Margin="5 0 0 0">
                     <Label Style="{StaticResource Title}">
                         <Label.Content>
