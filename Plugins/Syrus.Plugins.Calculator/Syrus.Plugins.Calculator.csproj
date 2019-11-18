@@ -6,6 +6,7 @@
 
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,6 +16,10 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy $(ProjectDir)plugin.json C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Calculator&#xD;&#xA;copy $(ProjectDir)icon.png C:\Users\vladi\AppData\Roaming\Syrus\plugins\Syrus.Plugins.Calculator" />
   </Target>
+  
+  <ItemGroup>
+    <PackageReference Include="NCalc.NetCore" Version="1.0.1" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\Syrus.Plugin\Syrus.Plugin.csproj" />

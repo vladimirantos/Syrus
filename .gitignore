@@ -46,3 +46,5 @@
 /Plugins/Syrus.Plugins.Wiki/obj
 /Syrus.Plugins.Text/obj
 /Syrus.Utils/obj
+/Plugins/Syrus.Plugins.Calculator/bin/Release
+/Syrus.Plugin/bin/Release/netcoreapp3.0

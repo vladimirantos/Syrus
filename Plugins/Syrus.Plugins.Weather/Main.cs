@@ -42,7 +42,7 @@ namespace Syrus.Plugins.Weather
                     new Result()
                     {
                         Text = $"Počasí v {query.Arguments.FirstToUpper()}",
-                        QuickResult = $"- {query.Arguments.FirstToUpper()} {weather.Main}",
+                        QuickResult = $"{query.Arguments.FirstToUpper()} {weather.Main}",
                         Content = new View()
                         {
                             Template = ViewTemplate,
