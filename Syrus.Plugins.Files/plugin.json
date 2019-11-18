@@ -1,0 +1,33 @@
+﻿{
+  "name": "Files",
+  "fullName": "Syrus.Plugins.Files",
+  "author": "Vladimír Antoš",
+  "version": "0.0.0.1",
+  "icon": "icon.png",
+  "enableHelp": false,
+  "searchingConfigurations": [
+    {
+      "language": "en",
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^.*$" ]
+        }
+      ]
+    },
+
+    {
+      "language": "cs",
+      "regularExpressions": [
+        {
+          "id": 1,
+          "text": [ "^.*$" ]
+        }
+      ]
+    }
+  ],
+  "constants": {
+    "indexedFolders": [ "C:\\Users\\vladi" ],
+    "except":  []
+  }
+}
