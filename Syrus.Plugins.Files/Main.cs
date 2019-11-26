@@ -2,10 +2,19 @@
 using Syrus.Plugin;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Syrus.Plugins.Files
 {
+    internal enum ResultSorting
+    {
+        DirectoriesFirst = 1,
+        FilesFirst = 2,
+        AlphabetAsc = 3,
+        AlphabetDesc = 4
+    }
+
     public class Main : BasePlugin
     {
         private PluginContext _context;
@@ -17,6 +26,7 @@ namespace Syrus.Plugins.Files
             {
                 var folder = x["folder"].ToString();
                 var excluded = x["exclude"].ToString();
+                
             }
             var xa = FileSearcher.GetFiles(@"C:\Users\vladi\OneDrive\Plocha\test\", new List<string>() {
                 @"^*\.xlsx$", @"C:\Users\vladi\OneDrive\Plocha\test\abc.xlsx"
@@ -29,9 +39,21 @@ namespace Syrus.Plugins.Files
         {
             if(_context.Metadata.FromKeyword.Id == 2)
             {
-
+                IEnumerable<Directory> directories = FilesManager.GetDirectories(query.Original);
+                IEnumerable<File> files = FilesManager.GetFiles(query.Original);
+                return ToResults(files);
             }
             return Empty;
+        }
+
+        private IEnumerable<Result> ToResults(IEnumerable<File> files)
+        {
+            List<Result> results = new List<Result>();
+            foreach(File f in files)
+            {
+                results.Add(f);
+            }
+            return results;
         }
     }
 }

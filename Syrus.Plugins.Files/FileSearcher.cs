@@ -9,7 +9,7 @@ namespace Syrus.Plugins.Files
     {
         public static List<string> GetFiles(string location, List<string> exclude)
         {
-            string[] files = Directory.GetFiles(location);
+            string[] files = System.IO.Directory.GetFiles(location);
             List<string> result = new List<string>();
             IEnumerable<string> regexExclude = exclude.Where(IsRegex);
             IEnumerable<string> fileExclude = exclude.Where(x => !IsRegex(x));
@@ -28,9 +28,4 @@ namespace Syrus.Plugins.Files
         private static bool IsRegex(string pattern) => pattern.StartsWith("^") && pattern.EndsWith("$");
     }
 
-    public class FileInfo
-    {
-        public string Name { get; set; }
-        public string Path { get; set; }
-    }
 }
