@@ -12,6 +12,10 @@
         {
           "id": 1,
           "text": [ "^.*$" ]
+        },
+        {
+          "id": 2,
+          "text": [ "^[a-zA-Z]:\\\\[\\\\\\S|*\\S]?.*$" ]
         }
       ]
     },
@@ -22,12 +26,21 @@
         {
           "id": 1,
           "text": [ "^.*$" ]
+        },
+        {
+          "id": 2,
+          "text": [ "^[a-zA-Z]:\\\\[\\\\\\S|*\\S]?.*$" ]
         }
       ]
     }
   ],
   "constants": {
-    "indexedFolders": [ "C:\\Users\\vladi" ],
+    "indexedFolders": [
+      {
+        "folder": "C:\\Users\\vladi\\OneDrive\\Plocha",
+        "exclude": "C:\\Users\\vladi\\OneDrive\\Plocha\test"
+      }
+    ],
     "except":  []
   }
 }
