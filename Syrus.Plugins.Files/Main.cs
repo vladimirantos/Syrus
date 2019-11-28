@@ -21,16 +21,16 @@ namespace Syrus.Plugins.Files
         public override void OnInitialize(PluginContext context)
         {
             _context = context;
-            var  a = ((JArray)context.Metadata.Constants["indexedFolders"]).Children();
-            foreach(var x in a)
-            {
-                var folder = x["folder"].ToString();
-                var excluded = x["exclude"].ToString();
+            //var  a = ((JArray)context.Metadata.Constants["indexedFolders"]).Children();
+            //foreach(var x in a)
+            //{
+            //    var folder = x["folder"].ToString();
+            //    var excluded = x["exclude"].ToString();
                 
-            }
-            var xa = FileSearcher.GetFiles(@"C:\Users\vladi\OneDrive\Plocha\test\", new List<string>() {
-                @"^*\.xlsx$", @"C:\Users\vladi\OneDrive\Plocha\test\abc.xlsx"
-            }) ;
+            //}
+            //var xa = FileSearcher.GetFiles(@"C:\Users\vladi\OneDrive\Plocha\test\", new List<string>() {
+            //    @"^*\.xlsx$", @"C:\Users\vladi\OneDrive\Plocha\test\abc.xlsx"
+            //}) ;
             //var f = new FileInfo(@"C:\Users\vladi\OneDrive\Plocha\test\New Text Document.txt");
             
         }
@@ -39,21 +39,25 @@ namespace Syrus.Plugins.Files
         {
             if(_context.Metadata.FromKeyword.Id == 2)
             {
-                IEnumerable<Directory> directories = FilesManager.GetDirectories(query.Original);
-                IEnumerable<File> files = FilesManager.GetFiles(query.Original);
-                return ToResults(files);
+                string path = query.Original;
+                bool exists = FilesManager.Exists(path);
+                if (!exists)
+                    path = FilesManager.GetDir(query.Original);
+                
+                IEnumerable<Directory> directories = FilesManager.GetDirectories(path);
+                IEnumerable<File> files = FilesManager.GetFiles(path);
+
+                if (!exists)
+                {
+                    directories = directories.Where(d => d.FullPath.ToLower().StartsWith(query.Original.ToLower()));
+                    files = files.Where(f => f.FullPath.ToLower().StartsWith(query.Original.ToLower()));
+                }
+
+                var result = directories.Select(d => (Result)d).ToList();
+                result.AddRange(files.Select(f => (Result)f));
+                return result;
             }
             return Empty;
-        }
-
-        private IEnumerable<Result> ToResults(IEnumerable<File> files)
-        {
-            List<Result> results = new List<Result>();
-            foreach(File f in files)
-            {
-                results.Add(f);
-            }
-            return results;
         }
     }
 }

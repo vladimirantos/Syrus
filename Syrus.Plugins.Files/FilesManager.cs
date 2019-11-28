@@ -32,5 +32,9 @@ namespace Syrus.Plugins.Files
                 yield return Directory.FromDirectoryInfo(new DirectoryInfo(d));
             }
         }
+
+        public static bool Exists(string path) => System.IO.Directory.Exists(path) || System.IO.File.Exists(path);
+
+        public static string GetDir(string path) => System.IO.Directory.GetParent(path).FullName;
     }
 }

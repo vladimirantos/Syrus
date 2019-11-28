@@ -88,5 +88,13 @@ namespace Syrus.Plugins.Files
             ParentPath = directoryInfo.Parent.FullName,
             Root = directoryInfo.Root.Name
         };
+
+        public static implicit operator Result(Directory d)
+        {
+            return new Result()
+            {
+                Text = d.Name
+            };
+        }
     }
 }

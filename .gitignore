@@ -49,3 +49,7 @@
 /Plugins/Syrus.Plugins.Calculator/bin/Release
 /Syrus.Plugin/bin/Release/netcoreapp3.0
 /Syrus.Plugins.Files/obj
+/Syrus.Utils/bin/Release/netcoreapp3.0
+/Syrus.Styles/bin/Release/netcoreapp3.0
+/Syrus.Core/bin/Release/netcoreapp3.0
+/Syrus/bin/Release/netcoreapp3.0
