@@ -177,6 +177,32 @@ namespace Syrus.Plugin
     }
 
     /// <summary>
+    /// Řeší jak se bude nastavovat grupování (nadpisy v seznamu výsledků)
+    /// </summary>
+    public enum GroupingMode
+    {
+        /// <summary>
+        /// Nebude vůbec grupováno
+        /// </summary>
+        Disable,
+
+        /// <summary>
+        /// Skupiny nastavují výsledky - defaultní hodnota
+        /// </summary>
+        FromResult,
+
+        /// <summary>
+        /// Jako nadpis skupiny bude použit název pluginu.
+        /// </summary>
+        PluginName,
+
+        /// <summary>
+        /// Hodnota group v resultConfiguration v plugin.json
+        /// </summary>
+        Specified,
+    }
+
+    /// <summary>
     /// Objekt pro nastavení výsledku vyhledávání.
     /// </summary>
     public class ResultConfiguration
@@ -187,5 +213,12 @@ namespace Syrus.Plugin
         public ResultViewMode? ViewMode { get; set; }
 
         public OpenDetailMode? OpenDetailMode { get; set; }
+
+        public GroupingMode GroupingMode { get; set; }
+
+        /// <summary>
+        /// Nadpis skupiny výsledků. Aby byl aplikován, musí být nastaven GroupingMode.Specified.
+        /// </summary>
+        public string Group { get; set; }
     }
 }

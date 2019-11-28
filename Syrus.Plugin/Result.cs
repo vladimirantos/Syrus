@@ -36,10 +36,6 @@ namespace Syrus.Plugin
         /// <returns></returns>
         private ResultConfiguration CombineConfigurations()
         {
-            //ResultsViewMode resultsViewMode = _resultConfiguration != null ? _resultConfiguration.ViewMode :
-            //    FromPlugin.FromKeyword.ResultConfiguration.ViewMode |
-            //    FromPlugin.CurrentSearchingConfiguration.ResultConfiguration.ViewMode |
-            //    FromPlugin.ResultConfiguration.ViewMode;
             ResultConfiguration fromPlugin = FromPlugin.ResultConfiguration;
             ResultConfiguration fromCurrentSearchingConfiguration = FromPlugin.CurrentSearchingConfiguration.ResultConfiguration;
             ResultConfiguration fromKeyword = FromPlugin.FromKeyword.ResultConfiguration;
@@ -56,10 +52,17 @@ namespace Syrus.Plugin
                 fromPlugin?.OpenDetailMode ??
                 OpenDetailMode.OnClick;
 
+            GroupingMode groupingMode = _resultConfiguration?.GroupingMode ??
+                fromKeyword?.GroupingMode ??
+                fromCurrentSearchingConfiguration?.GroupingMode ??
+                fromPlugin?.GroupingMode ??
+                GroupingMode.FromResult;
+
             return new ResultConfiguration()
             {
                 ViewMode = viewMode,
-                OpenDetailMode = openDetailMode
+                OpenDetailMode = openDetailMode,
+                GroupingMode = groupingMode
             };
         }
     }
