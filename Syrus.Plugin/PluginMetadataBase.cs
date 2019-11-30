@@ -184,7 +184,7 @@ namespace Syrus.Plugin
         /// <summary>
         /// Nebude vůbec grupováno
         /// </summary>
-        Disable,
+        Disabled,
 
         /// <summary>
         /// Skupiny nastavují výsledky - defaultní hodnota

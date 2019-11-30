@@ -6,11 +6,26 @@ namespace Syrus.Plugin
     public class Result : IResultConfigurable
     {
         private ResultConfiguration _resultConfiguration;
+        private string _group;
+
         public string Text { get; set; }
         public string QuickResult { get; set; }
         public string Icon { get; set; }
         public string NightIcon { get; set; }
-        public string Group { get; set; }
+        public string Group {
+            get {
+                ResultConfiguration currentConfiguration = ResultConfiguration;
+                if (currentConfiguration.GroupingMode == GroupingMode.Disabled)
+                    _group = null;
+                if (currentConfiguration.GroupingMode == GroupingMode.PluginName)
+                    _group = FromPlugin.Name;
+                if (currentConfiguration.GroupingMode == GroupingMode.Specified)
+                    _group = currentConfiguration.Group;
+                //jinak nastaveno v pluginu
+                return _group;
+            }
+            set => _group = value;
+        }
         public Query FromQuery { get; set; }
         public PluginMetadata FromPlugin { get; set; }
         public View Content { get; set; }
