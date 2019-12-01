@@ -21,7 +21,9 @@ namespace Syrus.Plugin
                     _group = FromPlugin.Name;
                 if (currentConfiguration.GroupingMode == GroupingMode.Specified)
                     _group = currentConfiguration.Group;
-                //jinak nastaveno v pluginu
+                if (_group == null)
+                    _group = FromPlugin.Name;
+                //jinak nastaveno v pluginu, nebo z config
                 return _group;
             }
             set => _group = value;
@@ -73,11 +75,18 @@ namespace Syrus.Plugin
                 fromPlugin?.GroupingMode ??
                 GroupingMode.FromResult;
 
+            string group = _resultConfiguration?.Group ??
+                fromKeyword?.Group ??
+                fromCurrentSearchingConfiguration?.Group ??
+                fromPlugin?.Group ??
+                null;
+
             return new ResultConfiguration()
             {
                 ViewMode = viewMode,
                 OpenDetailMode = openDetailMode,
-                GroupingMode = groupingMode
+                GroupingMode = groupingMode,
+                Group = group
             };
         }
     }
