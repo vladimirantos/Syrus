@@ -65,6 +65,12 @@ namespace Syrus.Plugin
         public bool EnableQueryHistory { get; set; } = false;
 
         /// <summary>
+        /// Pokud je true, bude se omezovat množství zobrazovaných výsledků. 
+        /// Počet výsledků se vezme buď z settings.json
+        /// </summary>
+        public bool LimitedCountResult { get; set; } = true;
+
+        /// <summary>
         /// Umožní zobrazovat plugin jako výsledek v případě, že nebyl nalezen žádný výsledek.
         /// </summary>
         public bool EnablePluginResult { get; set; } = true;
