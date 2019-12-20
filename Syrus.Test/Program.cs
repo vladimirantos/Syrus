@@ -52,14 +52,24 @@ namespace Syrus.Test
             //    ans = Console.ReadLine();
             //    Console.WriteLine(x.Match(ans).ToString());
             //} while (ans != "yes");
-            A a = new A();
-            B b = (B)a;
-            b.AA = "A";
-            b.BB = "B";
-            Console.WriteLine(b.AA);
-            Console.WriteLine(b.BB);
-            Console.WriteLine(a.AA);
+            Syrus.Core.Scheduling.TaskScheduler taskScheduler = new Core.Scheduling.TaskScheduler();
+            taskScheduler.AddSchedule(() => {
+                Console.WriteLine("TASK 1 " + DateTime.Now);
+                return Task.FromResult<string>(null);
+            }, 1000);
 
+            taskScheduler.AddSchedule(() =>
+            {
+                Console.WriteLine("TASK 2 " + DateTime.Now);
+                return Task.FromResult<string>(null);
+            }, 10000);
+
+            taskScheduler.AddSchedule(() =>
+            {
+                Console.WriteLine("TASK 3 " + DateTime.Now);
+                return Task.FromResult<string>(null);
+            }, 15000);
+            taskScheduler.Run(1000);
             Console.ReadKey();
         }
         public static int DamerauLevenshteinDistance(int[] source, int[] target, int threshold)
