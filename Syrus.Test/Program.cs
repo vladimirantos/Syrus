@@ -52,7 +52,7 @@ namespace Syrus.Test
             //    ans = Console.ReadLine();
             //    Console.WriteLine(x.Match(ans).ToString());
             //} while (ans != "yes");
-            Syrus.Core.Scheduling.TaskScheduler taskScheduler = new Core.Scheduling.TaskScheduler();
+            Syrus.Core.Scheduling.Scheduler taskScheduler = new Core.Scheduling.Scheduler();
             taskScheduler.AddSchedule(() => {
                 Console.WriteLine("TASK 1 " + DateTime.Now);
                 return Task.FromResult<string>(null);
@@ -70,6 +70,7 @@ namespace Syrus.Test
                 return Task.FromResult<string>(null);
             }, 15000);
             taskScheduler.Run(1000);
+            Console.WriteLine("AHOJ");
             Console.ReadKey();
         }
         public static int DamerauLevenshteinDistance(int[] source, int[] target, int threshold)

@@ -10,9 +10,15 @@ namespace Syrus.Plugin
     {
         void OnInitialize(PluginContext context);
 
-        //void OnClose();
-
         Task<IEnumerable<Result>> SearchAsync(Query query);
+    }
+
+    public interface ISchedulable
+    {
+        /// <summary>
+        /// Je volána v pravidelných intervalech. Může být využita pro aktualizaci indexů.
+        /// </summary>
+        Task UpdateAsync();
     }
 
     public abstract class BasePlugin : IPlugin
@@ -29,6 +35,8 @@ namespace Syrus.Plugin
         {
             
         }
+
+        public virtual Task UpdateAsync() => Task.CompletedTask;
 
         public abstract Task<IEnumerable<Result>> SearchAsync(Query query);
 

@@ -107,7 +107,7 @@ namespace Syrus.ViewModel
             _appSettings = SettingsLoader.Load(Constants.SettingsFile);
 
             _syrus = new Core.Syrus(Constants.PluginsDirectory, Constants.CacheDirectory, _appSettings);
-            _syrus.LoadPlugins().Initialize();
+            _syrus.LoadPlugins().Initialize().InitializeScheduler();
             Results = new ObservableCollection<Result>();
             Placeholder = _defaultPlaceholder;
         }

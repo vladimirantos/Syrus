@@ -1,4 +1,5 @@
 ﻿using Syrus.Core.Caching;
+using Syrus.Core.Scheduling;
 using Syrus.Plugin;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Syrus.Core
         public string PluginsLocation { get; private set; }
         public string CacheLocation { get; private set; }
         public Configuration Configuration { get; private set; }
+        public Scheduler TaskScheduler { get; private set; }
 
         public Syrus(string pluginsLocation, string cacheLocation, Configuration configuration)
             : this(new PluginLoader(pluginsLocation), new SearchEngine(configuration), pluginsLocation, cacheLocation, configuration) { }
@@ -26,6 +28,7 @@ namespace Syrus.Core
         {
             (_loader, _search, PluginsLocation, CacheLocation, Configuration) = (loader, search, pluginsLocation, cacheLocation, configuration);
             _searchingHistory = new QueryHistoryCache(CacheLocation);
+            TaskScheduler = new Scheduler();
         }
 
         public Syrus LoadPlugins()
@@ -47,6 +50,18 @@ namespace Syrus.Core
                 }));
             }
             Parallel.Invoke(actions.ToArray());
+            return this;
+        }
+
+        /// <summary>
+        /// Inicializace Scheduleru. Vybere pluginy, která implementují ISchedulable a vytvoří z nich úlohy.
+        /// Čas spuštění se získá z Metadata.UpdateInterval
+        /// </summary>
+        public Syrus InitializeScheduler()
+        {
+            IEnumerable<PluginPair> schedulables = _search.Plugins.Where(plugin => plugin.Plugin is ISchedulable); //todo otestovat
+            foreach (PluginPair schedulable in schedulables)
+                TaskScheduler.AddSchedule((schedulable.Plugin as ISchedulable).UpdateAsync, schedulable.Metadata.UpdateInterval);
             return this;
         }
 

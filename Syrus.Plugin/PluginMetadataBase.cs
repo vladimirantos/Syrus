@@ -65,6 +65,11 @@ namespace Syrus.Plugin
         public bool EnableQueryHistory { get; set; } = false;
 
         /// <summary>
+        /// Určuje jak často se bude volat metoda ISchedulable.UpdateAsync. Výchozí je 1 minuta.
+        /// </summary>
+        public double UpdateInterval { get; set; } = 60000;
+
+        /// <summary>
         /// Pokud je true, bude se omezovat množství zobrazovaných výsledků. 
         /// Počet výsledků se vezme buď z settings.json
         /// </summary>

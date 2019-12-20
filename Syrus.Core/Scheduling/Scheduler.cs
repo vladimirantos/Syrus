@@ -7,10 +7,10 @@ using System.Timers;
 
 namespace Syrus.Core.Scheduling
 {
-    public class TaskScheduler
+    public class Scheduler
     {
         private List<Schedule> _schedules;
-        public TaskScheduler() => _schedules = new List<Schedule>();
+        public Scheduler() => _schedules = new List<Schedule>();
 
         public void AddSchedule(Schedule schedule) => _schedules.Add(schedule);
 
