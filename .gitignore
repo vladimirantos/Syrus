@@ -53,3 +53,5 @@
 /Syrus.Styles/bin/Release/netcoreapp3.0
 /Syrus.Core/bin/Release/netcoreapp3.0
 /Syrus/bin/Release/netcoreapp3.0
+/Plugins/Syrus.Plugins.Files/obj
+/Plugins/Syrus.Plugins.Text/obj
