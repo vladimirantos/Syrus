@@ -1,12 +1,10 @@
 ﻿using Syrus.Core.Caching;
-using Syrus.Core.Scheduling;
 using Syrus.Plugin;
+using Syrus.Shared.Scheduling;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Syrus.Core
 {
@@ -43,7 +41,7 @@ namespace Syrus.Core
             List<Action> actions = new List<Action>();
             foreach(PluginPair p in _search.Plugins)
             {
-                actions.Add(() => p.Plugin.OnInitialize(new PluginContext(p.Metadata)
+                actions.Add(() => p.Plugin.OnInitialize(new PluginContext(p.Metadata, TaskScheduler)
                 {
                     CacheLocation = CacheLocation,
                     PluginsLocation = PluginsLocation

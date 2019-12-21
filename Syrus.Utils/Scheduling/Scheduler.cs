@@ -4,9 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace Syrus.Core.Scheduling
+namespace Syrus.Shared.Scheduling
 {
-    public class Scheduler
+    public interface IScheduler
+    {
+        void AddSchedule(Schedule schedule);
+        void AddSchedule(Func<Task> action, double interval);
+    }
+
+    public class Scheduler : IScheduler
     {
         private List<Schedule> _schedules;
         public Scheduler() => _schedules = new List<Schedule>();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Syrus.Core.Scheduling
+namespace Syrus.Shared.Scheduling
 {
     public class Schedule
     {

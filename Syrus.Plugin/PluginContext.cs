@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Syrus.Shared.Scheduling;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ namespace Syrus.Plugin
         public string PluginsLocation { get; set; }
         public string CacheLocation { get; set; }
         public Cache Cache => new Cache(CacheLocation, Metadata.FullName);
-
-        public PluginContext(PluginMetadata metadata) => Metadata = metadata;
+        public IScheduler TaskScheduler { get; private set; }
+        public PluginContext(PluginMetadata metadata, IScheduler scheduler) => (Metadata, TaskScheduler) = (metadata, scheduler);
 
         /// <summary>
         /// Deserialize JSON to type

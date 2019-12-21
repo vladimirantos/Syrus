@@ -1,4 +1,5 @@
 ﻿using Syrus.Core;
+using Syrus.Shared.Scheduling;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace Syrus.Test
             //    ans = Console.ReadLine();
             //    Console.WriteLine(x.Match(ans).ToString());
             //} while (ans != "yes");
-            Syrus.Core.Scheduling.Scheduler taskScheduler = new Core.Scheduling.Scheduler();
+            Scheduler taskScheduler = new Scheduler();
             taskScheduler.AddSchedule(() => {
                 Console.WriteLine("TASK 1 " + DateTime.Now);
                 return Task.FromResult<string>(null);
