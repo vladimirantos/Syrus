@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Syrus.Utils\Syrus.Shared.csproj" />
+    <ProjectReference Include="..\Syrus.Shared\Syrus.Shared.csproj" />
   </ItemGroup>
 
 </Project>
