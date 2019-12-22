@@ -13,11 +13,11 @@ namespace Syrus.Core
         private ILoader _loader;
         private ISearch _search;
         private QueryHistoryCache _searchingHistory;
+        private Scheduler TaskScheduler { get; set; }
 
         public string PluginsLocation { get; private set; }
         public string CacheLocation { get; private set; }
         public Configuration Configuration { get; private set; }
-        public Scheduler TaskScheduler { get; private set; }
 
         public Syrus(string pluginsLocation, string cacheLocation, Configuration configuration)
             : this(new PluginLoader(pluginsLocation), new SearchEngine(configuration), pluginsLocation, cacheLocation, configuration) { }
