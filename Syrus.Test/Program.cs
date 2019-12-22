@@ -70,6 +70,22 @@ namespace Syrus.Test
                 Console.WriteLine("TASK 3 " + DateTime.Now);
                 return Task.FromResult<string>(null);
             }, 15000);
+
+            IScheduleSequence sequence = taskScheduler.UseSequence();
+            sequence.AddSchedule(() =>
+                {
+                    Console.WriteLine("SEQUENCE 1 " + DateTime.Now);
+                    return Task.FromResult<string>(null);
+                }, 2000).AddSchedule(() =>
+                {
+                    Console.WriteLine("SEQUENCE 2 " + DateTime.Now);
+                    return Task.FromResult<string>(null);
+                }, 2000).AddSchedule(() =>
+             {
+                 Console.WriteLine("SEQUENCE 3 " + DateTime.Now);
+                 return Task.FromResult<string>(null);
+             }, 2000);
+
             taskScheduler.Run(1000);
             Console.WriteLine("AHOJ");
             Console.ReadKey();
