@@ -221,10 +221,20 @@ namespace Syrus.Core.Caching
             }
         }
 
-        public override string JsonSerialize() => JsonConvert.SerializeObject(_cache, Formatting.Indented);
+        //public override string JsonSerialize() => JsonConvert.SerializeObject(_cache, Formatting.Indented);
 
 
-        public override void Deserialize(string json)
+        public void Deserialize(string json)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Load()
         {
             throw new NotImplementedException();
         }

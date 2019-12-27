@@ -5,13 +5,7 @@ using System.Threading;
 
 namespace Syrus.Core.Caching
 {
-    public interface ISerializable
-    {
-        string JsonSerialize();
-        void Deserialize(string json);
-    }
-
-    internal abstract class CacheBase<K> : IDisposable, ISerializable
+    public abstract class CacheBase<K> : IDisposable
     {
         protected readonly ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
         protected readonly Dictionary<K, Timer> timers = new Dictionary<K, Timer>();
@@ -49,8 +43,7 @@ namespace Syrus.Core.Caching
             timers.Add(key, new Timer(new TimerCallback(TimerRemove), key,
                         timeout == Timeout.Infinite ? Timeout.Infinite : timeout * 1000, Timeout.Infinite));
         }
-
-        public abstract string JsonSerialize();
-        public abstract void Deserialize(string json);
+        public abstract void Save();
+        public abstract void Load();
     }
 }

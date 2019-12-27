@@ -17,9 +17,6 @@ namespace Syrus.Core.Caching
                 base.Add(value);
         }
 
-        public override string SerializeCache()
-        {
-            return base.SerializeCache();
-        }
+        public override void Save() => base.Save();
     }
 }

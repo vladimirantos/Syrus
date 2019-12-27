@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Syrus.Shared.Storage
 {
-    public interface IStorage
+    public interface IStorage<T>
     {
-        void Save();
+
+        /// <summary>
+        /// Uloží kolekci prvků. Při uložení dojde k přepsání původních dat.
+        /// </summary>
+        void Save(IEnumerable<T> items);
+
+        /// <summary>
+        /// Uložení objektu. Při uložení dojde k přepsání původních dat.
+        /// </summary>
+        void Save(T item);
         void Delete();
+        IEnumerable<T> GetAll();
+        T Get();
     }
 }

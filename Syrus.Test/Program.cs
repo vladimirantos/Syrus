@@ -1,4 +1,5 @@
 ﻿using Syrus.Core;
+using Syrus.Plugin;
 using Syrus.Shared.Scheduling;
 using System;
 using System.Collections;
@@ -53,40 +54,68 @@ namespace Syrus.Test
             //    ans = Console.ReadLine();
             //    Console.WriteLine(x.Match(ans).ToString());
             //} while (ans != "yes");
-            Scheduler taskScheduler = new Scheduler();
-            taskScheduler.AddSchedule(() => {
-                Console.WriteLine("TASK 1 " + DateTime.Now);
-                return Task.FromResult<string>(null);
-            }, 1000);
+            //Scheduler taskScheduler = new Scheduler();
+            //taskScheduler.AddSchedule(() => {
+            //    Console.WriteLine("TASK 1 " + DateTime.Now);
+            //    return Task.FromResult<string>(null);
+            //}, 1000);
 
-            taskScheduler.AddSchedule(() =>
+            //taskScheduler.AddSchedule(() =>
+            //{
+            //    Console.WriteLine("TASK 2 " + DateTime.Now);
+            //    return Task.FromResult<string>(null);
+            //}, 10000);
+
+            //taskScheduler.AddSchedule(() =>
+            //{
+            //    Console.WriteLine("TASK 3 " + DateTime.Now);
+            //    return Task.FromResult<string>(null);
+            //}, 15000);
+
+            //IScheduleSequence sequence = taskScheduler.UseSequence();
+            //sequence.AddSchedule(() =>
+            //    {
+            //        Console.WriteLine("SEQUENCE 1 " + DateTime.Now);
+            //        return Task.FromResult<string>(null);
+            //    }, 2000).AddSchedule(() =>
+            //    {
+            //        Console.WriteLine("SEQUENCE 2 " + DateTime.Now);
+            //        return Task.FromResult<string>(null);
+            //    }, 2000).AddSchedule(() =>
+            // {
+            //     Console.WriteLine("SEQUENCE 3 " + DateTime.Now);
+            //     return Task.FromResult<string>(null);
+            // }, 2000);
+
+            //taskScheduler.Run(1000);
+
+
+            Syrus.Core.Caching.CacheFacade<IEnumerable<A>> cache = new Core.Caching.CacheFacade<IEnumerable<A>>("cache-test.json");
+            cache.Add(new List<A>()
             {
-                Console.WriteLine("TASK 2 " + DateTime.Now);
-                return Task.FromResult<string>(null);
-            }, 10000);
-
-            taskScheduler.AddSchedule(() =>
-            {
-                Console.WriteLine("TASK 3 " + DateTime.Now);
-                return Task.FromResult<string>(null);
-            }, 15000);
-
-            IScheduleSequence sequence = taskScheduler.UseSequence();
-            sequence.AddSchedule(() =>
+                new A()
                 {
-                    Console.WriteLine("SEQUENCE 1 " + DateTime.Now);
-                    return Task.FromResult<string>(null);
-                }, 2000).AddSchedule(() =>
+                    AA = "BANIK PICO",
+                    BB = new List<B>()
+                    {
+                        new B(){ BB = "AHOJ"},
+                        new B(){BB = "Pondělí"}
+                    }
+                },
+                new A()
                 {
-                    Console.WriteLine("SEQUENCE 2 " + DateTime.Now);
-                    return Task.FromResult<string>(null);
-                }, 2000).AddSchedule(() =>
-             {
-                 Console.WriteLine("SEQUENCE 3 " + DateTime.Now);
-                 return Task.FromResult<string>(null);
-             }, 2000);
+                    AA = "Pátek",
+                    BB = new List<B>()
+                    {
+                        new B(){ BB = "Sobota"},
+                        new B(){BB = "Neděle"}
+                    }
+                }
+            });
 
-            taskScheduler.Run(1000);
+            cache.Save();
+            cache.Load();
+
             Console.WriteLine("AHOJ");
             Console.ReadKey();
         }
@@ -176,6 +205,7 @@ namespace Syrus.Test
     class A
     {
         public string AA { get; set; }
+        public List<B> BB {get; set;}
     }
 
     class B : A

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Syrus.Shared.Storage;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,18 +10,19 @@ using System.Threading;
 
 namespace Syrus.Core.Caching
 {
-    internal class Cache<T> : CacheBase<T> where T : class
+    internal class Cache<T> : CacheBase<T>, IEnumerable<T> where T : class
     {
-        private List<T> _cache = new List<T>();
+        private readonly IStorage<T> _storage;
+        private List<T> Items { get; set; } = new List<T>();
 
-        public List<T> Items => _cache;
+        public Cache(IStorage<T> storage) => _storage = storage;
 
         public override void Clear()
         {
             locker.EnterWriteLock();
             try
             {
-                _cache.Clear();
+                Items.Clear();
             }
             finally
             {
@@ -34,7 +37,7 @@ namespace Syrus.Core.Caching
             locker.EnterReadLock();
             try
             {
-                return _cache.Any(item => item == value);
+                return Items.Any(item => item == value);
             }
             finally
             {
@@ -49,7 +52,7 @@ namespace Syrus.Core.Caching
             locker.EnterWriteLock();
             try
             {
-                _cache.Remove(key);
+                Items.Remove(key);
             }
             finally
             {
@@ -64,7 +67,7 @@ namespace Syrus.Core.Caching
             locker.EnterWriteLock();
             try
             {
-                _cache.Add(value);
+                Items.Add(value);
             }
             finally
             {
@@ -72,24 +75,64 @@ namespace Syrus.Core.Caching
             }
         }
 
-        public override string JsonSerialize() => JsonConvert.SerializeObject(_cache, Formatting.Indented);
-
-
-        public override void Deserialize(string json)
+        public IEnumerable<T> GetAll()
         {
-            
+            if (Disposed)
+                return new List<T>();
+            locker.EnterReadLock();
+            try
+            {
+                return Items;
+            }
+            finally
+            {
+                locker.ExitReadLock();
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator() => GetAll().GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+
+        public override void Load()
+        {
+            if (Disposed)
+                return;
+            locker.EnterWriteLock();
+            try
+            {
+                Items = _storage.GetAll().ToList();
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
+        }
+
+        public override void Save()
+        {
+            if (Disposed)
+                return;
+            locker.EnterReadLock();
+            try
+            {
+                _storage.Save(Items);
+            }
+            finally
+            {
+                locker.ExitReadLock();
+            }
         }
     }
 
-    internal class CacheFacade<T> where T: class
+    public class CacheFacade<T> where T: class
     {
-        protected Cache<T> _cache;
+        private Cache<T> _cache;
         protected string _location;
-
         public CacheFacade(string location)
         {
             _location = location;
-            _cache = new Cache<T>();
+            _cache = new Cache<T>(new JsonStorage<T>(location));
         }
 
         public virtual void Add(T item) => _cache.Add(item);
@@ -98,8 +141,8 @@ namespace Syrus.Core.Caching
 
         public virtual bool Exists(T item) => _cache.Exists(item);
 
-        public virtual void Save() => File.WriteAllText(_location, SerializeCache());
+        public virtual void Save() => _cache.Save();
 
-        public virtual string SerializeCache() => _cache.JsonSerialize();
+        public virtual void Load() => _cache.Load();
     }
 }
